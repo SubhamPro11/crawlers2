@@ -1,0 +1,196 @@
+# Crawlers — AI Tools Directory
+
+## Project Overview
+- **Project Name:** Crawlers — AI Tools Directory
+- **One-Line Pitch:** A human-curated, terminal-inspired directory of AI tools, API endpoints, and developer resources.
+- **Live Goals:**
+  - Build a high-performance, edge-compatible directory using Next.js 16 and Supabase.
+  - Maintain absolute editorial integrity with zero fabricated stats, generic marketing copy, or template aesthetics.
+  - Deliver a distinct terminal-inspired dark navy & lime visual identity.
+
+---
+
+## Tech Stack
+| Layer | Technology |
+|---|---|
+| **Framework** | Next.js 16 (App Router) |
+| **UI** | React 19 + Tailwind CSS 4 |
+| **Database** | Supabase (PostgreSQL with RLS) |
+| **Hosting Target** | Cloudflare Pages |
+| **Icons** | Lucide React |
+| **Language** | TypeScript 5 (Strict Mode) |
+
+---
+
+## Hard Constraints
+*(Must be reread and strictly adhered to before starting work on any section)*
+- Do NOT touch Supabase Auth config, session handling, data-fetching logic, or the database schema without my explicit prior approval, even if a task seems to require it.
+- No purple/cyan AI-template gradients, no sparkle icons, no generic templated marketing copy, no fabricated stats or engagement numbers.
+- No embeds/iframes of third-party tool pages — always link directly to source.
+- Every design decision must look human-made, not AI-generated. When in doubt, choose the less "generic SaaS" option.
+
+---
+
+## Database Schema
+
+Designed SQL Migration: [`supabase/migrations/20260805000000_initial_schema.sql`](file:///d:/vs%20code/crawlers2/supabase/migrations/20260805000000_initial_schema.sql)
+
+### Tables & Key Columns
+1. **`sections`**: `id` (UUID PK), `name`, `slug` (UNIQUE), `description`, `display_order`, `created_at`
+2. **`categories`**: `id` (UUID PK), `section_id` (FK sections), `name`, `slug` (UNIQUE), `subgroup`, `description`, `display_order`, `created_at`
+3. **`tags`**: `id` (UUID PK), `name` (UNIQUE), `slug` (UNIQUE), `created_at`
+4. **`tools`**: `id` (UUID PK), `name`, `slug` (UNIQUE), `url`, `description`, `pricing_model` (ENUM: free/freemium/paid/open-source), `category_id` (FK categories), `logo_url`, `has_api` (BOOLEAN), `added_at`, `updated_at`, `is_active` (BOOLEAN)
+5. **`tool_tags`**: `tool_id` (FK tools), `tag_id` (FK tags) [Composite PK]
+6. **`submissions`**: `id` (UUID PK), `name`, `url`, `description`, `category`, `pricing_model`, `tags` (TEXT[]), `submitter_email`, `status` (ENUM: pending/approved/rejected), `submitted_at`
+7. **`view_logs`**: `id` (UUID PK), `tool_id` (FK tools), `user_agent`, `referrer`, `viewed_at`
+
+### Security & RLS Policies
+- **RLS Enabled**: On all 7 tables.
+- **Public Read Access**: Active `tools`, `categories`, `sections`, `tags`, `tool_tags`.
+- **Public Insert**: `submissions` (pending state) and `view_logs` (analytics tracking).
+- **Restricted Write**: Service role only for mutating core tables.
+
+---
+
+## Information Architecture — Sections & Categories
+
+Full taxonomy seeds defined in [`supabase/seed.sql`](file:///d:/vs%20code/crawlers2/supabase/seed.sql) and [`src/lib/taxonomy.ts`](file:///d:/vs%20code/crawlers2/src/lib/taxonomy.ts):
+
+1. **Text & Writing** (`text-writing`)
+   - *Content Generation & Copywriting*: Writing Assistants, Copywriting, Resume Tools
+   - *Document Processing & Audio Transcription*: Transcription, Document AI
+2. **Audio, Video & Media** (`audio-video-media`)
+   - *Video & Animation Production*: Video Generator, Podcast Tools
+   - *Audio, Speech & Music Processing*: Music Generation, Voice Cloning, Text-to-Speech
+3. **Design & 3D Creative** (`design-3d-creative`)
+   - *2D Visuals & Graphics*: Image Generation, Logo Generator, Fashion Design
+   - *3D, Immersive & Spatial*: 3D Modeling, AR/VR
+4. **Productivity & Business** (`productivity-business`)
+   - *Workflow & Project Management*: Project Management, CRM, Meeting Assistants
+   - *Communication & Operations*: Email Assistants, Finance Tools
+5. **Developer & Tech Tools** (`developer-tech-tools`)
+   - *Code & Infrastructure*: Code Assistants, DevTools, API Tools
+   - *Platforms & Extensions*: No-Code Builders, AI Extensions
+6. **Data, Models & Security** (`data-models-security`)
+   - *Data Architecture & Analytics*: Database Tools, Computer Vision
+   - *Security & Governance*: Cybersecurity, Content Moderation
+7. **Marketing, Sales & SEO** (`marketing-sales-seo`)
+   - *Sales Engine & Outreach*: Lead Generation, E-Commerce
+   - *Brand & Audience*: Social Media Tools, Ad Generator
+8. **Search, Chat & AI Agents** (`search-chat-ai-agents`)
+   - *Autonomous Agents & Systems*: AI Agents, Research Tools
+   - *Conversational Interfaces*: Chatbot Builders, Personal Assistants
+9. **Education & Lifestyle** (`education-lifestyle`)
+   - *Learning & Knowledge Systems*: Learning Tools, Language Learning, Accessibility
+   - *Lifestyle & Leisure*: Wellness, Gaming, Travel
+
+---
+
+## Design Tokens
+
+- **Theme Palette**:
+  - `navy-950` (`#060A14`): Deep midnight root background
+  - `navy-900` (`#0B1120`): Surface card background
+  - `navy-850` (`#10192D`): Input / pill background
+  - `navy-800` (`#17243C`): Standard border / divider
+  - `lime-accent` (`#A3E635`): High-contrast terminal lime accent
+  - `lime-hover` (`#BCF04D`): Hover accent
+  - `lime-border` (`rgba(163, 230, 53, 0.3)`): Subtle focus / card highlight glow
+- **Typography Stack**:
+  - `font-mono` (`JetBrains_Mono`): Headings, badges, tags, code snippets, prompt prefixes (`$>`)
+  - `font-sans` (`Inter`): Body text, longform descriptions, subheadings
+- **Base Components**:
+  - [`Button`](file:///d:/vs%20code/crawlers2/src/components/ui/Button.tsx): Primary (lime solid), Secondary, Outline, Ghost, Danger
+  - [`Badge`](file:///d:/vs%20code/crawlers2/src/components/ui/Badge.tsx): Free, Freemium, Paid, Open-Source enums + Lime/Outline/Subtle variants
+  - [`Input`](file:///d:/vs%20code/crawlers2/src/components/ui/Input.tsx): Terminal prompt input with `$>` prefix option, icons, error states
+  - [`ToolCard`](file:///d:/vs%20code/crawlers2/src/components/ui/Card.tsx): Terminal card with direct source link, API tag, bookmark action (zero fake counters)
+  - [`EmptyState`](file:///d:/vs%20code/crawlers2/src/components/ui/EmptyState.tsx): Reusable empty result container with terminal code snippet & action slot
+  - [`Skeleton`](file:///d:/vs%20code/crawlers2/src/components/ui/Skeleton.tsx): Animated navy pulse loading placeholder
+- **Dev Style Guide Playground**: Available at [`/style-guide`](file:///d:/vs%20code/crawlers2/src/app/style-guide/page.tsx)
+
+---
+
+## Running Changelog
+
+### Section 0: Persistent Context File Initialization
+- Created `brain.md` persistent context file at project root.
+- Established project overview, stack baseline, hard constraints, and tracking sections.
+
+### Section 1: Project Initialization & Stack Scaffolding
+- Initialized Next.js 16 (App Router) with TypeScript 5 strict mode, React 19, and Tailwind CSS v4.
+- Configured ESLint with flat config (`eslint-config-next`, `eslint-config-prettier`) and Prettier (`prettier-plugin-tailwindcss`).
+- Installed `lucide-react` for icons and `@supabase/supabase-js` for database connectivity.
+- Established strict directory layout: `/src/app`, `/src/components`, `/src/lib`, `/src/types`, `/supabase/migrations`.
+- Added `.env.example` with Supabase URL, anon key, and service role key placeholders.
+- Created developer-focused `README.md` with commands for `typecheck`, `lint`, and `format`.
+- Verified typechecking and linting pass with zero errors.
+
+### Section 2: Database Schema Design
+- Authored initial Postgres schema migration [`20260805000000_initial_schema.sql`](file:///d:/vs%20code/crawlers2/supabase/migrations/20260805000000_initial_schema.sql).
+- Defined custom ENUMs (`pricing_model`, `submission_status`).
+- Designed tables for `sections`, `categories`, `tags`, `tools`, `tool_tags`, `submissions`, and `view_logs`.
+- Added performance indexes for slugs, foreign keys, status flags, and timestamps.
+- Added strict Row Level Security (RLS) policies allowing public select on active tools/taxonomy and public insert on submissions/view_logs.
+- Authored TypeScript interfaces in [`src/types/database.ts`](file:///d:/vs%20code/crawlers2/src/types/database.ts).
+- Updated `brain.md` schema documentation.
+
+### Section 3: Information Architecture & Seed Taxonomy Design
+- Designed fixed seed structure across 9 top-level sections and 40+ categories with explicit subgroups.
+- Authored SQL seed script [`supabase/seed.sql`](file:///d:/vs%20code/crawlers2/supabase/seed.sql).
+- Authored typed application taxonomy constant [`src/lib/taxonomy.ts`](file:///d:/vs%20code/crawlers2/src/lib/taxonomy.ts).
+- Verified TypeScript compilation and updated `brain.md` taxonomy index.
+
+### Section 4: Design System & Visual Identity
+- Configured terminal dark navy (`#060A14`) & lime green (`#A3E635`) theme in Tailwind CSS v4 ([`src/app/globals.css`](file:///d:/vs%20code/crawlers2/src/app/globals.css)).
+- Integrated Google Fonts `JetBrains_Mono` (headings/chrome) & `Inter` (body) in [`src/app/layout.tsx`](file:///d:/vs%20code/crawlers2/src/app/layout.tsx).
+- Built base component library: `Button`, `Badge`, `Input`, `ToolCard`, `EmptyState`, and `Skeleton`.
+- Built dev-only style guide playground page at [`src/app/style-guide/page.tsx`](file:///d:/vs%20code/crawlers2/src/app/style-guide/page.tsx).
+- Enforced hard constraints: zero gradient buttons, zero sparkle icons, zero fabricated metrics.
+- Verified clean typecheck and ESLint linting with 0 errors.
+
+### Section 5: Core Pages & Routing Shells
+- Built mock dataset helper in [`src/lib/mockData.ts`](file:///d:/vs%20code/crawlers2/src/lib/mockData.ts) (offline mock representation without touching Supabase data fetching).
+- Created global layout shells: [`Navbar`](file:///d:/vs%20code/crawlers2/src/components/layout/Navbar.tsx) and [`Footer`](file:///d:/vs%20code/crawlers2/src/components/layout/Footer.tsx).
+- Implemented all 8 required page route shells with Next.js dynamic metadata:
+  1. `/` — Homepage hero, 9-section taxonomy grid, featured curated stacks ([`src/app/page.tsx`](file:///d:/vs%20code/crawlers2/src/app/page.tsx)).
+  2. `/[section]` — Section page displaying subgroups and categories ([`src/app/[section]/page.tsx`](file:///d:/vs%20code/crawlers2/src/app/[section]/page.tsx)).
+  3. `/[section]/[category]` — Category page with pricing model filters & grid ([`src/app/[section]/[category]/page.tsx`](file:///d:/vs%20code/crawlers2/src/app/[section]/[category]/page.tsx)).
+  4. `/tool/[slug]` — Individual tool detail view with direct links ([`src/app/tool/[slug]/page.tsx`](file:///d:/vs%20code/crawlers2/src/app/tool/[slug]/page.tsx)).
+  5. `/compare` — Side-by-side tool feature comparison matrix ([`src/app/compare/page.tsx`](file:///d:/vs%20code/crawlers2/src/app/compare/page.tsx)).
+  6. `/submit` — Community tool submission form ([`src/app/submit/page.tsx`](file:///d:/vs%20code/crawlers2/src/app/submit/page.tsx)).
+  7. `/api` — API Keys Registry directory for API-enabled tools ([`src/app/api/page.tsx`](file:///d:/vs%20code/crawlers2/src/app/api/page.tsx)).
+  8. `/changelog` — Public release log ([`src/app/changelog/page.tsx`](file:///d:/vs%20code/crawlers2/src/app/changelog/page.tsx)).
+- Verified `npm run typecheck` and `npm run lint` pass cleanly with zero errors and zero warnings.
+- Preserved strict constraint: Zero live database queries or auth logic wired yet.
+
+### Section 6: Data Wiring
+- Created Supabase client infrastructure and query helpers with static fallback handling in [`src/lib/supabase.ts`](file:///d:/vs%20code/crawlers2/src/lib/supabase.ts).
+- Wired homepage, section, category, tool detail, and API registry routes to live Supabase queries (`tools`, `sections`, `categories`, `view_logs`).
+- Built real-time [`SmartSearch`](file:///d:/vs%20code/crawlers2/src/components/search/SmartSearch.tsx) component performing instant full-text search across tool names, categories, tags, and descriptions.
+- Embedded `SmartSearch` in Homepage hero.
+- Built [`useBookmarks`](file:///d:/vs%20code/crawlers2/src/lib/useBookmarks.ts) hook storing personal tool collections in `localStorage` (zero sign-up required).
+- Wired community submission form to insert rows into Supabase `submissions` table (status: `pending`).
+- Verified `npm run typecheck` and `npm run lint` pass with 0 errors and 0 warnings.
+
+### Section 7: SEO & Discoverability
+- Implemented production-grade SEO base metadata in [`src/app/layout.tsx`](file:///d:/vs%20code/crawlers2/src/app/layout.tsx) with OpenGraph, Twitter Cards, canonical URL templates, and robots configuration.
+- Built JSON-LD structured data components ([`src/components/seo/JsonLd.tsx`](file:///d:/vs%20code/crawlers2/src/components/seo/JsonLd.tsx)) for `SoftwareApplication`, `CollectionPage`, and `BreadcrumbList`.
+- Embedded JSON-LD schemas into [`/tool/[slug]`](file:///d:/vs%20code/crawlers2/src/app/tool/%5Bslug%5D/page.tsx) and category routes.
+- Created dynamic sitemap auto-generator at [`src/app/sitemap.ts`](file:///d:/vs%20code/crawlers2/src/app/sitemap.ts) rendering all static, section, category, and tool URLs.
+- Created [`src/app/robots.ts`](file:///d:/vs%20code/crawlers2/src/app/robots.ts) linking to `/sitemap.xml`.
+- Created [`public/llms.txt`](file:///d:/vs%20code/crawlers2/public/llms.txt) for LLM crawlers describing taxonomy, endpoints, and ethical policies.
+- Verified clean typecheck and ESLint linting with zero errors.
+
+### Section 8: Compliance, Ethics & Crawling Architecture Plan
+- Documented complete legal, ethical, and technical compliance plan in [`docs/crawler_compliance_plan.md`](file:///d:/vs%20code/crawlers2/docs/crawler_compliance_plan.md).
+- Mandated strict `robots.txt` parsing and polite rate limiting (1 request / 3 seconds per domain, custom User-Agent `CrawlersBot/1.0`).
+- Established non-verbatim copy rule: raw scraped text is never published directly; automatically rephrased into neutral editorial voice.
+- Designed `crawler_audit_logs` schema for source URL and timestamp auditability.
+- Maintained strict gated constraint: Actual crawler execution binary remains unbuilt pending standalone approval.
+
+### Section 9: Pre-Launch Hardening
+- Created Cloudflare Pages [`public/_headers`](file:///d:/vs%20code/crawlers2/public/_headers) file with strict Content Security Policy (CSP), HSTS, X-Frame-Options: DENY, X-Content-Type-Options: nosniff, and Referrer-Policy headers.
+- Performed environment variable hygiene audit: `.env.example` verified with placeholders only; zero private keys leaked to client bundle.
+- Executed production Next.js 16 build check (`npm run build`) — compiled cleanly with 11 static/dynamic pages optimized.
+- Performed hard constraint audit: verified zero purple/cyan AI gradients, zero sparkle icons, zero fabricated engagement counters, and direct outbound links only.
+- Final review of [`brain.md`](file:///d:/vs%20code/crawlers2/brain.md) complete. All 9 prompt sections fulfilled.

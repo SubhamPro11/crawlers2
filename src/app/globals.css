@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-950: #060a14;
+  --color-navy-900: #0b1120;
+  --color-navy-850: #10192d;
+  --color-navy-800: #17243c;
+  --color-navy-700: #233454;
+  --color-navy-600: #334870;
+
+  --color-lime-accent: #a3e635;
+  --color-lime-hover: #bcf04d;
+  --color-lime-dim: rgba(163, 230, 53, 0.12);
+  --color-lime-border: rgba(163, 230, 53, 0.3);
+
+  --font-mono: var(--font-mono-jet), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: var(--font-sans-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --background: #060a14;
+  --foreground: #f1f5f9;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  background-image: radial-gradient(rgba(163, 230, 53, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  min-height: 100vh;
+}
+
+/* Custom terminal scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #060a14;
+}
+::-webkit-scrollbar-thumb {
+  background: #17243c;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #233454;
+}

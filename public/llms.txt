@@ -1,0 +1,28 @@
+# Crawlers — AI Tools & API Directory
+
+> Human-curated, terminal-inspired directory of AI tools, API endpoints, and developer resources. Direct source links, zero fake metrics.
+
+## Site Taxonomy (9 Top-Level Sections)
+
+1. Text & Writing (`/text-writing`): Writing Assistants, Copywriting, Resume Tools, Transcription, Document AI
+2. Audio, Video & Media (`/audio-video-media`): Video Generator, Podcast Tools, Music Generation, Voice Cloning, Text-to-Speech
+3. Design & 3D Creative (`/design-3d-creative`): Image Generation, Logo Generator, Fashion Design, 3D Modeling, AR/VR
+4. Productivity & Business (`/productivity-business`): Project Management, CRM, Meeting Assistants, Email Assistants, Finance Tools
+5. Developer & Tech Tools (`/developer-tech-tools`): Code Assistants, DevTools, API Tools, No-Code Builders, AI Extensions
+6. Data, Models & Security (`/data-models-security`): Database Tools, Computer Vision, Cybersecurity, Content Moderation
+7. Marketing, Sales & SEO (`/marketing-sales-seo`): Lead Generation, E-Commerce, Social Media Tools, Ad Generator
+8. Search, Chat & AI Agents (`/search-chat-ai-agents`): AI Agents, Research Tools, Chatbot Builders, Personal Assistants
+9. Education & Lifestyle (`/education-lifestyle`): Learning Tools, Language Learning, Accessibility, Wellness, Gaming, Travel
+
+## Key Endpoints for LLMs & Developers
+
+- `/sitemap.xml`: Full XML index of indexed tools, categories, and taxonomy sections
+- `/api`: Registry of software offering developer API endpoints
+- `/compare`: Side-by-side comparison matrix for AI tools
+- `/submit`: Community submissions portal for new tools
+- `/changelog`: Public platform release log
+
+## Policy for LLM Crawlers & Indexers
+
+- Direct outbound links are provided for all tool records; no third-party site embeds or iframes.
+- Verbatim scraped promotional copy is excluded in favor of concise, human-authored editorial summaries.
