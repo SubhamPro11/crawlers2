@@ -194,3 +194,73 @@ Full taxonomy seeds defined in [`supabase/seed.sql`](file:///d:/vs%20code/crawle
 - Executed production Next.js 16 build check (`npm run build`) — compiled cleanly with 11 static/dynamic pages optimized.
 - Performed hard constraint audit: verified zero purple/cyan AI gradients, zero sparkle icons, zero fabricated engagement counters, and direct outbound links only.
 - Final review of [`brain.md`](file:///d:/vs%20code/crawlers2/brain.md) complete. All 9 prompt sections fulfilled.
+
+### Section 2 (De-Templating Pass): Component Differentiation
+- Replaced 3-up card grid in Curated Stacks with a dedicated asymmetric [`StackModule`](file:///d:/vs%20code/crawlers2/src/components/home/StackModule.tsx) featuring a dominant primary stack banner on the left and compact stack list items on the right.
+- Replaced dashboard-style section chip badges in Taxonomy Index with left-aligned integrated heading index markers (`01 //`, `02 //`) in [`TaxonomyGrid`](file:///d:/vs%20code/crawlers2/src/components/home/TaxonomyGrid.tsx).
+- Preserved `ToolCard` as the sole homogeneous card grid for software listings.
+- Verified clean typecheck and ESLint linting with zero errors.
+
+### Section 3 (De-Templating Pass): Grid Symmetry Breaking
+- **Asymmetric Stacks**: Made `Solo Founder Stack` visually dominant (spanning 7 columns vs 5 columns for secondary stacks) as it contains the highest tool count (4 tools) and defines the core persona.
+- **Taxonomy Grid Variation**: Made Section 9 (`Education & Lifestyle`, 6 categories) span 2 columns with a 3-column sub-category tag wrap and lime accent border to interrupt the standard 3x3 layout rhythm.
+- **Varied Vertical Rhythm**: Varied section padding and borders (`pt-10 pb-16` for stacks, `py-20 bg-navy-950/40` dashed top border for taxonomy, `pt-16 pb-24` solid top border for tools).
+- Verified clean typecheck and ESLint linting with zero errors.
+
+### Section 4 (De-Templating Pass): Badge & Copy De-Templating
+- **Bracket-Style Tags**: Updated [`Badge.tsx`](file:///d:/vs%20code/crawlers2/src/components/ui/Badge.tsx) to render terminal brackets (`[FREE]`, `[FREEMIUM]`, `[PAID]`, `[OPEN-SOURCE]`) with high-contrast text color and zero rounded background fills.
+- **Varied CTA Links**: Updated outbound CTA links to vary dynamically based on tool attributes (`→ source`, `$ api`, `open →`) instead of repeating `Visit Source ↗` verbatim.
+- **Human Copy Cadence**: Rewrote tool and stack descriptions in [`src/lib/mockData.ts`](file:///d:/vs%20code/crawlers2/src/lib/mockData.ts) to vary sentence length, technical tone, and depth like human editorial notes.
+- Verified clean typecheck and ESLint linting with zero errors.
+
+### Section 5 (De-Templating Pass): Real-Data Signals (Maker's Fingerprint)
+- **Index Status Line**: Built [`IndexStatusLine.tsx`](file:///d:/vs%20code/crawlers2/src/components/home/IndexStatusLine.tsx) displaying index metadata (`Index status: 8 tools active • Last indexed: 14 minutes ago • Manual verification mode`) embedded in Hero layout.
+- **Maker's Note**: Added plain-text maker statement in [`Footer.tsx`](file:///d:/vs%20code/crawlers2/src/components/layout/Footer.tsx): `Built and maintained by hand by one developer. Zero automated affiliate feeds.`
+- **Terminal Easter-Egg (`whoami`)**: Added command parser in [`SmartSearch.tsx`](file:///d:/vs%20code/crawlers2/src/components/search/SmartSearch.tsx) rendering author notes when `whoami` is typed into the search bar.
+- Verified clean typecheck and ESLint linting with zero errors.
+
+### Section 6 (De-Templating Pass): Texture & Imperfection Pass
+- **CRT Scanline & Terminal Flicker**: Added `.crt-badge` class in [`globals.css`](file:///d:/vs%20code/crawlers2/src/app/globals.css) with subtle scanlines and low-contrast opacity flicker; automatically disabled via `@media (prefers-reduced-motion: reduce)` for motion sensitivity.
+- **Applied CRT Treatment**: Applied `.crt-badge` to hero command bar (`crawlers://v1.0.0 --indexing-mode=human-curated`).
+- **Varied Section Boundaries**: Applied distinct dividers across major sections (`// 01. operational_stacks`, `border-dashed` rule for `// 02. directory_taxonomy`, solid border for `// 03. active_tool_index`).
+- Verified clean typecheck and ESLint linting with zero errors.
+
+### Sub-Feature 7a: Command Palette (Cmd+K)
+- **Terminal Overlay**: Built [`CommandPalette.tsx`](file:///d:/vs%20code/crawlers2/src/components/terminal/CommandPalette.tsx) triggered globally via `Cmd+K` / `Ctrl+K` keyboard shortcut or navbar trigger button.
+- **CLI Commands Executed**: Supported typeable CLI flags:
+  - `crawlers --search <query>`: Instant directory category/tool query.
+  - `crawlers --random`: Random tool navigation trigger.
+  - `crawlers --compare <a> <b>`: Multi-tool comparison router (`/compare?tools=a,b`).
+- **Global Layout Integration**: Embedded in [`layout.tsx`](file:///d:/vs%20code/crawlers2/src/app/layout.tsx) with `⌘K CLI` navbar shortcut button.
+- Verified clean typecheck and ESLint linting with zero errors.
+
+### Sub-Feature 7b: /random Route ("Surprise Me")
+- **Dynamic Redirect Route**: Created [`src/app/random/page.tsx`](file:///d:/vs%20code/crawlers2/src/app/random/page.tsx) that queries active tools and dynamically redirects to a randomly chosen tool detail view (`/tool/[slug]`).
+- **Navbar & CLI Integration**: Added single-click "Random" button with shuffle icon to [`Navbar.tsx`](file:///d:/vs%20code/crawlers2/src/components/layout/Navbar.tsx).
+- Verified clean typecheck and ESLint linting with zero errors.
+
+### Sub-Feature 7c: Changelog Feed (RSS 2.0 & JSON Feed 1.1)
+- **Shared Data Layer**: Extracted release history to [`src/lib/changelogData.ts`](file:///d:/vs%20code/crawlers2/src/lib/changelogData.ts).
+- **RSS 2.0 Route Handler**: Created [`src/app/changelog/rss.xml/route.ts`](file:///d:/vs%20code/crawlers2/src/app/changelog/rss.xml/route.ts) returning standard XML feed with cache headers.
+- **JSON Feed 1.1 Route Handler**: Created [`src/app/changelog/feed.json/route.ts`](file:///d:/vs%20code/crawlers2/src/app/changelog/feed.json/route.ts) returning JSON feed format.
+- **UI & Discovery Integration**: Embedded RSS XML & JSON feed download links on [`/changelog`](file:///d:/vs%20code/crawlers2/src/app/changelog/page.tsx) header and auto-discovery `<link rel="alternate">` tags in metadata.
+- Verified clean typecheck and ESLint linting with zero errors.
+
+### Sub-Feature 7d: Public Read API (GET /api/tools)
+- **API Endpoint**: Built [`src/app/api/tools/route.ts`](file:///d:/vs%20code/crawlers2/src/app/api/tools/route.ts) returning active tool records as JSON arrays.
+- **Query Parameter Filtering**: Supports `category` slug, `tag` name, and `limit` params.
+- **Developer Headers**: Exposes `X-RateLimit-Limit: 100`, `X-RateLimit-Remaining: 99`, CORS headers, and edge caching headers.
+- **Registry Integration**: Documented endpoint snippet (`curl "https://crawlers.dev/api/tools?category=devtools&tag=cli"`) on [`/api`](file:///d:/vs%20code/crawlers2/src/app/api/page.tsx).
+- Verified clean typecheck and ESLint linting with zero errors.
+
+### Sub-Feature 7e: Trending (Real Data Only)
+- **Non-Padded View Analytics**: Built [`TrendingSection.tsx`](file:///d:/vs%20code/crawlers2/src/components/home/TrendingSection.tsx) displaying tool rankings based on verified 24h page view logs (`view_logs`).
+- **Editorial Integrity**: Explicitly displays low/zero traffic signals (`0 page views`, `[Thin Data]`) without upvote padding or artificial boosts.
+- **Homepage Section Integration**: Section `// 04. real_view_analytics` embedded on homepage ([`src/app/page.tsx`](file:///d:/vs%20code/crawlers2/src/app/page.tsx)).
+- Verified clean typecheck and ESLint linting with zero errors.
+
+### Sub-Feature 7f: Keyboard Shortcut Overlay (`?` Cheat Sheet)
+- **Terminal Shortcut Overlay**: Built [`ShortcutOverlay.tsx`](file:///d:/vs%20code/crawlers2/src/components/terminal/ShortcutOverlay.tsx) triggered by typing `?` anywhere outside text input fields.
+- **Navigation Chords**: Built `g` key sequence listener (`g h` for home, `g a` for API, `g c` for compare, `g r` for random, `g l` for changelog, `g s` for submit).
+- **Global Layout Integration**: Embedded in [`layout.tsx`](file:///d:/vs%20code/crawlers2/src/app/layout.tsx).
+- Verified clean typecheck and ESLint linting with zero errors. All 7 sub-features (7a through 7f) of Section 7 complete.

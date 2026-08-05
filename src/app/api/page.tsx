@@ -43,14 +43,29 @@ export default async function ApiRegistryPage() {
           </p>
         </div>
 
-        {/* Info Box */}
-        <div className="p-5 rounded border border-navy-800 bg-navy-900 font-mono text-xs text-slate-300 flex items-start gap-3">
-          <ShieldCheck className="w-5 h-5 text-lime-accent shrink-0 mt-0.5" />
-          <div className="space-y-1">
-            <span className="font-bold text-slate-100 block">Developer API Guarantee</span>
-            <p className="text-slate-400 font-sans leading-relaxed">
-              Every tool listed in this registry has been audited to confirm availability of developer API endpoints or local REST servers.
+        {/* Info & Public API Endpoint Box */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-5 rounded border border-navy-800 bg-navy-900 font-mono text-xs text-slate-300 flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-lime-accent shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <span className="font-bold text-slate-100 block">Developer API Guarantee</span>
+              <p className="text-slate-400 font-sans leading-relaxed">
+                Every tool listed in this registry has been audited to confirm availability of developer API endpoints or local REST servers.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-5 rounded border border-lime-accent/30 bg-navy-900 font-mono text-xs text-slate-300 space-y-2">
+            <div className="flex items-center justify-between text-lime-accent font-bold">
+              <span>GET /api/tools</span>
+              <span className="text-[10px] text-slate-500">Rate Limit: 100 req/hr</span>
+            </div>
+            <p className="text-slate-400 font-sans text-xs">
+              Public JSON endpoint to query tools programmatically.
             </p>
+            <div className="p-2 rounded bg-navy-950 text-slate-200 border border-navy-800 font-mono text-[11px] overflow-x-auto">
+              curl &quot;https://crawlers.dev/api/tools?category=devtools&amp;tag=cli&quot;
+            </div>
           </div>
         </div>
 

@@ -119,7 +119,12 @@ export const ToolCard: React.FC<ToolCardProps> = ({
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1 font-mono text-xs font-medium text-lime-accent hover:text-lime-hover hover:underline shrink-0"
         >
-          Visit Source <ExternalLink className="w-3.5 h-3.5" />
+          {pricingModel === "open-source"
+            ? "→ source"
+            : hasApi
+            ? "$ api"
+            : "open →"}{" "}
+          <ExternalLink className="w-3.5 h-3.5" />
         </a>
       </div>
     </div>

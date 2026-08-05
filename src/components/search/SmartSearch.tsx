@@ -69,7 +69,17 @@ export const SmartSearch: React.FC = () => {
             <span>{results.length} Matches Found</span>
           </div>
 
-          {results.length > 0 ? (
+          {query.trim().toLowerCase() === "whoami" ? (
+            <div className="p-4 font-mono text-xs text-lime-accent bg-navy-950 space-y-2 border-t border-navy-800">
+              <div className="text-slate-300 font-bold">$ whoami</div>
+              <p className="text-slate-300 leading-relaxed font-sans">
+                Crawlers is built &amp; editorially curated by a single developer. Zero paid placements, zero sponsored badges, zero automated affiliate scraping.
+              </p>
+              <div className="text-slate-500 text-[11px]">
+                Status: Direct manual verification • Contact: subham@crawlers.dev
+              </div>
+            </div>
+          ) : results.length > 0 ? (
             results.map((tool) => (
               <Link
                 key={tool.id}
@@ -97,7 +107,7 @@ export const SmartSearch: React.FC = () => {
             ))
           ) : (
             <div className="p-6 text-center font-mono text-xs text-slate-400">
-              No software matched &quot;{query}&quot;. Try searching for &apos;ollama&apos; or &apos;cursor&apos;.
+              No software matched &quot;{query}&quot;. Try &apos;whoami&apos;, &apos;ollama&apos;, or &apos;cursor&apos;.
             </div>
           )}
 

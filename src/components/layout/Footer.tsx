@@ -65,8 +65,11 @@ export const Footer: React.FC = () => {
           </p>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-6 border-t border-navy-900 text-center font-mono text-[11px] text-slate-500">
-        &copy; {new Date().getFullYear()} Crawlers AI Tools Directory. Built for developers &amp; creators.
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-6 border-t border-navy-900 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-slate-500">
+        <div>&copy; {new Date().getFullYear()} Crawlers AI Tools Directory.</div>
+        <div className="text-slate-400">
+          Built and maintained by hand by one developer. Zero automated affiliate feeds.
+        </div>
       </div>
     </footer>
   );

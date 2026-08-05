@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Terminal, Code2, PlusCircle, ArrowLeftRight, Menu, X, History } from "lucide-react";
+import { Terminal, Code2, PlusCircle, ArrowLeftRight, Menu, X, History, Shuffle } from "lucide-react";
 
 export const Navbar: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -26,7 +26,17 @@ export const Navbar: React.FC = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6 font-mono text-xs text-slate-300">
+        <nav className="hidden md:flex items-center gap-5 font-mono text-xs text-slate-300">
+          <button
+            onClick={() => {
+              window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
+            }}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-navy-900 border border-navy-800 text-slate-400 hover:text-lime-accent hover:border-lime-accent/40 transition-colors"
+            title="Open Command Palette"
+          >
+            <span className="text-[10px]">⌘K CLI</span>
+          </button>
+
           <Link href="/#sections" className="hover:text-lime-accent transition-colors">
             $ taxonomy
           </Link>
@@ -35,6 +45,9 @@ export const Navbar: React.FC = () => {
           </Link>
           <Link href="/compare" className="flex items-center gap-1.5 hover:text-lime-accent transition-colors">
             <ArrowLeftRight className="w-3.5 h-3.5" /> Compare
+          </Link>
+          <Link href="/random" className="flex items-center gap-1.5 hover:text-lime-accent transition-colors" title="Surprise me with a random tool">
+            <Shuffle className="w-3.5 h-3.5 text-lime-accent" /> Random
           </Link>
           <Link href="/changelog" className="flex items-center gap-1.5 hover:text-lime-accent transition-colors">
             <History className="w-3.5 h-3.5" /> Changelog

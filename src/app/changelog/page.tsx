@@ -1,53 +1,21 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowLeft, History, Check } from "lucide-react";
+import { ArrowLeft, History, Check, Rss, FileCode } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Badge } from "@/components/ui/Badge";
+import { CHANGELOG_ENTRIES } from "@/lib/changelogData";
 
 export const metadata = {
   title: "Public Changelog & Release Notes | Crawlers",
   description: "Chronological log of directory features, database schema updates, and taxonomy additions.",
+  alternates: {
+    types: {
+      "application/rss+xml": "/changelog/rss.xml",
+      "application/feed+json": "/changelog/feed.json",
+    },
+  },
 };
-
-const CHANGELOG_ENTRIES = [
-  {
-    version: "v1.2.0",
-    date: "2026-08-05",
-    title: "Core Pages & Route Shells Scaffolded",
-    description: "Delivered 8 top-level application routes with full Next.js metadata, terminal-navy styling, and static dataset wrappers.",
-    highlights: [
-      "Added `/`, `/[section]`, `/[section]/[category]`, and `/tool/[slug]` route shells",
-      "Added `/compare` side-by-side comparison matrix",
-      "Added `/submit` community submission form",
-      "Added `/api` API Keys Registry view",
-      "Added `/changelog` public changelog log",
-    ],
-  },
-  {
-    version: "v1.1.0",
-    date: "2026-08-04",
-    title: "Design System & Visual Identity Baseline",
-    description: "Configured terminal-inspired dark navy background (`#060A14`) and lime-green accent theme in Tailwind CSS v4.",
-    highlights: [
-      "Integrated `JetBrains_Mono` for headings/chrome and `Inter` for body text",
-      "Built base component library: `Button`, `Badge`, `Input`, `ToolCard`, `EmptyState`, `Skeleton`",
-      "Built `/style-guide` dev playground",
-      "Zero purple/cyan SaaS gradients or sparkle icons",
-    ],
-  },
-  {
-    version: "v1.0.0",
-    date: "2026-08-03",
-    title: "Initial Taxonomy & Database Schema Design",
-    description: "Designed 9-section information architecture and authored initial SQL database schema with Row Level Security.",
-    highlights: [
-      "Authored `20260805000000_initial_schema.sql` Supabase migration",
-      "Defined custom ENUMs for pricing models and submission status",
-      "Authored 9 top-level taxonomy sections and 40+ categories in `supabase/seed.sql`",
-    ],
-  },
-];
 
 export default function ChangelogPage() {
   return (
@@ -64,12 +32,34 @@ export default function ChangelogPage() {
           <span className="text-lime-accent">Changelog</span>
         </div>
 
-        {/* Page Header */}
-        <div className="border-b border-navy-800 pb-6 space-y-2">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-navy-850 border border-navy-700 font-mono text-xs text-lime-accent">
-            <History className="w-3.5 h-3.5" />
-            <span>Public Release Log</span>
+        {/* Page Header with RSS & JSON Feed Links */}
+        <div className="border-b border-navy-800 pb-6 space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-navy-850 border border-navy-700 font-mono text-xs text-lime-accent">
+              <History className="w-3.5 h-3.5" />
+              <span>Public Release Log</span>
+            </div>
+
+            <div className="flex items-center gap-2 font-mono text-xs">
+              <a
+                href="/changelog/rss.xml"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-navy-900 border border-navy-700 text-amber-400 hover:border-amber-400/50 transition-colors"
+              >
+                <Rss className="w-3.5 h-3.5 text-amber-400" /> RSS Feed
+              </a>
+              <a
+                href="/changelog/feed.json"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-navy-900 border border-navy-700 text-cyan-400 hover:border-cyan-400/50 transition-colors"
+              >
+                <FileCode className="w-3.5 h-3.5 text-cyan-400" /> JSON Feed
+              </a>
+            </div>
           </div>
+
           <h1 className="font-mono text-3xl font-bold text-slate-100">
             Crawlers Public Changelog
           </h1>
