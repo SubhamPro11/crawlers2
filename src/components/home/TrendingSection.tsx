@@ -15,13 +15,13 @@ export const TrendingSection: React.FC<TrendingSectionProps> = ({
   const trendingTools = tools.slice(0, 3);
 
   return (
-    <section className="pt-12 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full border-t border-navy-850">
+    <section className="animate-entrance pt-12 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full border-t border-navy-850">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-navy-800 pb-4 mb-8 gap-4">
         <div>
-          <div className="font-mono text-xs text-lime-accent uppercase tracking-wider mb-1">
+          <div className="font-mono text-[11px] text-lime-accent/70 uppercase tracking-[0.2em] mb-1.5">
             {"// 04. real_view_analytics"}
           </div>
-          <h2 className="font-mono text-xl font-bold text-slate-100 flex items-center gap-2">
+          <h2 className="font-mono text-xl sm:text-2xl font-bold text-slate-100 tracking-[-0.02em] flex items-center gap-2.5">
             <TrendingUp className="w-5 h-5 text-lime-accent" /> Trending by Real View Logs
           </h2>
           <p className="text-xs text-slate-400 font-sans">

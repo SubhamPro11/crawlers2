@@ -114,7 +114,7 @@ export default function AdminDashboardPage() {
   if (!authed) return null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1 w-full space-y-8 font-mono">

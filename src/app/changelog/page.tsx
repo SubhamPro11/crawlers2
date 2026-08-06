@@ -19,7 +19,7 @@ export const metadata = {
 
 export default function ChangelogPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
       <Navbar />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-10">
@@ -60,7 +60,7 @@ export default function ChangelogPage() {
             </div>
           </div>
 
-          <h1 className="font-mono text-3xl font-bold text-slate-100">
+          <h1 className="font-mono text-3xl font-extrabold tracking-[-0.03em] text-slate-100">
             Crawlers Public Changelog
           </h1>
           <p className="text-sm text-slate-400 font-sans">
@@ -80,7 +80,7 @@ export default function ChangelogPage() {
                 <span className="text-slate-500">{entry.date}</span>
               </div>
 
-              <h2 className="font-mono text-xl font-bold text-slate-100">{entry.title}</h2>
+              <h2 className="font-mono text-xl font-bold text-slate-100 tracking-[-0.01em]">{entry.title}</h2>
               <p className="text-sm text-slate-300 leading-relaxed">{entry.description}</p>
 
               <ul className="space-y-1.5 pt-2 font-mono text-xs text-slate-400">

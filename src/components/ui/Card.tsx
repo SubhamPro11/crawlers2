@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { ExternalLink, Bookmark, Code2 } from "lucide-react";
 import { Badge } from "./Badge";
+import { ToolFavicon } from "./ToolFavicon";
 import { PricingModel } from "@/types/database";
 
 export interface ToolCardProps {
@@ -37,12 +38,13 @@ export const ToolCard: React.FC<ToolCardProps> = ({
 }) => {
   return (
     <div
-      className={`group relative flex flex-col justify-between p-5 rounded-xl border border-navy-800 bg-navy-900/90 hover:border-navy-600 transition-all duration-200 ${className}`}
+      className={`group relative flex flex-col justify-between p-5 rounded-xl border border-navy-800 bg-navy-900/90 hover:border-lime-accent/25 hover:shadow-[0_0_24px_-6px_rgba(163,230,53,0.08)] transition-all duration-300 card-lift ${className}`}
     >
       <div>
         {/* Card Header: Name, Pricing Badge & Actions */}
         <div className="flex items-start justify-between gap-3 mb-2.5">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
+            <ToolFavicon url={url} name={name} size={16} />
             <Link
               href={`/tool/${slug}`}
               className="font-mono text-base font-bold text-slate-100 group-hover:text-lime-accent transition-colors underline-offset-4 hover:underline"

@@ -16,7 +16,7 @@ export default async function ApiRegistryPage() {
   const apiTools = await fetchTools({ hasApi: true });
 
   return (
-    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-10">
@@ -35,7 +35,7 @@ export default async function ApiRegistryPage() {
             <Code2 className="w-4 h-4" />
             <span>Developer API Endpoint Index</span>
           </div>
-          <h1 className="font-mono text-3xl md:text-4xl font-bold tracking-tight text-slate-100">
+          <h1 className="font-mono text-3xl md:text-4xl font-extrabold tracking-[-0.03em] text-slate-100">
             API Keys &amp; Developer Endpoints
           </h1>
           <p className="text-sm md:text-base text-slate-300 font-sans max-w-3xl leading-relaxed">
@@ -64,13 +64,13 @@ export default async function ApiRegistryPage() {
               Public JSON endpoint to query tools programmatically.
             </p>
             <div className="p-2 rounded bg-navy-950 text-slate-200 border border-navy-800 font-mono text-[11px] overflow-x-auto">
-              curl &quot;https://crawlers.dev/api/tools?category=devtools&amp;tag=cli&quot;
+              curl &quot;https://crawlers.dpdns.org/api/tools?category=devtools&amp;tag=cli&quot;
             </div>
           </div>
         </div>
 
         {/* Tools Grid */}
-        <div className="space-y-6">
+        <div className="animate-entrance space-y-6">
           <div className="flex items-center justify-between font-mono text-xs text-slate-400 border-b border-navy-850 pb-3">
             <span>Showing {apiTools.length} Verified API Providers</span>
             <Badge variant="lime">API Enabled</Badge>

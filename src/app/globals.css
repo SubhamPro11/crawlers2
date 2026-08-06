@@ -2,6 +2,7 @@
 
 @theme {
   --color-navy-950: #060a14;
+  --color-navy-925: #080e1a;
   --color-navy-900: #0b1120;
   --color-navy-850: #10192d;
   --color-navy-800: #17243c;
@@ -11,6 +12,7 @@
   --color-lime-accent: #a3e635;
   --color-lime-hover: #bcf04d;
   --color-lime-dim: rgba(163, 230, 53, 0.12);
+  --color-lime-muted: rgba(163, 230, 53, 0.55);
   --color-lime-border: rgba(163, 230, 53, 0.3);
 
   --font-mono: var(--font-mono-jet), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -106,3 +108,148 @@ body {
   }
 }
 
+/* Film-grain texture overlay — breaks up flat digital backgrounds */
+.grain-overlay {
+  position: relative;
+  isolation: isolate;
+}
+.grain-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+
+/* Hero vignette — radial fade creates natural focal depth */
+.hero-vignette {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, transparent 50%, var(--color-navy-950) 100%),
+    var(--color-navy-950);
+}
+
+/* Tonal section alternation for visual rhythm */
+.section-alt {
+  background-color: var(--color-navy-925);
+}
+
+/* Subtle inset shadow at section tops — prevents flat-band stacking */
+.section-inset {
+  box-shadow: inset 0 1px 0 rgba(163, 230, 53, 0.06);
+}
+
+/* ─── Motion System ─── */
+
+/* Entrance animation: fade up from 12px below with slight opacity shift */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply to sections and cards on page load */
+.animate-entrance {
+  animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Stagger delays for grid children — used on card grids */
+.stagger-1 { animation-delay: 0.08s; }
+.stagger-2 { animation-delay: 0.16s; }
+.stagger-3 { animation-delay: 0.24s; }
+.stagger-4 { animation-delay: 0.32s; }
+.stagger-5 { animation-delay: 0.40s; }
+.stagger-6 { animation-delay: 0.48s; }
+
+/* Hero-specific entrance: slower, slightly more travel */
+@keyframes hero-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero {
+  animation: hero-entrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-hero-delayed {
+  animation: hero-entrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+.animate-hero-delayed-2 {
+  animation: hero-entrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+/* ─── Focus Rings ─── */
+
+/* Consistent lime focus ring for keyboard navigation (accessibility) */
+*:focus-visible {
+  outline: 2px solid rgba(163, 230, 53, 0.5);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Nav link animated underline — grows from center on hover */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-lime-accent);
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), left 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-link:hover::after {
+  width: 100%;
+  left: 0%;
+}
+
+/* Button active press — deeper scale for tactile feedback */
+.btn-press:active {
+  transform: scale(0.96);
+  transition-duration: 0.08s;
+}
+
+/* Card lift on hover — subtle Y translate for depth */
+.card-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+.card-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* ─── Reduced Motion ─── */
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-entrance,
+  .animate-hero,
+  .animate-hero-delayed,
+  .animate-hero-delayed-2 {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .card-lift:hover {
+    transform: none !important;
+  }
+  .nav-link::after {
+    transition: none !important;
+  }
+}

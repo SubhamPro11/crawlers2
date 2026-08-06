@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s | Crawlers",
   },
   description:
-    "A human-curated, terminal-inspired directory of AI tools, API endpoints, and developer resources. Direct source links, zero fake metrics.",
+    "A human-curated directory of AI tools, API endpoints, and developer infrastructure. Direct source links, audited licensing, zero fabricated metrics.",
   keywords: [
     "AI directory",
     "AI tools",
@@ -45,13 +45,13 @@ export const metadata: Metadata = {
     siteName: "Crawlers AI Tools Directory",
     title: "Crawlers — AI Tools Directory & API Registry",
     description:
-      "A human-curated, terminal-inspired directory of AI tools, API endpoints, and developer resources.",
+      "A human-curated directory of AI tools, API endpoints, and developer infrastructure.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Crawlers — AI Tools Directory",
     description:
-      "Human-curated AI software, local LLM runners, and developer API registry.",
+      "Human-curated AI tools directory, API registry, and developer infrastructure index.",
   },
   robots: {
     index: true,

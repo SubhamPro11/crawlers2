@@ -69,7 +69,7 @@ export const StackModule: React.FC<StackModuleProps> = ({ stacks }) => {
         {secondaryStacks.map((stack) => (
           <div
             key={stack.id}
-            className="p-5 rounded-xl border border-navy-800 bg-navy-900/70 hover:border-navy-700 transition-colors flex-1 flex flex-col justify-between"
+            className="p-5 rounded-xl border border-navy-800 bg-navy-900/70 hover:border-lime-accent/20 transition-all duration-300 card-lift flex-1 flex flex-col justify-between"
           >
             <div>
               <div className="flex items-center justify-between mb-2">

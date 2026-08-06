@@ -63,7 +63,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
   const relatedTools = allTools.filter((t) => t.id !== tool.id).slice(0, 3);
 
   return (
-    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
       <SoftwareApplicationJsonLd
         name={tool.name}
         description={tool.description}

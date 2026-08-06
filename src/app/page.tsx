@@ -16,31 +16,33 @@ import { TrendingSection } from "@/components/home/TrendingSection";
 
 export const metadata = {
   title: "Crawlers — AI Tools Directory & API Registry",
-  description: "Human-curated, terminal-inspired directory of AI tools, API endpoints, and developer resources. Direct links only, zero fabricated metrics.",
+  description: "A human-curated directory of AI tools, API endpoints, and developer infrastructure. Direct source links, audited licensing, zero fabricated metrics.",
 };
 
 export default async function HomePage() {
   const tools = await fetchTools({ limit: 6 });
   return (
-    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative border-b border-navy-800 bg-navy-950 py-16 md:py-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative border-b border-navy-800 hero-vignette py-16 md:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center space-y-6">
-          <div className="crt-badge inline-flex items-center gap-2 px-3 py-1 rounded bg-lime-accent/10 border border-lime-accent/30 font-mono text-xs text-lime-accent">
+          <div className="crt-badge animate-hero inline-flex items-center gap-2 px-3 py-1 rounded bg-lime-accent/10 border border-lime-accent/30 font-mono text-xs text-lime-accent">
             <Terminal className="w-3.5 h-3.5 text-lime-accent" />
-            <span>crawlers://v1.0.0 --indexing-mode=human-curated</span>
+            <span>crawlers://v1.0.0 --audit=manual --feeds=zero</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-mono font-bold tracking-tight text-slate-100 leading-tight">
-            The Human-Curated <br />
+          <h1 className="animate-hero-delayed text-3xl sm:text-5xl md:text-6xl font-mono font-extrabold text-slate-100 leading-[1.08] tracking-[-0.04em]">
+            The Human-Curated <br className="hidden sm:block" />
             <span className="text-lime-accent">AI Tools &amp; API Directory</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-slate-300 font-sans max-w-2xl mx-auto leading-relaxed">
-            Zero generic SaaS gradients. Zero fabricated engagement numbers. An unvarnished directory of AI software, developer tools, and API endpoints.
-          </p>
+          <blockquote className="animate-hero-delayed-2 relative max-w-xl mx-auto border-l-2 border-lime-accent/40 pl-5 py-1">
+            <p className="text-base sm:text-lg text-slate-300 font-sans leading-relaxed italic">
+              Zero generic SaaS gradients. Zero fabricated engagement numbers.&nbsp;An&nbsp;unvarnished directory of AI software, developer tools, and&nbsp;API&nbsp;endpoints.
+            </p>
+          </blockquote>
 
           <div className="pt-1">
             <IndexStatusLine toolCount={tools.length} lastUpdatedText="14 minutes ago" />
@@ -66,17 +68,17 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Curated Stacks */}
-      <section className="pt-10 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      <section className="animate-entrance pt-10 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div className="flex items-center justify-between border-b border-navy-800 pb-4 mb-8">
           <div>
-            <div className="font-mono text-xs text-lime-accent uppercase tracking-wider mb-1">
+            <div className="font-mono text-[11px] text-lime-accent/70 uppercase tracking-[0.2em] mb-1.5">
               {"// 01. operational_stacks"}
             </div>
-            <h2 className="font-mono text-xl font-bold text-slate-100 flex items-center gap-2">
+            <h2 className="font-mono text-xl sm:text-2xl font-bold text-slate-100 tracking-[-0.02em] flex items-center gap-2.5">
               <Sparkles className="w-5 h-5 text-lime-accent" /> Curated Operational Stacks
             </h2>
             <p className="text-xs text-slate-400 font-sans">
-              Hand-assembled software pipelines for specific technical roles.
+              Hand-assembled tool pipelines for specific technical roles. Not algorithmically generated.
             </p>
           </div>
         </div>
@@ -85,16 +87,16 @@ export default async function HomePage() {
       </section>
 
       {/* 9 Taxonomy Sections Grid */}
-      <section id="sections" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full border-t border-dashed border-navy-800 bg-navy-950/40">
+      <section id="sections" className="animate-entrance py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full border-t border-dashed border-navy-800 section-alt">
         <div className="border-b border-navy-800 pb-4 mb-8">
-          <div className="font-mono text-xs text-lime-accent uppercase tracking-wider mb-1">
-            {"// 02. directory_taxonomy"}
-          </div>
-          <h2 className="font-mono text-xl font-bold text-slate-100 flex items-center gap-2">
-            <span className="text-lime-accent">$</span> Directory Taxonomy Index
-          </h2>
+            <div className="font-mono text-[11px] text-lime-accent/70 uppercase tracking-[0.2em] mb-1.5">
+              {"// 02. directory_taxonomy"}
+            </div>
+            <h2 className="font-mono text-xl sm:text-2xl font-bold text-slate-100 tracking-[-0.02em] flex items-center gap-2.5">
+              Directory Taxonomy Index
+            </h2>
           <p className="text-xs text-slate-400 font-sans">
-            Explore 9 top-level groupings and their specialized sub-categories.
+            Nine top-level groupings with specialized sub-categories. Browse by&nbsp;domain.
           </p>
         </div>
 
@@ -102,17 +104,17 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Tools Grid */}
-      <section className="pt-16 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full border-t border-navy-800">
+      <section className="animate-entrance pt-16 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full border-t border-navy-800 section-inset">
         <div className="flex items-center justify-between border-b border-navy-800 pb-4 mb-8">
           <div>
-            <div className="font-mono text-xs text-lime-accent uppercase tracking-wider mb-1">
+            <div className="font-mono text-[11px] text-lime-accent/70 uppercase tracking-[0.2em] mb-1.5">
               {"// 03. active_tool_index"}
             </div>
-            <h2 className="font-mono text-xl font-bold text-slate-100 flex items-center gap-2">
+            <h2 className="font-mono text-xl sm:text-2xl font-bold text-slate-100 tracking-[-0.02em] flex items-center gap-2.5">
               <ShieldCheck className="w-5 h-5 text-lime-accent" /> Editorially Verified Tools
             </h2>
             <p className="text-xs text-slate-400 font-sans">
-              Recently indexed AI software with audited links &amp; licensing models.
+              Recently indexed software with audited links, licensing&nbsp;models, and direct source&nbsp;URLs.
             </p>
           </div>
         </div>

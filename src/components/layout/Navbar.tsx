@@ -38,24 +38,24 @@ export const Navbar: React.FC = () => {
             <span className="text-[10px]">⌘K CLI</span>
           </button>
 
-          <Link href="/#sections" className="hover:text-lime-accent transition-colors">
+          <Link href="/#sections" className="nav-link hover:text-lime-accent transition-colors">
             &gt; taxonomy
           </Link>
-          <Link href="/api" className="flex items-center gap-1.5 hover:text-lime-accent transition-colors">
+          <Link href="/api" className="nav-link flex items-center gap-1.5 hover:text-lime-accent transition-colors">
             <Code2 className="w-3.5 h-3.5" /> API Registry
           </Link>
-          <Link href="/compare" className="flex items-center gap-1.5 hover:text-lime-accent transition-colors">
+          <Link href="/compare" className="nav-link flex items-center gap-1.5 hover:text-lime-accent transition-colors">
             <ArrowLeftRight className="w-3.5 h-3.5" /> Compare
           </Link>
-          <Link href="/random" className="flex items-center gap-1.5 hover:text-lime-accent transition-colors" title="Surprise me with a random tool">
+          <Link href="/random" className="nav-link flex items-center gap-1.5 hover:text-lime-accent transition-colors" title="Surprise me with a random tool">
             <Shuffle className="w-3.5 h-3.5 text-lime-accent" /> Random
           </Link>
-          <Link href="/changelog" className="flex items-center gap-1.5 hover:text-lime-accent transition-colors">
+          <Link href="/changelog" className="nav-link flex items-center gap-1.5 hover:text-lime-accent transition-colors">
             <History className="w-3.5 h-3.5" /> Changelog
           </Link>
           <Link
             href="/submit"
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-lime-accent text-navy-950 font-semibold hover:bg-lime-hover transition-colors"
+            className="btn-press flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-lime-accent text-navy-950 font-semibold hover:bg-lime-hover transition-colors"
           >
             <PlusCircle className="w-3.5 h-3.5" /> Submit Tool
           </Link>

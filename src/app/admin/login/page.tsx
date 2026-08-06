@@ -68,7 +68,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
       <Navbar />
 
       <main className="flex-1 flex items-center justify-center px-4 py-16">
