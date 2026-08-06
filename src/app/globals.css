@@ -93,3 +93,16 @@ body {
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
 }
 
+/* Touch vs Hover Capabilities */
+@media (pointer: coarse) {
+  button, a {
+    touch-action: manipulation;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(163, 230, 53, 0.25);
+  }
+}
+

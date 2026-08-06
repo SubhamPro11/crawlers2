@@ -96,8 +96,8 @@ export const CommandPalette: React.FC = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl bg-navy-950 border border-lime-accent/40 rounded-3xl shadow-2xl overflow-hidden font-mono text-slate-100 animate-in fade-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div className="w-full max-w-2xl bg-navy-950 border border-lime-accent/40 rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden font-mono text-slate-100 animate-in slide-in-from-bottom-4 sm:zoom-in-95 duration-150">
         {/* Terminal Title Bar */}
         <div className="bg-navy-900 border-b border-navy-800 px-4 py-2 flex items-center justify-between text-xs text-slate-400">
           <div className="flex items-center gap-2">

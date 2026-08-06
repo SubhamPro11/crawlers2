@@ -53,8 +53,8 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="w-full max-w-md rounded-3xl border border-navy-800 bg-navy-900 font-mono text-slate-100 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div className="w-full max-w-md rounded-t-3xl sm:rounded-3xl border border-navy-800 bg-navy-900 font-mono text-slate-100 shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4 sm:zoom-in-95 duration-150">
         <div className="px-5 py-3 border-b border-navy-800 flex items-center justify-between bg-navy-950">
           <div className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5 uppercase tracking-wider">
             <Flag className="w-3.5 h-3.5 text-amber-400" /> report_broken_link
