@@ -19,8 +19,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="relative flex items-center">
           {promptPrefix && (
-            <span className="absolute left-3 font-mono text-lime-accent text-sm pointer-events-none select-none">
-              $&gt;
+            <span className="absolute left-3 font-mono text-lime-accent text-sm pointer-events-none select-none font-bold">
+              &gt;
             </span>
           )}
           {leftIcon && !promptPrefix && (

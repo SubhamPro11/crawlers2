@@ -39,7 +39,7 @@ export const Navbar: React.FC = () => {
           </button>
 
           <Link href="/#sections" className="hover:text-lime-accent transition-colors">
-            $ taxonomy
+            &gt; taxonomy
           </Link>
           <Link href="/api" className="flex items-center gap-1.5 hover:text-lime-accent transition-colors">
             <Code2 className="w-3.5 h-3.5" /> API Registry
@@ -80,7 +80,7 @@ export const Navbar: React.FC = () => {
             onClick={() => setMobileOpen(false)}
             className="block text-slate-300 hover:text-lime-accent py-1"
           >
-            $ taxonomy
+            &gt; taxonomy
           </Link>
           <Link
             href="/api"

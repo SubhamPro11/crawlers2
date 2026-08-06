@@ -46,7 +46,7 @@ export const StackModule: React.FC<StackModuleProps> = ({ stacks }) => {
                   key={slug}
                   className="px-2.5 py-1 rounded-md bg-navy-950 text-slate-200 border border-navy-800"
                 >
-                  ${slug}
+                  #{slug}
                 </span>
               ))}
             </div>

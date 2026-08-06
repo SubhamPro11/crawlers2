@@ -122,7 +122,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({
           {pricingModel === "open-source"
             ? "→ source"
             : hasApi
-            ? "$ api"
+            ? "> api"
             : "open →"}{" "}
           <ExternalLink className="w-3.5 h-3.5" />
         </a>

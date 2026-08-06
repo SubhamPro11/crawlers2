@@ -29,7 +29,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       <p className="text-sm text-slate-400 max-w-md mb-6 leading-relaxed">{description}</p>
       {codeSnippet && (
         <div className="w-full max-w-sm bg-navy-950 border border-navy-800 rounded-lg p-3 text-left font-mono text-xs text-slate-400 mb-6">
-          <span className="text-lime-accent">$</span> {codeSnippet}
+          <span className="text-lime-accent">&gt;</span> {codeSnippet}
         </div>
       )}
       {action && <div>{action}</div>}

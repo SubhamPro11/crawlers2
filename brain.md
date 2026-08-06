@@ -322,8 +322,12 @@ Full taxonomy seeds defined in [`supabase/seed.sql`](file:///d:/vs%20code/crawle
 - **Pushed to GitHub**: Synchronized all changes to [`https://github.com/SubhamPro11/crawlers2.git`](https://github.com/SubhamPro11/crawlers2.git) on branch `main`.
 
 ### Google Sign-In via Supabase Auth Pass
-- **OAuth Callback Handler**: Created App Router auth callback route [`src/app/auth/callback/route.ts`](file:///d:/vs%20code/crawlers2/src/app/auth/callback/route.ts) exchanging OAuth code for signed Supabase JWT access + refresh tokens.
-- **Terminal Identity Auth UI**: Built [`NavbarUserMenu.tsx`](file:///d:/vs%20code/crawlers2/src/components/layout/NavbarUserMenu.tsx) rendering `$ google_login` terminal button when signed out, and user avatar / name chip + `$ logout` when signed in. Added Google OAuth trigger button to [`/admin/login`](file:///d:/vs%20code/crawlers2/src/app/admin/login/page.tsx).
+- **OAuth Callback Client Page**: Upgraded auth callback route to client component [`src/app/auth/callback/page.tsx`](file:///d:/vs%20code/crawlers2/src/app/auth/callback/page.tsx) reading client browser PKCE verifier to reliably exchange OAuth codes for signed JWT sessions.
+- **Terminal Identity Auth UI**: Built [`NavbarUserMenu.tsx`](file:///d:/vs%20code/crawlers2/src/components/layout/NavbarUserMenu.tsx) rendering `> google_login` terminal button when signed out, and user avatar / name chip + `logout` when signed in. Added Google OAuth trigger button to [`/admin/login`](file:///d:/vs%20code/crawlers2/src/app/admin/login/page.tsx).
 - **Profiles Table & Auto-Creation Trigger**: Created Postgres migration [`20260806000001_google_oauth_profiles.sql`](file:///d:/vs%20code/crawlers2/supabase/migrations/20260806000001_google_oauth_profiles.sql) with RLS policies and `handle_new_user()` trigger auto-inserting `public.profiles` rows on `auth.users` signup and assigning `role = 'admin'` to `subhamkr11012004@gmail.com`.
 - **Session & Token Verification**: Configured strict session verification via `supabase.auth.getUser()`, automatic JWT refresh via Supabase client, and server-side token invalidation on sign-out.
+
+### Site-Wide $ Symbol Removal Pass
+- **Systematic UI Prompt Convention**: Removed all literal `$` characters used as decorative UI chrome across the site. Replaced terminal command prompt prefixes (`$ taxonomy`, `$ google_login`, `$ api`, `$>`) with `>` (e.g. `> taxonomy`, `> google_login`, `> api`, `> ` prompt chevron) and tool tag prefixes with `#` (`#cursor`, `#v0-by-vercel`).
+- **Audit Verification**: Verified 0 literal `$` UI chrome instances remain across all components, forms, headers, and cards.
 - **Pushed to GitHub**: Synchronized all changes to [`https://github.com/SubhamPro11/crawlers2.git`](https://github.com/SubhamPro11/crawlers2.git) on branch `main`.

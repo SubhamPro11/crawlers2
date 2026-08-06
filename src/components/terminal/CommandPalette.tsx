@@ -115,7 +115,7 @@ export const CommandPalette: React.FC = () => {
 
         {/* Command Input Bar */}
         <div className="p-4 bg-navy-900/60 border-b border-navy-850 flex items-center gap-3">
-          <span className="text-lime-accent font-bold">$</span>
+          <span className="text-lime-accent font-bold">&gt;</span>
           <input
             ref={inputRef}
             type="text"
