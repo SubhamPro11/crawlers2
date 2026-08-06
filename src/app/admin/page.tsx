@@ -85,7 +85,7 @@ export default function AdminDashboardPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1 w-full space-y-8 font-mono">
         {/* Admin Dashboard Titlebar */}
-        <div className="macos-window p-6 space-y-4">
+        <div className="rounded border border-navy-800 bg-navy-900 p-6 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-lime-accent/10 border border-lime-accent/30 flex items-center justify-center text-lime-accent">
@@ -161,7 +161,7 @@ export default function AdminDashboardPage() {
             </div>
 
             {pendingSubmissions.length === 0 ? (
-              <div className="p-8 macos-window text-center space-y-2 text-slate-400">
+              <div className="p-8 rounded border border-navy-800 bg-navy-900 text-center space-y-2 text-slate-400">
                 <Check className="w-8 h-8 text-lime-accent mx-auto" />
                 <div className="font-bold text-slate-200">Review Queue Empty</div>
                 <p className="text-xs font-sans text-slate-500">
@@ -173,7 +173,7 @@ export default function AdminDashboardPage() {
                 {pendingSubmissions.map((sub) => (
                   <div
                     key={sub.id}
-                    className="macos-window p-5 space-y-3 border border-navy-800"
+                    className="rounded border border-navy-800 bg-navy-900 p-5 space-y-3 border border-navy-800"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex items-center gap-3">
@@ -230,7 +230,7 @@ export default function AdminDashboardPage() {
               <span>Total: {activeTools.length}</span>
             </div>
 
-            <div className="divide-y divide-navy-850 macos-window overflow-hidden">
+            <div className="divide-y divide-navy-850 rounded border border-navy-800 bg-navy-900 overflow-hidden">
               {activeTools.map((t) => (
                 <div
                   key={t.id}
@@ -274,21 +274,21 @@ export default function AdminDashboardPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="macos-window p-5 space-y-1">
+              <div className="rounded border border-navy-800 bg-navy-900 p-5 space-y-1">
                 <div className="text-xs text-slate-400">Total Page Views (24h)</div>
                 <div className="text-3xl font-bold text-lime-accent">0</div>
                 <div className="text-[10px] text-slate-500 font-sans">
                   Real traffic from view_logs table
                 </div>
               </div>
-              <div className="macos-window p-5 space-y-1">
+              <div className="rounded border border-navy-800 bg-navy-900 p-5 space-y-1">
                 <div className="text-xs text-slate-400">Active Listed Tools</div>
                 <div className="text-3xl font-bold text-cyan-400">{activeTools.length}</div>
                 <div className="text-[10px] text-slate-500 font-sans">
                   All active directory listings
                 </div>
               </div>
-              <div className="macos-window p-5 space-y-1">
+              <div className="rounded border border-navy-800 bg-navy-900 p-5 space-y-1">
                 <div className="text-xs text-slate-400">Audit Status</div>
                 <div className="text-3xl font-bold text-amber-400">Strict</div>
                 <div className="text-[10px] text-slate-500 font-sans">
@@ -297,7 +297,7 @@ export default function AdminDashboardPage() {
               </div>
             </div>
 
-            <div className="macos-window p-5 space-y-3">
+            <div className="rounded border border-navy-800 bg-navy-900 p-5 space-y-3">
               <div className="text-xs text-lime-accent font-bold uppercase tracking-wider flex items-center gap-1.5">
                 <Eye className="w-4 h-4" /> Live Traffic Stream Log
               </div>

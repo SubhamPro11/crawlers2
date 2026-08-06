@@ -16,28 +16,13 @@ export const TaxonomyGrid: React.FC<TaxonomyGridProps> = ({ sections }) => {
         return (
           <div
             key={section.slug}
-            className={`macos-window overflow-hidden transition-all flex flex-col justify-between ${
+            className={`p-6 rounded border border-navy-800 bg-navy-900/60 hover:border-navy-700 transition-all flex flex-col justify-between ${
               isFeatured
-                ? "md:col-span-2 lg:col-span-2 border-lime-accent/40"
-                : "hover:border-navy-700"
+                ? "md:col-span-2 lg:col-span-2 border-lime-accent/40 bg-navy-900"
+                : ""
             }`}
           >
-            {/* macOS Window Titlebar Chrome */}
-            <div className="macos-titlebar">
-              <div className="macos-traffic-lights">
-                <span className="macos-dot macos-dot-red" />
-                <span className="macos-dot macos-dot-yellow" />
-                <span className="macos-dot macos-dot-green" />
-              </div>
-              <div className="font-mono text-[10px] text-slate-400 font-semibold truncate">
-                finder — sec_0{section.number}_{section.slug}.sys
-              </div>
-              <div className="text-[10px] text-lime-accent font-mono font-bold">
-                [{section.categories.length} CATS]
-              </div>
-            </div>
-
-            <div className="p-6">
+            <div>
               {/* Left-aligned integrated index marker in heading */}
               <div className="flex items-baseline gap-2 mb-2 font-mono">
                 <span className="text-lime-accent font-bold text-sm">

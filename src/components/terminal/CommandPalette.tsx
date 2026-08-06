@@ -101,10 +101,7 @@ export const CommandPalette: React.FC = () => {
         {/* Terminal Title Bar */}
         <div className="bg-navy-900 border-b border-navy-800 px-4 py-2 flex items-center justify-between text-xs text-slate-400">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block"></span>
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block"></span>
-            <span className="w-2.5 h-2.5 rounded-full bg-lime-accent/80 inline-block"></span>
-            <span className="ml-2 font-bold text-slate-200 flex items-center gap-1.5">
+            <span className="font-bold text-slate-200 flex items-center gap-1.5">
               <Terminal className="w-3.5 h-3.5 text-lime-accent" /> crawlers-cli v1.0.0
             </span>
           </div>

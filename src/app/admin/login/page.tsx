@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Shield, Lock, ArrowRight, AlertCircle } from "lucide-react";
+import { Lock, ArrowRight, AlertCircle } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { supabase } from "@/lib/supabase";
@@ -72,21 +72,7 @@ export default function AdminLoginPage() {
       <Navbar />
 
       <main className="flex-1 flex items-center justify-center px-4 py-16">
-        <div className="w-full max-w-md macos-window overflow-hidden font-mono">
-          {/* macOS Titlebar */}
-          <div className="macos-titlebar">
-            <div className="macos-traffic-lights">
-              <span className="macos-dot macos-dot-red" />
-              <span className="macos-dot macos-dot-yellow" />
-              <span className="macos-dot macos-dot-green" />
-            </div>
-            <div className="text-[11px] text-slate-400 font-semibold flex items-center gap-1.5">
-              <Shield className="w-3.5 h-3.5 text-lime-accent" /> auth — login.admin.sys
-            </div>
-            <div className="text-[10px] text-slate-500">v1.2.0</div>
-          </div>
-
-          <div className="p-8 space-y-6">
+        <div className="w-full max-w-md p-8 rounded border border-navy-800 bg-navy-900 font-mono space-y-6">
             <div className="text-center space-y-2">
               <div className="w-12 h-12 rounded-xl bg-lime-accent/10 border border-lime-accent/30 mx-auto flex items-center justify-center text-lime-accent">
                 <Lock className="w-6 h-6" />
@@ -155,7 +141,6 @@ export default function AdminLoginPage() {
               Session duration: 24h max • RLS Security Active
             </div>
           </div>
-        </div>
       </main>
 
       <Footer />

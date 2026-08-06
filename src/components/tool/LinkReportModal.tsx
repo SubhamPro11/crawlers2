@@ -54,24 +54,19 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="w-full max-w-md macos-window overflow-hidden font-mono text-slate-100 animate-in fade-in zoom-in-95 duration-150">
-        <div className="macos-titlebar">
-          <div className="macos-traffic-lights">
-            <span className="macos-dot macos-dot-red" />
-            <span className="macos-dot macos-dot-yellow" />
-            <span className="macos-dot macos-dot-green" />
+      <div className="w-full max-w-md rounded border border-navy-800 bg-navy-900 font-mono text-slate-100 animate-in fade-in zoom-in-95 duration-150">
+        <div className="px-5 py-3 border-b border-navy-800 flex items-center justify-between bg-navy-950">
+          <div className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5 uppercase tracking-wider">
+            <Flag className="w-3.5 h-3.5 text-amber-400" /> report_broken_link
           </div>
-          <div className="text-[11px] text-slate-400 font-semibold flex items-center gap-1.5">
-            <Flag className="w-3.5 h-3.5 text-amber-400" /> report_link.sys
-          </div>
-          <button onClick={onClose} className="text-slate-500 hover:text-slate-200">
+          <button onClick={onClose} className="text-slate-500 hover:text-slate-200 cursor-pointer">
             <X className="w-4 h-4" />
           </button>
         </div>
 
         <div className="p-6 space-y-4">
           {submitted ? (
-            <div className="py-6 text-center space-y-2 text-lime-accent">
+            <div className="toast-notification p-6 text-center space-y-2 text-lime-accent">
               <Check className="w-8 h-8 mx-auto" />
               <div className="font-bold">Report Logged into Admin Triage Queue</div>
               <p className="text-xs text-slate-400 font-sans">

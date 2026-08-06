@@ -294,3 +294,11 @@ Full taxonomy seeds defined in [`supabase/seed.sql`](file:///d:/vs%20code/crawle
 - **4f. Broken Link Reporting**: Built [`LinkReportModal.tsx`](file:///d:/vs%20code/crawlers2/src/components/tool/LinkReportModal.tsx) allowing visitors to flag dead URLs for admin triage.
 - **4g. Tool Detail Page Enhancements**: Built [`ToolDetailClientActions.tsx`](file:///d:/vs%20code/crawlers2/src/components/tool/ToolDetailClientActions.tsx) rendering copy-to-clipboard API curl snippet buttons and broken link report triggers on [`/tool/[slug]`](file:///d:/vs%20code/crawlers2/src/app/tool/[slug]/page.tsx).
 - Verified clean `npm run typecheck`, `npm run lint`, and `npm run build` compilation across 18 static & dynamic routes.
+
+### Revert macOS Theme Pass (Keep Notifications Only)
+- **Reverted Site-Wide macOS Chrome**: Removed red/yellow/green traffic-light window controls from Navbar header, Hero search container, Taxonomy section cards, Admin Login, Admin Console, and Command Palette.
+- **Reverted Header & Panels**: Reverted Navbar to solid dark terminal header (`bg-navy-950/90 backdrop-blur border-b border-navy-800`). Reverted `.macos-window` blur containers and heavy drop-shadows to standard terminal navy cards (`bg-navy-900 border border-navy-800`).
+- **Removed Dock**: Deleted `MacOSDock.tsx` component and unmounted from `RootLayout`.
+- **Reverted Font Stack**: Reverted font stack tokens in [`globals.css`](file:///d:/vs%20code/crawlers2/src/app/globals.css) back to original `JetBrains_Mono` + `Inter` pairing.
+- **Scoped macOS Styling to Notifications Only**: Created `.toast-notification` in [`globals.css`](file:///d:/vs%20code/crawlers2/src/app/globals.css) preserving rounded corners, frosted vibrancy blur background (`backdrop-blur-md`), subtle drop shadow, and fixed top-right toast positioning for copy API and link report action feedbacks.
+- **Sweep for Leftovers**: Verified 0 occurrences of `macos` classes remain across `src/`. Confirmed clean `npm run typecheck`, `npm run lint`, and `npm run build` (18 static/dynamic routes).

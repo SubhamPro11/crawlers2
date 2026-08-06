@@ -32,7 +32,7 @@ export const ToolDetailClientActions: React.FC<ToolDetailClientActionsProps> = (
 
   return (
     <>
-      <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-navy-850 font-mono text-xs">
+      <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-navy-850 font-mono text-xs relative">
         <div className="flex items-center gap-2">
           {hasApi && (
             <button
@@ -44,6 +44,13 @@ export const ToolDetailClientActions: React.FC<ToolDetailClientActionsProps> = (
             </button>
           )}
         </div>
+
+        {copied && (
+          <div className="fixed top-20 right-6 z-50 toast-notification px-4 py-2 text-xs font-mono text-lime-accent flex items-center gap-2 animate-in fade-in slide-in-from-top-2 duration-150">
+            <Check className="w-4 h-4" />
+            <span>Endpoint curl command copied to clipboard</span>
+          </div>
+        )}
 
         <button
           onClick={() => setReportOpen(true)}
