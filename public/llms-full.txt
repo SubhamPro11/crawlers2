@@ -1,0 +1,79 @@
+# Crawlers — Full AI Tools Directory & API Catalog
+
+> Full plain-text dump for AI agent indexing, LLM crawlers, and automated search agents.
+> Source: https://crawlers.dpdns.org
+
+## Section 01: Text & Writing (/text-writing)
+- Writing Assistants
+- Copywriting
+- Resume Tools
+- Transcription
+- Document AI
+
+## Section 02: Audio, Video & Media (/audio-video-media)
+- ElevenLabs (https://elevenlabs.io): AI Voice Generator and Text-to-Speech synthesis platform. [freemium] [API Available] [Tags: #audio, #tts, #voice-cloning]
+- Video Generator
+- Podcast Tools
+- Music Generation
+- Voice Cloning
+- Text-to-Speech
+
+## Section 03: Design & 3D Creative (/design-3d-creative)
+- Midjourney (https://midjourney.com): AI image generation system via Discord & Web interface. [paid] [Tags: #design, #image-gen, #creative]
+- Image Generation
+- Logo Generator
+- Fashion Design
+- 3D Modeling
+- AR/VR
+
+## Section 04: Productivity & Business (/productivity-business)
+- Project Management
+- CRM
+- Meeting Assistants
+- Email Assistants
+- Finance Tools
+
+## Section 05: Developer & Tech Tools (/developer-tech-tools)
+- Ollama (https://ollama.com): Get up and running with Llama 3, Mistral, Gemma, and local LLMs. [open-source] [API Available] [Tags: #local-llm, #cli, #devtools]
+- Cursor (https://cursor.com): AI-first code editor built for pair programming and rapid iteration. [freemium] [Tags: #ide, #code-assistant, #editor]
+- v0 by Vercel (https://v0.dev): Generative UI system producing React components from text prompts. [freemium] [Tags: #frontend, #react, #ui-generation]
+- vLLM (https://github.com/vllm-project/vllm): High-throughput and memory-efficient LLM serving engine. [open-source] [API Available] [Tags: #llm-serving, #python, #inference]
+- Code Assistants
+- DevTools
+- API Tools
+- No-Code Builders
+- AI Extensions
+
+## Section 06: Data, Models & Security (/data-models-security)
+- LangChain (https://langchain.com): Building applications with LLMs through composability. [open-source] [API Available] [Tags: #framework, #agents, #python]
+- Database Tools
+- Computer Vision
+- Cybersecurity
+- Content Moderation
+
+## Section 07: Marketing, Sales & SEO (/marketing-sales-seo)
+- Lead Generation
+- E-Commerce
+- Social Media Tools
+- Ad Generator
+
+## Section 08: Search, Chat & AI Agents (/search-chat-ai-agents)
+- Claude (https://claude.ai): Next-generation AI assistant built by Anthropic for reasoning and coding. [freemium] [API Available] [Tags: #chat, #reasoning, #anthropic]
+- AI Agents
+- Research Tools
+- Chatbot Builders
+- Personal Assistants
+
+## Section 09: Education & Lifestyle (/education-lifestyle)
+- Learning Tools
+- Language Learning
+- Accessibility
+- Wellness
+- Gaming
+- Travel
+
+## Public Developer API Endpoints
+- GET https://crawlers.dpdns.org/api/tools (Returns full JSON payload of all tools & tags)
+- GET https://crawlers.dpdns.org/sitemap.xml (Full XML index of all dynamic paths)
+- GET https://crawlers.dpdns.org/changelog/feed.json (JSON Feed for AI update monitoring)
+- GET https://crawlers.dpdns.org/changelog/rss.xml (RSS Feed for release updates)

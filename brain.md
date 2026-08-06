@@ -340,3 +340,9 @@ Full taxonomy seeds defined in [`supabase/seed.sql`](file:///d:/vs%20code/crawle
 - **Dead Code & Asset Sweep**: Removed orphaned utility file `src/lib/useBookmarks.ts`, unused `ToolTag` & `ViewLog` schema interfaces in `src/types/database.ts`, and 5 unreferenced default template SVGs in `public/` (`file.svg`, `globe.svg`, `next.svg`, `vercel.svg`, `window.svg`).
 - **Build Performance Check**: Verified `npm run build` compilation time accelerated to **1.60s** with 0 errors and 0 warnings.
 - **Pushed to GitHub**: Synchronized all changes to [`https://github.com/SubhamPro11/crawlers2.git`](https://github.com/SubhamPro11/crawlers2.git) on branch `main`.
+
+### AI Crawler Indexing & Live Domain Fix Pass (`crawlers.dpdns.org`)
+- **Domain Root Correction**: Updated default base URL in [`src/app/robots.ts`](file:///d:/vs%20code/crawlers2/src/app/robots.ts) and [`src/app/sitemap.ts`](file:///d:/vs%20code/crawlers2/src/app/sitemap.ts) from `crawlers.dev` to live production domain `https://crawlers.dpdns.org`.
+- **CORS & Preflight OPTIONS Handler**: Added `OPTIONS` preflight route handler to [`src/app/api/tools/route.ts`](file:///d:/vs%20code/crawlers2/src/app/api/tools/route.ts) with `Access-Control-Allow-Origin: *` headers for zero-block LLM agent access.
+- **Full Plain-Text LLM Index Dump**: Created [`public/llms-full.txt`](file:///d:/vs%20code/crawlers2/public/llms-full.txt) and updated [`public/llms.txt`](file:///d:/vs%20code/crawlers2/public/llms.txt) exposing 100% of the directory's software records, pricing models, tags, and section paths in a single plain-text HTTP request for AI agents and web crawlers.
+- **Pushed to GitHub**: Synchronized all changes to [`https://github.com/SubhamPro11/crawlers2.git`](https://github.com/SubhamPro11/crawlers2.git) on branch `main`.

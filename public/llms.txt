@@ -16,11 +16,12 @@
 
 ## Key Endpoints for LLMs & Developers
 
-- `/sitemap.xml`: Full XML index of indexed tools, categories, and taxonomy sections
-- `/api`: Registry of software offering developer API endpoints
-- `/compare`: Side-by-side comparison matrix for AI tools
-- `/submit`: Community submissions portal for new tools
-- `/changelog`: Public platform release log
+- `https://crawlers.dpdns.org/llms-full.txt`: Complete plain-text catalog dump of all indexed AI tools, categories, and tags
+- `https://crawlers.dpdns.org/sitemap.xml`: Full XML index of indexed tools, categories, and taxonomy sections
+- `https://crawlers.dpdns.org/api/tools`: REST API endpoint returning full JSON payload of all active software
+- `https://crawlers.dpdns.org/compare`: Side-by-side comparison matrix for AI tools
+- `https://crawlers.dpdns.org/submit`: Community submissions portal for new tools
+- `https://crawlers.dpdns.org/changelog`: Public platform release log
 
 ## Policy for LLM Crawlers & Indexers
 

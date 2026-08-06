@@ -3,7 +3,7 @@ import { TAXONOMY_SEEDS } from "@/lib/taxonomy";
 import { MOCK_TOOLS } from "@/lib/mockData";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dev";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
   const now = new Date();
 
   // Static routes
