@@ -21,7 +21,33 @@ function AuthCallbackContent() {
         return;
       }
 
-      // Check existing or newly exchanged session
+      // 1. Explicitly exchange PKCE authorization code if present in URL
+      const code = searchParams.get("code");
+      if (code) {
+        try {
+          const { data: exchangeData, error: exchangeError } =
+            await supabase.auth.exchangeCodeForSession(code);
+
+          if (exchangeError) {
+            console.error("Code exchange error:", exchangeError);
+            if (mounted) setStatus(`Auth Exchange Error: ${exchangeError.message}`);
+            setTimeout(() => router.push(next), 2500);
+            return;
+          }
+
+          if (exchangeData?.session) {
+            if (mounted) setStatus("Session authenticated! Syncing profile...");
+            setTimeout(() => {
+              if (mounted) router.push(next);
+            }, 500);
+            return;
+          }
+        } catch (err) {
+          console.error("Unexpected exchange failure:", err);
+        }
+      }
+
+      // 2. Fallback check for active session or implicit hash token
       const { data, error } = await supabase.auth.getSession();
 
       if (error) {
@@ -37,7 +63,7 @@ function AuthCallbackContent() {
         }, 500);
       } else {
         // Listen briefly for auth state listener to resolve session
-        const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+        const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
           if (session && mounted) {
             setStatus("Session authenticated! Syncing profile...");
             listener.subscription.unsubscribe();
@@ -56,11 +82,11 @@ function AuthCallbackContent() {
     return () => {
       mounted = false;
     };
-  }, [next, router]);
+  }, [next, router, searchParams]);
 
   return (
     <div className="min-h-screen bg-navy-950 flex flex-col items-center justify-center p-4 font-mono text-slate-100">
-      <div className="w-full max-w-md p-8 rounded-xl border border-lime-accent/40 bg-navy-900 text-center space-y-4 shadow-2xl">
+      <div className="w-full max-w-md p-8 rounded-3xl border border-lime-accent/40 bg-navy-900 text-center space-y-4 shadow-2xl">
         <div className="w-12 h-12 rounded-full bg-lime-accent/10 border border-lime-accent/30 text-lime-accent flex items-center justify-center mx-auto animate-spin">
           <RefreshCw className="w-6 h-6" />
         </div>
