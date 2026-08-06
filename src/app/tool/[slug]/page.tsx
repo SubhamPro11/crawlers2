@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ToolCard } from "@/components/ui/Card";
 import { SoftwareApplicationJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { ToolDetailClientActions } from "@/components/tool/ToolDetailClientActions";
 
 interface ToolDetailPageProps {
   params: Promise<{
@@ -138,7 +139,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
             </p>
           </div>
 
-          {/* Tag Metadata */}
+          {/* Tag Metadata & Client Actions */}
           <div className="border-t border-navy-850 pt-4 flex flex-wrap items-center gap-2 font-mono text-xs">
             <span className="text-slate-500">Tags:</span>
             {tags.map((tag) => (
@@ -147,6 +148,14 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
               </span>
             ))}
           </div>
+
+          <ToolDetailClientActions
+            toolId={tool.id}
+            toolName={tool.name}
+            toolSlug={tool.slug}
+            toolUrl={tool.url}
+            hasApi={tool.has_api}
+          />
         </div>
 
         {/* Third-Party Direct Link Notice (Enforcing Hard Constraint) */}

@@ -68,3 +68,22 @@ export interface ViewLog {
   referrer?: string | null;
   viewed_at: string;
 }
+
+export type UserRole = "user" | "admin";
+
+export interface Profile {
+  id: string;
+  email: string;
+  role: UserRole;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface LinkReport {
+  id: string;
+  tool_id: string;
+  reason?: string | null;
+  reporter_ip?: string | null;
+  status: "pending" | "resolved" | "dismissed";
+  reported_at: string;
+}

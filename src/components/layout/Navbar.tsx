@@ -8,22 +8,30 @@ export const Navbar: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-navy-950/90 backdrop-blur border-b border-navy-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded bg-lime-accent/10 border border-lime-accent/30 flex items-center justify-center text-lime-accent group-hover:bg-lime-accent group-hover:text-navy-950 transition-all">
-            <Terminal className="w-4 h-4" />
+    <header className="sticky top-0 z-50 bg-navy-950/80 backdrop-blur-xl border-b border-navy-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 flex items-center justify-between font-mono text-xs">
+        {/* macOS Traffic Light Controls + Brand Logo */}
+        <div className="flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-1.5 pr-2 border-r border-navy-800/80">
+            <span className="macos-dot macos-dot-red" />
+            <span className="macos-dot macos-dot-yellow" />
+            <span className="macos-dot macos-dot-green" />
           </div>
-          <div className="flex flex-col">
-            <span className="font-mono text-base font-bold tracking-tight text-slate-100 group-hover:text-lime-accent transition-colors">
-              Crawlers
-            </span>
-            <span className="font-mono text-[10px] text-slate-500 tracking-wider uppercase">
-              AI Tools Directory
-            </span>
-          </div>
-        </Link>
+
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-6 h-6 rounded-md bg-lime-accent/10 border border-lime-accent/30 flex items-center justify-center text-lime-accent group-hover:bg-lime-accent group-hover:text-navy-950 transition-all">
+              <Terminal className="w-3.5 h-3.5" />
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="font-mono text-sm font-bold tracking-tight text-slate-100 group-hover:text-lime-accent transition-colors">
+                Crawlers
+              </span>
+              <span className="text-[10px] text-slate-500 font-sans tracking-tight">
+                v1.2.0 • macos-shell
+              </span>
+            </div>
+          </Link>
+        </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-5 font-mono text-xs text-slate-300">

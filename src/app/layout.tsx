@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JetBrains_Mono, Inter } from "next/font/google";
 import { CommandPalette } from "@/components/terminal/CommandPalette";
 import { ShortcutOverlay } from "@/components/terminal/ShortcutOverlay";
+import { MacOSDock } from "@/components/layout/MacOSDock";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -69,10 +70,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${jetbrainsMono.variable} ${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-navy-950 text-slate-100 selection:bg-lime-accent/30 selection:text-lime-accent">
+      <body className="min-h-full flex flex-col bg-navy-950 text-slate-100 selection:bg-lime-accent/30 selection:text-lime-accent pb-16">
         {children}
         <CommandPalette />
         <ShortcutOverlay />
+        <MacOSDock />
       </body>
     </html>
   );

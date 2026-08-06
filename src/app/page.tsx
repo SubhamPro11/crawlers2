@@ -46,8 +46,26 @@ export default async function HomePage() {
             <IndexStatusLine toolCount={tools.length} lastUpdatedText="14 minutes ago" />
           </div>
 
-          <div className="pt-2">
-            <SmartSearch />
+          {/* macOS Terminal Window Container for SmartSearch */}
+          <div className="pt-2 max-w-3xl mx-auto">
+            <div className="macos-window text-left">
+              <div className="macos-titlebar">
+                <div className="macos-traffic-lights">
+                  <span className="macos-dot macos-dot-red" />
+                  <span className="macos-dot macos-dot-yellow" />
+                  <span className="macos-dot macos-dot-green" />
+                </div>
+                <div className="font-mono text-[11px] text-slate-400 font-semibold flex items-center gap-1.5">
+                  <Terminal className="w-3 h-3 text-lime-accent" /> bash — crawlers-search (zsh) — 80x24
+                </div>
+                <div className="text-[10px] text-slate-500 font-mono">
+                  ⌘K CLI
+                </div>
+              </div>
+              <div className="p-4 bg-navy-950/70">
+                <SmartSearch />
+              </div>
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4 font-mono text-xs">

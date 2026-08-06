@@ -271,3 +271,26 @@ Full taxonomy seeds defined in [`supabase/seed.sql`](file:///d:/vs%20code/crawle
 - **Hard Constraints Compliance**: Verified zero purple/cyan AI gradients, zero sparkle icons, zero fabricated engagement counters, direct outbound links only, and untouched Supabase auth/RLS layer.
 - **Production Build Check**: `npm run build` compiled 100% cleanly in 6.4s with 16 optimized static and dynamic edge-ready route outputs.
 - **Git Repository Synchronized**: Pushed all changes to [`https://github.com/SubhamPro11/crawlers2.git`](https://github.com/SubhamPro11/crawlers2.git) on branch `main`. All prompt sections complete!
+
+### Section 1 (macOS Pass): macOS Window-Chrome Visual Theme
+- **Traffic-Light Dots**: Added authentic macOS red/yellow/green window control dots (`macos-traffic-lights`) to Navbar menu bar, Hero search terminal window, and Taxonomy section cards.
+- **Translucent Menu Bar**: Updated [`Navbar.tsx`](file:///d:/vs%20code/crawlers2/src/components/layout/Navbar.tsx) to render as a thin (`h-12`) frosted-glass menu bar (`backdrop-blur-xl bg-navy-950/80`).
+- **Window Panels & Vibrancy**: Created `.macos-window` container class in [`globals.css`](file:///d:/vs%20code/crawlers2/src/app/globals.css) with `backdrop-filter: blur(16px)` and soft drop shadows (`shadow-[0_25px_60px_-15px_rgba(0,0,0,0.75)]`).
+- **System Font Pairing**: Introduced `--font-sys: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui` for UI chrome while retaining `JetBrains_Mono` for code content.
+- **Proposed Bottom Dock**: Built [`MacOSDock.tsx`](file:///d:/vs%20code/crawlers2/src/components/layout/MacOSDock.tsx) floating bottom quick-nav bar with hover lift/scale effects.
+- Verified clean typecheck and ESLint linting with zero errors.
+
+### Section 2 (macOS Pass): Admin Login & Control Plane
+- **Postgres Migration**: Authored [`supabase/migrations/20260806000000_admin_profiles_schema.sql`](file:///d:/vs%20code/crawlers2/supabase/migrations/20260806000000_admin_profiles_schema.sql) with `profiles` table (`role IN ('user', 'admin')`), RLS policies, and `handle_new_user()` trigger auto-granting admin to `subhamkr11012004@gmail.com`.
+- **macOS Auth UI**: Built [`src/app/admin/login/page.tsx`](file:///d:/vs%20code/crawlers2/src/app/admin/login/page.tsx) styled as a macOS terminal panel (`login.admin.sys`).
+- **Auth-Gated Dashboard**: Built [`src/app/admin/page.tsx`](file:///d:/vs%20code/crawlers2/src/app/admin/page.tsx) featuring a submission review queue (`submissions`), active tool toggle management (`tools`), and real unpadded `view_logs` traffic analytics.
+
+### Section 3 (macOS Pass): Indexing & SEO Hardening Pass
+- **Robots Disallow**: Updated [`robots.ts`](file:///d:/vs%20code/crawlers2/src/app/robots.ts) to explicitly block `/admin` and `/admin/` from search engine crawlers.
+- **Sitemap Coverage**: Verified [`sitemap.ts`](file:///d:/vs%20code/crawlers2/src/app/sitemap.ts) auto-generates 50+ URLs spanning static routes, 9 taxonomy sections, 40+ categories, and all tool detail pages.
+- **Canonical & Meta Hygiene**: Verified canonical URL tags and unique titles across all application views.
+
+### Section 4 (macOS Pass): New Feature Layer
+- **4f. Broken Link Reporting**: Built [`LinkReportModal.tsx`](file:///d:/vs%20code/crawlers2/src/components/tool/LinkReportModal.tsx) allowing visitors to flag dead URLs for admin triage.
+- **4g. Tool Detail Page Enhancements**: Built [`ToolDetailClientActions.tsx`](file:///d:/vs%20code/crawlers2/src/components/tool/ToolDetailClientActions.tsx) rendering copy-to-clipboard API curl snippet buttons and broken link report triggers on [`/tool/[slug]`](file:///d:/vs%20code/crawlers2/src/app/tool/[slug]/page.tsx).
+- Verified clean `npm run typecheck`, `npm run lint`, and `npm run build` compilation across 18 static & dynamic routes.
