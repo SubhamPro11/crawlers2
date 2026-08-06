@@ -124,7 +124,7 @@ export default function AdminLoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full mt-2 py-3 px-4 rounded-lg bg-lime-accent text-navy-950 font-bold hover:bg-lime-hover transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full mt-2 py-3 px-5 rounded-full bg-lime-accent text-navy-950 font-bold hover:bg-lime-hover transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {loading ? (
                   <span>Authenticating...</span>
@@ -145,7 +145,7 @@ export default function AdminLoginPage() {
 
             <button
               onClick={() => signInWithGoogle("/admin")}
-              className="w-full py-2.5 px-4 rounded-lg bg-navy-850 border border-navy-700 text-slate-200 hover:text-lime-accent hover:border-lime-accent/50 transition-colors flex items-center justify-center gap-2 font-mono text-xs cursor-pointer font-bold"
+              className="w-full py-3 px-5 rounded-full bg-navy-850 border border-navy-700 text-slate-200 hover:text-lime-accent hover:border-lime-accent/50 transition-colors flex items-center justify-center gap-2 font-mono text-xs cursor-pointer font-bold"
             >
               <LogIn className="w-4 h-4 text-lime-accent" />
               <span>Sign in with Google (OAuth)</span>

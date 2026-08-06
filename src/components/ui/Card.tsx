@@ -66,7 +66,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({
                   e.preventDefault();
                   onBookmarkToggle(id);
                 }}
-                className={`p-1.5 rounded-lg transition-colors ${
+                className={`p-2 rounded-full w-8 h-8 flex items-center justify-center transition-colors ${
                   isBookmarked
                     ? "text-lime-accent bg-lime-accent/10 border border-lime-accent/30"
                     : "text-slate-500 hover:text-slate-300 hover:bg-navy-800"
@@ -80,7 +80,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({
           </div>
         </div>
 
-        {/* Category & Tags */}
+        {/* Category Badge */}
         {categoryName && (
           <div className="mb-3 text-xs font-mono text-slate-400 flex items-center gap-2">
             <span>in</span>
@@ -117,7 +117,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 font-mono text-xs font-medium text-lime-accent hover:text-lime-hover hover:underline shrink-0"
+          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-navy-950 border border-lime-accent/40 text-lime-accent hover:bg-lime-accent hover:text-navy-950 font-mono text-xs font-semibold transition-all shrink-0"
         >
           {pricingModel === "open-source"
             ? "→ source"

@@ -32,7 +32,7 @@ export const Navbar: React.FC = () => {
             onClick={() => {
               window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
             }}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-navy-900 border border-navy-800 text-slate-400 hover:text-lime-accent hover:border-lime-accent/40 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-navy-900 border border-navy-800 text-slate-400 hover:text-lime-accent hover:border-lime-accent/40 transition-colors"
             title="Open Command Palette"
           >
             <span className="text-[10px]">⌘K CLI</span>
@@ -55,7 +55,7 @@ export const Navbar: React.FC = () => {
           </Link>
           <Link
             href="/submit"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-lime-accent text-navy-950 font-semibold hover:bg-lime-hover transition-colors"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-lime-accent text-navy-950 font-semibold hover:bg-lime-hover transition-colors"
           >
             <PlusCircle className="w-3.5 h-3.5" /> Submit Tool
           </Link>
@@ -65,7 +65,7 @@ export const Navbar: React.FC = () => {
         {/* Mobile Toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-navy-850"
+          className="md:hidden p-2 w-9 h-9 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-100 hover:bg-navy-850"
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -75,6 +75,13 @@ export const Navbar: React.FC = () => {
       {/* Mobile Drawer */}
       {mobileOpen && (
         <div className="md:hidden border-t border-navy-850 bg-navy-900 px-4 py-4 space-y-3 font-mono text-sm">
+          <Link
+            href="/"
+            onClick={() => setMobileOpen(false)}
+            className="block text-slate-300 hover:text-lime-accent py-1"
+          >
+            Home
+          </Link>
           <Link
             href="/#sections"
             onClick={() => setMobileOpen(false)}
@@ -97,6 +104,13 @@ export const Navbar: React.FC = () => {
             <ArrowLeftRight className="w-4 h-4" /> Compare
           </Link>
           <Link
+            href="/random"
+            onClick={() => setMobileOpen(false)}
+            className="flex items-center gap-2 text-slate-300 hover:text-lime-accent py-1"
+          >
+            <Shuffle className="w-4 h-4 text-lime-accent" /> Random Tool
+          </Link>
+          <Link
             href="/changelog"
             onClick={() => setMobileOpen(false)}
             className="flex items-center gap-2 text-slate-300 hover:text-lime-accent py-1"
@@ -114,7 +128,7 @@ export const Navbar: React.FC = () => {
             <Link
               href="/submit"
               onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-center gap-2 w-full px-4 py-2 rounded-lg bg-lime-accent text-navy-950 font-bold"
+              className="flex items-center justify-center gap-2 w-full px-5 py-2.5 rounded-full bg-lime-accent text-navy-950 font-bold"
             >
               <PlusCircle className="w-4 h-4" /> Submit Tool
             </Link>

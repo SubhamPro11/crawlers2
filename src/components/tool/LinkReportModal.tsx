@@ -54,7 +54,7 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="w-full max-w-md rounded border border-navy-800 bg-navy-900 font-mono text-slate-100 animate-in fade-in zoom-in-95 duration-150">
+      <div className="w-full max-w-md rounded-3xl border border-navy-800 bg-navy-900 font-mono text-slate-100 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         <div className="px-5 py-3 border-b border-navy-800 flex items-center justify-between bg-navy-950">
           <div className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5 uppercase tracking-wider">
             <Flag className="w-3.5 h-3.5 text-amber-400" /> report_broken_link
@@ -109,14 +109,14 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-3 py-1.5 rounded-lg bg-navy-900 border border-navy-800 text-slate-400 hover:text-slate-200 cursor-pointer"
+                  className="px-4 py-1.5 rounded-full bg-navy-900 border border-navy-800 text-slate-400 hover:text-slate-200 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-4 py-1.5 rounded-lg bg-amber-400 text-navy-950 font-bold hover:bg-amber-300 transition-colors cursor-pointer"
+                  className="px-5 py-1.5 rounded-full bg-amber-400 text-navy-950 font-bold hover:bg-amber-300 transition-colors cursor-pointer"
                 >
                   {loading ? "Submitting..." : "Submit Report"}
                 </button>

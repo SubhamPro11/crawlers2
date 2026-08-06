@@ -97,9 +97,11 @@ Full taxonomy seeds defined in [`supabase/seed.sql`](file:///d:/vs%20code/crawle
   - `lime-hover` (`#BCF04D`): Hover accent
   - `lime-border` (`rgba(163, 230, 53, 0.3)`): Subtle focus / card highlight glow
 - **Corner Radius Scale**:
-  - `rounded-sm` (`6px` / `--radius-sm`): Tag chips (`#cli`), category pills, small icon chips
-  - `rounded-md` (`10px` / `--radius-md`): Buttons (`Button.tsx`), form inputs (`Input.tsx`), search inputs, CTA action controls
-  - `rounded-lg` (`16px` / `--radius-lg`): Cards (`ToolCard`, `StackModule`, `TaxonomyGrid`), overlay panels (`CommandPalette`, `ShortcutOverlay`, `LinkReportModal`), form cards
+  - `rounded-full` (`9999px` / Pill-Shaped): All primary/secondary buttons (`Button.tsx`), nav CTAs, bookmark toggles, card action links, tab controls
+  - `rounded-3xl` (`24px` / Dialog Container): Modal containers ([`CommandPalette`](file:///d:/vs%20code/crawlers2/src/components/terminal/CommandPalette.tsx), [`ShortcutOverlay`](file:///d:/vs%20code/crawlers2/src/components/terminal/ShortcutOverlay.tsx), [`LinkReportModal`](file:///d:/vs%20code/crawlers2/src/components/tool/LinkReportModal.tsx))
+  - `rounded-xl` (`16px` / Card Surface): Cards (`ToolCard`, `StackModule`, `TaxonomyGrid`), form cards
+  - `rounded-lg` (`10px` / Input Radius): Form inputs (`Input.tsx`), search inputs
+  - `rounded-md` (`6px` / Tag Radius): Tag chips (`#cli`), category pills
   - `rounded-none` (`0px`): Terminal bracket tags (`[FREE]`, `[FREEMIUM]`, `[PAID]`, `[OPEN-SOURCE]`) preserved as sharp text tokens
 - **Typography Stack**:
   - `font-mono` (`JetBrains_Mono`): Headings, badges, tags, code snippets, prompt prefixes (`$>`)
@@ -330,4 +332,11 @@ Full taxonomy seeds defined in [`supabase/seed.sql`](file:///d:/vs%20code/crawle
 ### Site-Wide $ Symbol Removal Pass
 - **Systematic UI Prompt Convention**: Removed all literal `$` characters used as decorative UI chrome across the site. Replaced terminal command prompt prefixes (`$ taxonomy`, `$ google_login`, `$ api`, `$>`) with `>` (e.g. `> taxonomy`, `> google_login`, `> api`, `> ` prompt chevron) and tool tag prefixes with `#` (`#cursor`, `#v0-by-vercel`).
 - **Audit Verification**: Verified 0 literal `$` UI chrome instances remain across all components, forms, headers, and cards.
+- **Pushed to GitHub**: Synchronized all changes to [`https://github.com/SubhamPro11/crawlers2.git`](https://github.com/SubhamPro11/crawlers2.git) on branch `main`.
+
+### Circular/Pill Buttons, Soft Rounded Dialogs & Dead Code Cleanup Pass
+- **Circular/Pill Buttons**: Converted all primary/secondary buttons (`Button.tsx`), header CTAs (`Submit Tool`, `⌘K CLI`, `> google_login`), card action buttons (`> api`, `open →`, `→ source`), tab controls, and icon buttons (`onBookmarkToggle`) to fully circular `rounded-full` pill shapes with expanded horizontal padding (`px-5` / `px-6`).
+- **Soft Rounded Dialogs**: Applied `rounded-3xl` (24px soft rounded radius) across all floating modal dialogs ([`CommandPalette`](file:///d:/vs%20code/crawlers2/src/components/terminal/CommandPalette.tsx), [`ShortcutOverlay`](file:///d:/vs%20code/crawlers2/src/components/terminal/ShortcutOverlay.tsx), [`LinkReportModal`](file:///d:/vs%20code/crawlers2/src/components/tool/LinkReportModal.tsx)).
+- **Dead Code & Asset Sweep**: Removed orphaned utility file `src/lib/useBookmarks.ts`, unused `ToolTag` & `ViewLog` schema interfaces in `src/types/database.ts`, and 5 unreferenced default template SVGs in `public/` (`file.svg`, `globe.svg`, `next.svg`, `vercel.svg`, `window.svg`).
+- **Build Performance Check**: Verified `npm run build` compilation time accelerated to **1.60s** with 0 errors and 0 warnings.
 - **Pushed to GitHub**: Synchronized all changes to [`https://github.com/SubhamPro11/crawlers2.git`](https://github.com/SubhamPro11/crawlers2.git) on branch `main`.

@@ -43,11 +43,6 @@ export interface Tool {
   is_active: boolean;
 }
 
-export interface ToolTag {
-  tool_id: string;
-  tag_id: string;
-}
-
 export interface Submission {
   id: string;
   name: string;
@@ -59,14 +54,6 @@ export interface Submission {
   submitter_email?: string | null;
   status: SubmissionStatus;
   submitted_at: string;
-}
-
-export interface ViewLog {
-  id: string;
-  tool_id: string;
-  user_agent?: string | null;
-  referrer?: string | null;
-  viewed_at: string;
 }
 
 export type UserRole = "user" | "admin";

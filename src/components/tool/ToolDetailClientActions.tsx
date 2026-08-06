@@ -37,7 +37,7 @@ export const ToolDetailClientActions: React.FC<ToolDetailClientActionsProps> = (
           {hasApi && (
             <button
               onClick={handleCopyApi}
-              className="px-3 py-1.5 rounded-lg bg-navy-850 border border-navy-700 text-lime-accent hover:bg-navy-800 transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-1.5 rounded-full bg-navy-850 border border-navy-700 text-lime-accent hover:bg-navy-800 transition-colors flex items-center gap-1.5 cursor-pointer"
             >
               {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copied ? "Copied API Endpoint!" : "Copy API Curl Snippet"}</span>
@@ -54,7 +54,7 @@ export const ToolDetailClientActions: React.FC<ToolDetailClientActionsProps> = (
 
         <button
           onClick={() => setReportOpen(true)}
-          className="px-3 py-1.5 rounded-lg bg-navy-900 border border-navy-800 text-slate-400 hover:text-amber-400 hover:border-amber-400/40 transition-colors flex items-center gap-1.5 cursor-pointer"
+          className="px-4 py-1.5 rounded-full bg-navy-900 border border-navy-800 text-slate-400 hover:text-amber-400 hover:border-amber-400/40 transition-colors flex items-center gap-1.5 cursor-pointer"
         >
           <Flag className="w-3.5 h-3.5 text-amber-400" />
           <span>Report Broken Link</span>
