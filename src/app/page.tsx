@@ -20,7 +20,8 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  const tools = await fetchTools({ limit: 6 });
+  const allTools = await fetchTools();
+  const featuredTools = allTools.slice(0, 24);
   return (
     <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
       <Navbar />
@@ -45,7 +46,7 @@ export default async function HomePage() {
           </blockquote>
 
           <div className="pt-1">
-            <IndexStatusLine toolCount={tools.length} lastUpdatedText="14 minutes ago" />
+            <IndexStatusLine toolCount={allTools.length} lastUpdatedText="Just now" />
           </div>
 
           <div className="pt-2">
@@ -114,13 +115,13 @@ export default async function HomePage() {
               <ShieldCheck className="w-5 h-5 text-lime-accent" /> Editorially Verified Tools
             </h2>
             <p className="text-xs text-slate-400 font-sans">
-              Recently indexed software with audited links, licensing&nbsp;models, and direct source&nbsp;URLs.
+              Showing {featuredTools.length} of {allTools.length} indexed tools with audited links &amp; licensing models.
             </p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {tools.map((tool) => (
+          {featuredTools.map((tool) => (
             <ToolCard
               key={tool.id}
               id={tool.id}
@@ -137,7 +138,7 @@ export default async function HomePage() {
       </section>
 
       {/* Real Data Trending Section */}
-      <TrendingSection tools={tools} />
+      <TrendingSection tools={allTools} />
 
       <Footer />
     </div>

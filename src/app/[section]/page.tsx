@@ -5,7 +5,7 @@ import { ArrowLeft, Terminal, FolderGit2, ArrowRight } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { TAXONOMY_SEEDS } from "@/lib/taxonomy";
-import { MOCK_TOOLS } from "@/lib/mockData";
+import { fetchTools } from "@/lib/supabase";
 import { ToolCard } from "@/components/ui/Card";
 
 interface SectionPageProps {
@@ -37,6 +37,8 @@ export default async function SectionPage({ params }: SectionPageProps) {
   if (!section) {
     notFound();
   }
+
+  const sectionTools = await fetchTools({ sectionSlug });
 
   // Group categories by subgroup
   const subgroupMap: Record<string, typeof section.categories> = {};
@@ -119,7 +121,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
             Featured Tools in {section.name}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {MOCK_TOOLS.slice(0, 3).map((tool) => (
+            {sectionTools.map((tool) => (
               <ToolCard
                 key={tool.id}
                 id={tool.id}
@@ -129,8 +131,6 @@ export default async function SectionPage({ params }: SectionPageProps) {
                 description={tool.description}
                 pricingModel={tool.pricing_model}
                 hasApi={tool.has_api}
-                categoryName={section.categories[0]?.name}
-                categorySlug={section.categories[0]?.slug}
               />
             ))}
           </div>

@@ -1,0 +1,1266 @@
+[
+  {
+    "name": "Altern AI",
+    "slug": "altern-ai",
+    "url": "https://altern.ai",
+    "description": "*, *[Productivity Directory](https://productivity.directory)*",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Productivity Directory",
+    "slug": "productivity-directory",
+    "url": "https://productivity.directory",
+    "description": "** - Find, Search & Review AI Productivity Tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Altern",
+    "slug": "altern",
+    "url": "https://altern.ai",
+    "description": "Find almost anything related to AI",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Tools Submit",
+    "slug": "ai-tools-submit",
+    "url": "https://submitaitools.org/submit-your-ai-tool/",
+    "description": "Submit your AI tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Awesome AI Tools",
+    "slug": "awesome-ai-tools",
+    "url": "https://github.com/mahseema/awesome-ai-tools",
+    "description": "A curated list of Artificial Intelligence Top Tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Corner",
+    "slug": "ai-corner",
+    "url": "https://aicorner.net",
+    "description": "AI Tools Directory",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AIDir",
+    "slug": "aidir",
+    "url": "https://aidir.wiki",
+    "description": "The first AI Directory of the world, Since 2022!",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Directory",
+    "slug": "ai-directory",
+    "url": "https://aidirectory.wiki",
+    "description": "Curated collection of AI-powered tools for productivity, creativity, and business.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AiDirs",
+    "slug": "aidirs",
+    "url": "https://aidirs.best",
+    "description": "Discover and Share the Best AI Tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI For Developers",
+    "slug": "ai-for-developers",
+    "url": "https://aifordevelopers.org",
+    "description": "A curated list of AI DevTools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "ainave",
+    "slug": "ainave",
+    "url": "https://www.ainave.com",
+    "description": "Navigate the world of AI with ease!",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Agent Store",
+    "slug": "ai-agent-store",
+    "url": "https://aiagentstore.ai/",
+    "description": "Compare AI agents, agent development platforms and agentic frameworks.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Agents Live",
+    "slug": "ai-agents-live",
+    "url": "https://aiagentslive.com/",
+    "description": "An inclusive space where AI agents can be discovered, shared, and utilized, fostering innovation through diverse use cases.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Agents Marketplace",
+    "slug": "ai-agents-marketplace",
+    "url": "https://trillionagent.com/",
+    "description": "A marketplace of AI agents, natural language searchable by task or use case. Categorized according to over 300 human role equivalents.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Hubs",
+    "slug": "ai-hubs",
+    "url": "https://aihubs.ai/",
+    "description": "The best AI tools directory to help you find the latest and most powerful AI applications.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Hunt List",
+    "slug": "ai-hunt-list",
+    "url": "https://aihuntlist.com/",
+    "description": "Discover The Best AI Products & Tools. 3000+ AI products and 200+ categories in the best AI products directory.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Library",
+    "slug": "ai-library",
+    "url": "https://www.theailibrary.co/",
+    "description": "A powerful AI Tools Directory with 500+ tools for every need, from productivity to creativity.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AiMatchPro",
+    "slug": "aimatchpro",
+    "url": "https://aimatch.pro/",
+    "description": "Directory making it easy to find an ai tool for your specific usecase by matching a stack of tools with a search query.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI PEDIA HUB",
+    "slug": "ai-pedia-hub",
+    "url": "https://aipediahub.com/",
+    "description": "THE LARGEST AI TOOLS DIRECTORY, UPDATED DAILY.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Pulse",
+    "slug": "ai-pulse",
+    "url": "https://www.aipulse.fyi",
+    "description": "Your trusted source for in-depth reviews of the latest AI tools and technologies.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Resource Pro",
+    "slug": "ai-resource-pro",
+    "url": "https://airesource.pro",
+    "description": "Create your AI learning roadmap or explore our curated collection of top AI tools, news, and resources.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Respo",
+    "slug": "ai-respo",
+    "url": "https://airespo.com",
+    "description": "Find AI tools and learning resources.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Scout",
+    "slug": "ai-scout",
+    "url": "https://aiscout.net/",
+    "description": "AI Tools Directory",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Search Visibility & Optimization Tools",
+    "slug": "ai-search-visibility-optimization-tools",
+    "url": "https://www.aeotools.space",
+    "description": "Directory of AI Search Visibility & Optimization Tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Sites Net",
+    "slug": "ai-sites-net",
+    "url": "https://ai-sites.net/",
+    "description": "Chinese AI Tools Directory",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Tools Arena",
+    "slug": "ai-tools-arena",
+    "url": "https://aitoolsarena.com/",
+    "description": "Your Ultimate Resource for AI Tools and Insights",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Tools Corner",
+    "slug": "ai-tools-corner",
+    "url": "https://aitoolscorner.com/",
+    "description": "Collection of best AI Tools,",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Tools Directory",
+    "slug": "ai-tools-directory",
+    "url": "https://aidirectory.wiki/",
+    "description": "Curated list of AI tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Tools Pin",
+    "slug": "ai-tools-pin",
+    "url": "https://aitoolspin.com/",
+    "description": "The best AI tools by category",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AISuperSmart",
+    "slug": "aisupersmart",
+    "url": "https://www.aisupersmart.com/ai-tools-directory/",
+    "description": "1500+ Ai Tools Which Update's Daily And Provide Ai News to World",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI-Tools Directory",
+    "slug": "ai-tools-directory",
+    "url": "https://ai-tools.directory",
+    "description": "A directory of AI tools curated by AI itself",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Tools Guru",
+    "slug": "ai-tools-guru",
+    "url": "https://aitoolguru.com/",
+    "description": "THE LARGEST AI TOOLS DIRECTORY",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Tools List",
+    "slug": "ai-tools-list",
+    "url": "https://aitoolslist.io/",
+    "description": "Best AI Tools Rated",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Tools Love",
+    "slug": "ai-tools-love",
+    "url": "https://aitools.love/",
+    "description": "Compare pricing and features for different AI tools and not only.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Tools Marketer",
+    "slug": "ai-tools-marketer",
+    "url": "https://aitoolsmarketer.com/",
+    "description": "Unlock the Power of AI: Discover, Learn, Compare, and Optimize with the Ultimate AI Tools Directory.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Top Tools",
+    "slug": "ai-top-tools",
+    "url": "https://aitoptools.com/",
+    "description": "The place to go for AI Tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Tools Magazine",
+    "slug": "ai-tools-magazine",
+    "url": "https://aitoolsmagazine.com/",
+    "description": "Find the Best AI Tools & Increase Your Productivity by 10x",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "ALL AI TOOLS .TECH DIRECTORY",
+    "slug": "all-ai-tools-tech-directory",
+    "url": "https://allaitools.tech/",
+    "description": "Best AI Tools Directory, Find and Compare Tools, Powered by AI Recommendation System",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Altern",
+    "slug": "altern",
+    "url": "https://altern.ai",
+    "description": "Your Gateway to the AI Universe",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "All Things AI",
+    "slug": "all-things-ai",
+    "url": "https://allthingsai.com/",
+    "description": "The Curated Resource of AI Tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AiToolex",
+    "slug": "aitoolex",
+    "url": "https://aitoolex.com/",
+    "description": "Explore Best AI Tools on AiToolex. Submit your tool.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "aitools.inc",
+    "slug": "aitools-inc",
+    "url": "https://aitools.inc",
+    "description": "Discover tools to free up your time and 10x your output.",
+    "pricing_model": "free",
+    "has_api": false
+  },
+  {
+    "name": "AI Tool Trek",
+    "slug": "ai-tool-trek",
+    "url": "https://aitooltrek.com/",
+    "description": "Curated list of latestnet AI tools & AI News.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "All The AI Tools",
+    "slug": "all-the-ai-tools",
+    "url": "https://alltheaitools.com/",
+    "description": "Explore our comprehensive AI Tools Directory. Find, compare, and choose the best AI tools for your needs.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Tools Explore",
+    "slug": "ai-tools-explore",
+    "url": "https://aiex.me/",
+    "description": "Curated tools and insights to elevate your AI-driven projects.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Tools For Me",
+    "slug": "ai-tools-for-me",
+    "url": "https://aitoolsforme.com/",
+    "description": "Growing AI Directory Tools.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Tool List",
+    "slug": "ai-tool-list",
+    "url": "https://www.aitoollist.org",
+    "description": "An awesome directory of AI tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AiToolz",
+    "slug": "aitoolz",
+    "url": "https://aitoolz.net",
+    "description": "Find useful AI tools.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Toolz Dir",
+    "slug": "ai-toolz-dir",
+    "url": "https://www.aitoolzdir.com",
+    "description": "Submit your AI Tool to aitoolzdir and get a DR 27 Backlink for free",
+    "pricing_model": "free",
+    "has_api": false
+  },
+  {
+    "name": "AI Parabellum",
+    "slug": "ai-parabellum",
+    "url": "https://aiparabellum.com",
+    "description": "Find Tomorrow's AI Tools Today",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Agent Store",
+    "slug": "ai-agent-store",
+    "url": "https://aiagentstore.ai",
+    "description": "Find AI Agents and AI Agent building tools or list your own Agent.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Agents Base",
+    "slug": "ai-agents-base",
+    "url": "https://aiagentsbase.com",
+    "description": "Your All-in-One AI Agents Directory",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Agents List",
+    "slug": "ai-agents-list",
+    "url": "https://aiagentslist.com/",
+    "description": "Discover and compare the best AI agents for your needs.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Agents Directory",
+    "slug": "ai-agents-directory",
+    "url": "https://aiagentsdirectory.com/",
+    "description": "Specialized directory for AI Agents and Frameworks, UPDATED DAILY",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Agents Verse",
+    "slug": "ai-agents-verse",
+    "url": "https://aiagentsverse.com/",
+    "description": "Discover the best AI Agents in our AI Agents Directory.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Add AI Directory",
+    "slug": "add-ai-directory",
+    "url": "https://addaidirectory.com/",
+    "description": "An online platform that catalogs and categorizes AI agents and tools. Users can easily discover, compare, and select AI solutions, while businesses can advertise featured AI agents.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AgentHunter",
+    "slug": "agenthunter",
+    "url": "https://www.agenthunter.io/",
+    "description": "Discover the Best AI Agents in One Place.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Aixyz",
+    "slug": "aixyz",
+    "url": "https://www.aixyz.co",
+    "description": "Discover 1,500+ AI tools with smart filters, comparisons, and curated collections.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Tools Saver",
+    "slug": "ai-tools-saver",
+    "url": "https://www.aitoolsaver.com/",
+    "description": "Your Favorite AI Tools with Discounts",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Awesome AI Coding Tools",
+    "slug": "awesome-ai-coding-tools",
+    "url": "https://github.com/tokyo-dal/awesome-ai-coding-tools",
+    "description": "A curated list of AI-powered coding tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AIChief",
+    "slug": "aichief",
+    "url": "https://aichief.com",
+    "description": "#1 AI Tools Directory created exclusively for businesses, AI explorers, and curious minds alike!",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Ask AI For It",
+    "slug": "ask-ai-for-it",
+    "url": "https://askaiforit.com",
+    "description": "AI Tools and SaaS Directory to boost your productivity at work and in life.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Headshot Hub",
+    "slug": "ai-headshot-hub",
+    "url": "https://aiheadshothub.com/",
+    "description": "Compare top AI headshot generators with detailed reviews, pricing breakdowns, and real examples.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AI Hustle",
+    "slug": "ai-hustle",
+    "url": "https://aihustle.tools",
+    "description": ") - All the best ai tools in one place",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Aura++",
+    "slug": "aura",
+    "url": "https://auraplusplus.com",
+    "description": "Launch your project and get a featured launch blog post, social media promotions, high authority dofollow backlink and traffic.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "AIToolsHunt",
+    "slug": "aitoolshunt",
+    "url": "https://aitoolshunt.com",
+    "description": "Comprehensive AI tools directory to discover the latest AI tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Best of AI",
+    "slug": "best-of-ai",
+    "url": "https://bestofai.io",
+    "description": "List of just best AI Tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Based Tools",
+    "slug": "based-tools",
+    "url": "https://www.basedtools.ai/",
+    "description": "The most Based AI Directory.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Best AI Tools org",
+    "slug": "best-ai-tools-org",
+    "url": "https://www.best-ai-tools.org/",
+    "description": "Find & Learn AI Tools with AI ChatBot + free Academy",
+    "pricing_model": "free",
+    "has_api": false
+  },
+  {
+    "name": "Best of Web",
+    "slug": "best-of-web",
+    "url": "https://www.bestofweb.site",
+    "description": "Startup and founder directory. Easy and fast to submit, includes a free dofollow backlink.",
+    "pricing_model": "free",
+    "has_api": false
+  },
+  {
+    "name": "Beyond AI Tools",
+    "slug": "beyond-ai-tools",
+    "url": "https://www.beyondaitools.com/",
+    "description": "AI tools, solutions, best practices, and more — all with multilingual support, aiming to foster AI adoption across the globe.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Byblos AI",
+    "slug": "byblos-ai",
+    "url": "https://byblosai.com/",
+    "description": "Find AI tools and software using an AI search",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "BuildVoyage",
+    "slug": "buildvoyage",
+    "url": "https://buildvoyage.com/",
+    "description": "A micro-saas directory for AI projects where the journey is what matters!",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "ChooseTheAI",
+    "slug": "choosetheai",
+    "url": "https://choosetheai.com/",
+    "description": "AI ecosystem analytics - tools, models, frameworks, and who's winning.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "ClaudePro.directory",
+    "slug": "claudepro-directory",
+    "url": "https://claudepro.directory/",
+    "description": "The unofficial home for Claude enthusiasts. Explore expert rules, browse powerful MCP servers, find specialized agents and commands, discover automation hooks, and connect with the community building the future of AI.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Cloudbooklet AI",
+    "slug": "cloudbooklet-ai",
+    "url": "https://www.cloudbooklet.net/",
+    "description": "Cloudbooklet AI Tools.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "CogList AI",
+    "slug": "coglist-ai",
+    "url": "https://coglist.com/",
+    "description": "AI Agents/Tools Directory and List for Indie Hackers in Project Building.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "DataLook.io",
+    "slug": "datalook-io",
+    "url": "https://datalook.io/",
+    "description": "Discover the best AI tools, data science resources, and the latest insights in artificial intelligence.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Dynamite AI",
+    "slug": "dynamite-ai",
+    "url": "https://www.dynamite-ai.com/",
+    "description": "Yet another (FREE) AI Tools Directory.",
+    "pricing_model": "free",
+    "has_api": false
+  },
+  {
+    "name": "Dessign",
+    "slug": "dessign",
+    "url": "https://dessign.net/",
+    "description": "AI Tools Directory.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Desifounder",
+    "slug": "desifounder",
+    "url": "https://desifounder.com/spotlight",
+    "description": "Discover AI Projects & Tools.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Direct2App",
+    "slug": "direct2app",
+    "url": "https://www.direct2app.com/",
+    "description": "Find the best SaaS & AI for your business.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Dofollow.Tools",
+    "slug": "dofollow-tools",
+    "url": "https://dofollow.tools",
+    "description": "Submit on Dofollow.Tools and get dofollow backlinks",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Deeplaunch.io",
+    "slug": "deeplaunch-io",
+    "url": "https://deeplaunch.io/",
+    "description": ") - The Ultimate Directory for Online Tools and Resources",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "EliteAI Tools",
+    "slug": "eliteai-tools",
+    "url": "https://eliteai.tools",
+    "description": "AI tools directory, exclusively featuring high-quality AI tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "EveryDev.ai",
+    "slug": "everydev-ai",
+    "url": "https://www.everydev.ai",
+    "description": "The largest developer curated AI tools directory and social network",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Evolmagazine.com",
+    "slug": "evolmagazine-com",
+    "url": "https://www.evolmagazine.com/en/tools/",
+    "description": "Find, compare, and integrate the best AI and productivity tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Expify",
+    "slug": "expify",
+    "url": "https://www.expify.ai",
+    "description": "Biggest AI tools directory in the planet.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Find An AI Tools",
+    "slug": "find-an-ai-tools",
+    "url": "https://findanaitools.com",
+    "description": "No 1 AI Aggregator",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Findyouragent.ai",
+    "slug": "findyouragent-ai",
+    "url": "https://findyouragent.ai/",
+    "description": "A curated AI Agent Directory & Search Platform",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Find my AI Tool",
+    "slug": "find-my-ai-tool",
+    "url": "https://findmyaitool.com/",
+    "description": "Discover AI Tools for Your Business.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Foundr",
+    "slug": "foundr",
+    "url": "https://foundr.ai/",
+    "description": "Discover The Best AI Tools at Your Fingertips",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Free AI Tool",
+    "slug": "free-ai-tool",
+    "url": "https://freeaitool.ai/",
+    "description": "List of Best & Latest Free AI Tools in 2024",
+    "pricing_model": "free",
+    "has_api": false
+  },
+  {
+    "name": "Future AI Guide",
+    "slug": "future-ai-guide",
+    "url": "https://tools.futureaiguide.com/",
+    "description": "The Ultimate AI Hub and AI Tool Directory.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Futurepedia Wiki",
+    "slug": "futurepedia-wiki",
+    "url": "https://futurepedia.wiki",
+    "description": "Find the best futuristic tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "FUTUREPEDIA",
+    "slug": "futurepedia",
+    "url": "https://www.futurepedia.io/",
+    "description": "THE LARGEST AI TOOLS DIRECTORY, UPDATED DAILY",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "FutureTools",
+    "slug": "futuretools",
+    "url": "https://www.futuretools.io/",
+    "description": "Collects & Organizes All The Best AI Tools So YOU Too Can Become Superhuman!",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "flowtools",
+    "slug": "flowtools",
+    "url": "https://www.flowtools.co",
+    "description": "Your first stop for smart AI tool decisions",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "FastLaunch",
+    "slug": "fastlaunch",
+    "url": "https://fastlaunch.io/",
+    "description": "FastLaunch - Launch & Discover Amazing Products",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Grabon AI Directory",
+    "slug": "grabon-ai-directory",
+    "url": "https://www.grabon.in/indulge/ai-tools/",
+    "description": "The World’s Best & Largest Directory Of AI Tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "God of Prompt",
+    "slug": "god-of-prompt",
+    "url": "https://godofprompt.ai/best-ai-tools/",
+    "description": "1000+ Best AI Tools for Marketing & Business",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "GroupifyAI",
+    "slug": "groupifyai",
+    "url": "https://groupify.ai/?ref=github",
+    "description": "Explore, Compare & Review Best Trending AI tools & AI courses on the top AI platform.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Havnai",
+    "slug": "havnai",
+    "url": "https://havnai.com/",
+    "description": "The world's first AI tool directory offering 60-second video intros for each tool and one-click AI tool lists by industry name.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "HeyAIworld",
+    "slug": "heyaiworld",
+    "url": "https://heyaiworld.com/",
+    "description": "All-in-one platform for finding best AI tools, people to follow, best AI tools for each profession and more.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "IA sur mesure",
+    "slug": "ia-sur-mesure",
+    "url": "https://iasurmesure.com/",
+    "description": "A french directory",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Insidr AI Directory",
+    "slug": "insidr-ai-directory",
+    "url": "https://www.insidr.ai/ai-tools/",
+    "description": "AI Tools Directory",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Intelligent Tools",
+    "slug": "intelligent-tools",
+    "url": "https://intelligenttools.co/",
+    "description": "AI Tools Directory with honest reviews",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Kick Product",
+    "slug": "kick-product",
+    "url": "https://kickproduct.com/",
+    "description": "Fair Launch platform for SaaS Product (including AI tools )",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "LineZine AI Tool Directory",
+    "slug": "linezine-ai-tool-directory",
+    "url": "https://linezine.com/ai-tool-directory",
+    "description": "Curated list of AI tools for business use",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "ListYourTool",
+    "slug": "listyourtool",
+    "url": "https://www.listyourtool.com/",
+    "description": "Discover the best AI tools in one place",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Launch Vault",
+    "slug": "launch-vault",
+    "url": "https://www.launchvault.dev/",
+    "description": "The Ultimate Product Launch Platform for Indie Hackers and Startups",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Makerlist.io",
+    "slug": "makerlist-io",
+    "url": "https://makerlist.io",
+    "description": "Directory of tools & Startups",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Marketing Tools List",
+    "slug": "marketing-tools-list",
+    "url": "https://marketingtoolslist.com",
+    "description": "a curated list of marketing tools in various categories",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Most Popular AI Tools",
+    "slug": "most-popular-ai-tools",
+    "url": "https://mostpopularaitools.com",
+    "description": "Curated directory of trending AI tools across writing, design, coding, marketing & productivity.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "NavTools AI",
+    "slug": "navtools-ai",
+    "url": "https://navtools.ai/",
+    "description": "Best AI Tools Directory & AI Tools List",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "NeonRev",
+    "slug": "neonrev",
+    "url": "https://www.neonrev.com/",
+    "description": "One of the largest and best AI Tools Directory",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Navfolders.com",
+    "slug": "navfolders-com",
+    "url": "https://navfolders.com/",
+    "description": ") - Discover and share the best web resources. NavFolders helps you navigate the internet efficiently with curated collections, smart categorization, and powerful search tools.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "OpenHunts",
+    "slug": "openhunts",
+    "url": "https://openhunts.com/",
+    "description": "Launch and hunt products openly - A platform for discovering and showcasing new products and tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "OpenSaasDirectory",
+    "slug": "opensaasdirectory",
+    "url": "https://opensaas.directory/",
+    "description": "Discover and explore the best open-source SaaS projects.",
+    "pricing_model": "open-source",
+    "has_api": false
+  },
+  {
+    "name": "OpenTools",
+    "slug": "opentools",
+    "url": "https://opentools.ai/",
+    "description": "Chat with our GPT to find the right AI tool for you",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "OpenFuture AI",
+    "slug": "openfuture-ai",
+    "url": "https://openfuture.ai/",
+    "description": "Largest Tools Directory, Fastest Update, The Most Accurate Database",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Orbic AI",
+    "slug": "orbic-ai",
+    "url": "https://orbic.ai",
+    "description": "Largest GPT Store And AI Tools Directory",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "PoweredbyAI",
+    "slug": "poweredbyai",
+    "url": "https://poweredbyai.app",
+    "description": "AI TOOLS & PROMPTS!",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Productivity Tools",
+    "slug": "productivity-tools",
+    "url": "https://productivity.directory",
+    "description": "A curated productivity directory",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Startuplist.in",
+    "slug": "startuplist-in",
+    "url": "https://startuplist.in/",
+    "description": "Get free backlinks to boost your SEO and get more traffic to your website.",
+    "pricing_model": "free",
+    "has_api": false
+  },
+  {
+    "name": "Stratup.ai",
+    "slug": "stratup-ai",
+    "url": "https://stratup.ai/",
+    "description": "AI-Powered Startup Ideas and Tools to Fuel Your Entrepreneurial Journey",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Startup Tools List",
+    "slug": "startup-tools-list",
+    "url": "https://startuptoolslist.com",
+    "description": "Find Best Tools For Start Your Startup",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Spiff.store",
+    "slug": "spiff-store",
+    "url": "http://spiff.store/",
+    "description": "Internet's best database for AI tools. Discover top AI websites or submit your own tool for more traffic.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Sales Tools AI",
+    "slug": "sales-tools-ai",
+    "url": "https://salestoolsai.top/",
+    "description": "Find AI Tools that increase your sales",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Stackviv",
+    "slug": "stackviv",
+    "url": "https://stackviv.ai/",
+    "description": "The Largest AI Directory Featuring the Best Tools Across 1000+ Curated Categories!",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "SearchAiDirectory",
+    "slug": "searchaidirectory",
+    "url": "https://searchaidirectory.com/",
+    "description": "Find the best AI tools to solve your problems.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Selljam.ai",
+    "slug": "selljam-ai",
+    "url": "https://selljam.ai/",
+    "description": "Best AI tools and resources for online sellers and ecom pros.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Show Me Best AI",
+    "slug": "show-me-best-ai",
+    "url": "https://showmebest.ai/",
+    "description": "Discover the best AI tools at ShowMeBestAI",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Submit AI Tools",
+    "slug": "submit-ai-tools",
+    "url": "https://submitaitools.org",
+    "description": "Unleash AI’s Potential Discover Tools, Drive Innovation",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "There's An AI",
+    "slug": "there-s-an-ai",
+    "url": "https://theresanai.com",
+    "description": "No 1 AI Aggregator",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "theaisurf",
+    "slug": "theaisurf",
+    "url": "https://theaisurf.com/",
+    "description": "Discover Top AI Tools in One Clean Directory",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "THANK JOHN",
+    "slug": "thank-john",
+    "url": "https://www.thankjohn.com/",
+    "description": "Free tool submissions + featured",
+    "pricing_model": "free",
+    "has_api": false
+  },
+  {
+    "name": ".Tech AI TOOLS",
+    "slug": "tech-ai-tools",
+    "url": "https://allaitools.tech",
+    "description": "No 1 AI Tools and Agents directory, spam-free, AI-Powered recommendations, Worthy Newsletter",
+    "pricing_model": "free",
+    "has_api": false
+  },
+  {
+    "name": "ToolFinder",
+    "slug": "toolfinder",
+    "url": "https://toolfinder.wiki",
+    "description": "Discover & browse thousands of tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Toolify.ai",
+    "slug": "toolify-ai",
+    "url": "https://www.toolify.ai/",
+    "description": "Best AI Companies and Tools, Auto Updated Daily By ChatGPT",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Toolwave.io",
+    "slug": "toolwave-io",
+    "url": "https://www.toolwave.io",
+    "description": "Toolwave - Discover Thousands of AI Tools for Every Use Case",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "TopAI.tools",
+    "slug": "topai-tools",
+    "url": "https://topai.tools/",
+    "description": "Discover the best AI tools Everyday",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "ToolPasta by Robopost",
+    "slug": "toolpasta-by-robopost",
+    "url": "https://toolpasta.com/",
+    "description": "Discover The Best AI Websites & Tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Tool Pilot",
+    "slug": "tool-pilot",
+    "url": "https://www.toolpilot.ai",
+    "description": "Navigate the World of AI Tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Top Tools",
+    "slug": "top-tools",
+    "url": "https://www.toptools.ai/",
+    "description": "AI Tools Directory",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Tools",
+    "slug": "tools",
+    "url": "https://tools.so/",
+    "description": "Growing directory of the best AI tools on the internet.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Tools Hub AI",
+    "slug": "tools-hub-ai",
+    "url": "https://toolshubai.com/",
+    "description": "Explore the best AI tools for every task",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "ThatsMyAI",
+    "slug": "thatsmyai",
+    "url": "https://thatsmy.ai/",
+    "description": "Discover the right AI Apps and Certifications for your needs",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "The Next AI Tool",
+    "slug": "the-next-ai-tool",
+    "url": "https://thenextaitool.com",
+    "description": "Discover over 43K AI tools across 80+ categories",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "TrustList",
+    "slug": "trustlist",
+    "url": "https://www.trustlist.ai/",
+    "description": "Your Trusted A.I. Guide. Discover the A.I. solutions that simplify your daily tasks.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "TrustedBy",
+    "slug": "trustedby",
+    "url": "https://www.trustedby.ai/",
+    "description": "AI Tools Trusted by Top Business Leaders, Operators & Professionals.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Toolkitly",
+    "slug": "toolkitly",
+    "url": "https://www.toolkitly.com/",
+    "description": "Your Go-To Platform for Tech Tool Discussions, Innovations & Real-Time Updates!",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "ToolDirs",
+    "slug": "tooldirs",
+    "url": "https://tooldirs.com",
+    "description": "The Ultimate Tools Directory. Discover, and find the perfect AI tools.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Uno Directory",
+    "slug": "uno-directory",
+    "url": "https://uno.directory",
+    "description": "Curated directory of tools of all categories.",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Victrays",
+    "slug": "victrays",
+    "url": "https://www.Victrays.com/",
+    "description": "Find Ai tools | Ai Prompts | Plugins",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Webspot",
+    "slug": "webspot",
+    "url": "https://webspot.app/",
+    "description": "Find the Best Websites on the Internet in 2025",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "WhatstheBigData.com",
+    "slug": "whatsthebigdata-com",
+    "url": "https://whatsthebigdata.com/ai-tools/",
+    "description": "Browse the top AI tools",
+    "pricing_model": "freemium",
+    "has_api": false
+  },
+  {
+    "name": "Yet Another AI Tool Directory",
+    "slug": "yet-another-ai-tool-directory",
+    "url": "https://yaatd.com/",
+    "description": "Yet Another AI Tool Directory",
+    "pricing_model": "freemium",
+    "has_api": false
+  }
+]

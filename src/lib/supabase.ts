@@ -133,6 +133,35 @@ export async function fetchTools(options?: {
   if (supabase) {
     let query = supabase.from("tools").select("*").eq("is_active", true);
 
+    if (options?.categorySlug) {
+      const { data: catData } = await supabase
+        .from("categories")
+        .select("id")
+        .eq("slug", options.categorySlug)
+        .single();
+      if (catData) {
+        query = query.eq("category_id", catData.id);
+      }
+    } else if (options?.sectionSlug) {
+      const { data: sectionData } = await supabase
+        .from("sections")
+        .select("id")
+        .eq("slug", options.sectionSlug)
+        .single();
+      if (sectionData) {
+        const { data: catList } = await supabase
+          .from("categories")
+          .select("id")
+          .eq("section_id", sectionData.id);
+        if (catList && catList.length > 0) {
+          query = query.in(
+            "category_id",
+            catList.map((c) => c.id)
+          );
+        }
+      }
+    }
+
     if (options?.hasApi) {
       query = query.eq("has_api", true);
     }
