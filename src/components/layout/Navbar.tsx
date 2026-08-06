@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Terminal, Code2, PlusCircle, ArrowLeftRight, Menu, X, History, Shuffle } from "lucide-react";
+import { NavbarUserMenu } from "./NavbarUserMenu";
 
 export const Navbar: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -58,6 +59,7 @@ export const Navbar: React.FC = () => {
           >
             <PlusCircle className="w-3.5 h-3.5" /> Submit Tool
           </Link>
+          <NavbarUserMenu />
         </nav>
 
         {/* Mobile Toggle */}
@@ -108,14 +110,17 @@ export const Navbar: React.FC = () => {
           >
             Style Guide
           </Link>
-          <div className="pt-2 border-t border-navy-800">
+          <div className="pt-2 border-t border-navy-800 flex flex-col gap-2">
             <Link
               href="/submit"
               onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-center gap-2 w-full px-4 py-2 rounded bg-lime-accent text-navy-950 font-bold"
+              className="flex items-center justify-center gap-2 w-full px-4 py-2 rounded-lg bg-lime-accent text-navy-950 font-bold"
             >
               <PlusCircle className="w-4 h-4" /> Submit Tool
             </Link>
+            <div className="flex justify-center pt-1">
+              <NavbarUserMenu />
+            </div>
           </div>
         </div>
       )}

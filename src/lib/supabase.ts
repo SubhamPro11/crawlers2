@@ -17,6 +17,44 @@ export const supabase = isSupabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
 
+// Trigger Google OAuth Sign-In
+export async function signInWithGoogle(nextUrl = "/"): Promise<{ error?: string }> {
+  if (!supabase) {
+    return { error: "Supabase client is not configured." };
+  }
+
+  const origin = typeof window !== "undefined" ? window.location.origin : "";
+  const redirectTo = `${origin}/auth/callback?next=${encodeURIComponent(nextUrl)}`;
+
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo,
+      queryParams: {
+        access_type: "offline",
+        prompt: "consent",
+      },
+    },
+  });
+
+  if (error) {
+    return { error: error.message };
+  }
+  return {};
+}
+
+// Sign out current user session
+export async function signOutUser(): Promise<{ error?: string }> {
+  if (supabase) {
+    const { error } = await supabase.auth.signOut();
+    if (error) return { error: error.message };
+  }
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("crawlers_admin_session");
+  }
+  return {};
+}
+
 // Fetch all sections
 export async function fetchSections(): Promise<Section[]> {
   if (supabase) {

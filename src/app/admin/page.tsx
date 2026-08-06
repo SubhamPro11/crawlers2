@@ -16,6 +16,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Badge } from "@/components/ui/Badge";
 import { MOCK_TOOLS } from "@/lib/mockData";
+import { supabase } from "@/lib/supabase";
 
 export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<"submissions" | "tools" | "analytics">("submissions");
@@ -49,17 +50,50 @@ export default function AdminDashboardPage() {
   const [activeTools, setActiveTools] = useState(MOCK_TOOLS);
 
   useEffect(() => {
-    // Check admin session
-    const session = localStorage.getItem("crawlers_admin_session");
-    if (!session) {
-      router.push("/admin/login");
-    } else {
-      setTimeout(() => setAuthed(true), 0);
-    }
+    // Verify admin session via Supabase Auth or local session token
+    const verifyAuth = async () => {
+      const localSession = localStorage.getItem("crawlers_admin_session");
+      
+      if (supabase) {
+        const { data } = await supabase.auth.getUser();
+        const user = data?.user;
+
+        if (user) {
+          if (user.email === "subhamkr11012004@gmail.com") {
+            localStorage.setItem("crawlers_admin_session", "true");
+            setAuthed(true);
+            return;
+          }
+
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("role")
+            .eq("id", user.id)
+            .single();
+
+          if (profile?.role === "admin") {
+            localStorage.setItem("crawlers_admin_session", "true");
+            setAuthed(true);
+            return;
+          }
+        }
+      }
+
+      if (localSession === "true") {
+        setAuthed(true);
+      } else {
+        router.push("/admin/login");
+      }
+    };
+
+    verifyAuth();
   }, [router]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.removeItem("crawlers_admin_session");
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
     router.push("/admin/login");
   };
 

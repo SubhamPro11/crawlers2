@@ -320,3 +320,10 @@ Full taxonomy seeds defined in [`supabase/seed.sql`](file:///d:/vs%20code/crawle
 - **Preserved Terminal Identities**: Kept `[FREE]`, `[FREEMIUM]`, `[PAID]`, `[OPEN-SOURCE]` terminal bracket badges sharp (`rounded-none`).
 - **Accessibility Verification**: Verified focus ring outlines (`focus:ring-2 focus:ring-lime-accent/50`) render cleanly against rounded button contours.
 - **Pushed to GitHub**: Synchronized all changes to [`https://github.com/SubhamPro11/crawlers2.git`](https://github.com/SubhamPro11/crawlers2.git) on branch `main`.
+
+### Google Sign-In via Supabase Auth Pass
+- **OAuth Callback Handler**: Created App Router auth callback route [`src/app/auth/callback/route.ts`](file:///d:/vs%20code/crawlers2/src/app/auth/callback/route.ts) exchanging OAuth code for signed Supabase JWT access + refresh tokens.
+- **Terminal Identity Auth UI**: Built [`NavbarUserMenu.tsx`](file:///d:/vs%20code/crawlers2/src/components/layout/NavbarUserMenu.tsx) rendering `$ google_login` terminal button when signed out, and user avatar / name chip + `$ logout` when signed in. Added Google OAuth trigger button to [`/admin/login`](file:///d:/vs%20code/crawlers2/src/app/admin/login/page.tsx).
+- **Profiles Table & Auto-Creation Trigger**: Created Postgres migration [`20260806000001_google_oauth_profiles.sql`](file:///d:/vs%20code/crawlers2/supabase/migrations/20260806000001_google_oauth_profiles.sql) with RLS policies and `handle_new_user()` trigger auto-inserting `public.profiles` rows on `auth.users` signup and assigning `role = 'admin'` to `subhamkr11012004@gmail.com`.
+- **Session & Token Verification**: Configured strict session verification via `supabase.auth.getUser()`, automatic JWT refresh via Supabase client, and server-side token invalidation on sign-out.
+- **Pushed to GitHub**: Synchronized all changes to [`https://github.com/SubhamPro11/crawlers2.git`](https://github.com/SubhamPro11/crawlers2.git) on branch `main`.

@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Lock, ArrowRight, AlertCircle } from "lucide-react";
+import { Lock, ArrowRight, AlertCircle, LogIn } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { supabase } from "@/lib/supabase";
+import { supabase, signInWithGoogle } from "@/lib/supabase";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -136,6 +136,20 @@ export default function AdminLoginPage() {
                 )}
               </button>
             </form>
+
+            <div className="relative flex py-2 items-center">
+              <div className="flex-grow border-t border-navy-800" />
+              <span className="flex-shrink mx-3 text-slate-500 text-xs uppercase font-mono">OR</span>
+              <div className="flex-grow border-t border-navy-800" />
+            </div>
+
+            <button
+              onClick={() => signInWithGoogle("/admin")}
+              className="w-full py-2.5 px-4 rounded-lg bg-navy-850 border border-navy-700 text-slate-200 hover:text-lime-accent hover:border-lime-accent/50 transition-colors flex items-center justify-center gap-2 font-mono text-xs cursor-pointer font-bold"
+            >
+              <LogIn className="w-4 h-4 text-lime-accent" />
+              <span>Sign in with Google (OAuth)</span>
+            </button>
 
             <div className="pt-2 text-center text-[11px] text-slate-500 font-sans border-t border-navy-850">
               Session duration: 24h max • RLS Security Active
