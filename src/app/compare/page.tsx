@@ -50,7 +50,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
         </div>
 
         {/* Comparison Matrix Table */}
-        <div className="rounded border border-navy-800 bg-navy-900 overflow-hidden font-sans">
+        <div className="rounded-xl border border-navy-800 bg-navy-900 overflow-hidden font-sans">
           <div className="grid grid-cols-3 border-b border-navy-800 bg-navy-850 p-4 font-mono text-xs text-slate-400 uppercase tracking-wider">
             <div>Feature Matrix</div>
             <div className="text-lime-accent font-bold">{toolA.name}</div>

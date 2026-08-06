@@ -31,7 +31,7 @@ export const Navbar: React.FC = () => {
             onClick={() => {
               window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
             }}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-navy-900 border border-navy-800 text-slate-400 hover:text-lime-accent hover:border-lime-accent/40 transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-navy-900 border border-navy-800 text-slate-400 hover:text-lime-accent hover:border-lime-accent/40 transition-colors"
             title="Open Command Palette"
           >
             <span className="text-[10px]">⌘K CLI</span>
@@ -54,7 +54,7 @@ export const Navbar: React.FC = () => {
           </Link>
           <Link
             href="/submit"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-lime-accent text-navy-950 font-semibold hover:bg-lime-hover transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-lime-accent text-navy-950 font-semibold hover:bg-lime-hover transition-colors"
           >
             <PlusCircle className="w-3.5 h-3.5" /> Submit Tool
           </Link>
@@ -63,7 +63,7 @@ export const Navbar: React.FC = () => {
         {/* Mobile Toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 rounded text-slate-400 hover:text-slate-100 hover:bg-navy-850"
+          className="md:hidden p-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-navy-850"
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

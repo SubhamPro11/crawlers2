@@ -107,7 +107,7 @@ export default function AdminDashboardPage() {
               </span>
               <button
                 onClick={handleLogout}
-                className="px-3 py-1.5 rounded bg-navy-900 border border-navy-700 text-xs text-red-400 hover:bg-red-950/40 hover:border-red-800 transition-colors flex items-center gap-1.5 cursor-pointer"
+                className="px-3 py-1.5 rounded-lg bg-navy-900 border border-navy-700 text-xs text-red-400 hover:bg-red-950/40 hover:border-red-800 transition-colors flex items-center gap-1.5 cursor-pointer"
               >
                 <LogOut className="w-3.5 h-3.5" /> Logout
               </button>
@@ -118,7 +118,7 @@ export default function AdminDashboardPage() {
           <div className="flex items-center gap-2 pt-2 border-t border-navy-850 text-xs">
             <button
               onClick={() => setActiveTab("submissions")}
-              className={`px-4 py-2 rounded flex items-center gap-2 transition-colors cursor-pointer ${
+              className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-colors cursor-pointer ${
                 activeTab === "submissions"
                   ? "bg-lime-accent text-navy-950 font-bold"
                   : "bg-navy-900 text-slate-300 hover:text-lime-accent"
@@ -129,7 +129,7 @@ export default function AdminDashboardPage() {
             </button>
             <button
               onClick={() => setActiveTab("tools")}
-              className={`px-4 py-2 rounded flex items-center gap-2 transition-colors cursor-pointer ${
+              className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-colors cursor-pointer ${
                 activeTab === "tools"
                   ? "bg-lime-accent text-navy-950 font-bold"
                   : "bg-navy-900 text-slate-300 hover:text-lime-accent"
@@ -140,7 +140,7 @@ export default function AdminDashboardPage() {
             </button>
             <button
               onClick={() => setActiveTab("analytics")}
-              className={`px-4 py-2 rounded flex items-center gap-2 transition-colors cursor-pointer ${
+              className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-colors cursor-pointer ${
                 activeTab === "analytics"
                   ? "bg-lime-accent text-navy-950 font-bold"
                   : "bg-navy-900 text-slate-300 hover:text-lime-accent"
@@ -203,13 +203,13 @@ export default function AdminDashboardPage() {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleRejectSubmission(sub.id)}
-                          className="px-3 py-1.5 rounded bg-red-950/60 border border-red-800 text-red-300 hover:bg-red-900 transition-colors flex items-center gap-1 cursor-pointer"
+                          className="px-3 py-1.5 rounded-lg bg-red-950/60 border border-red-800 text-red-300 hover:bg-red-900 transition-colors flex items-center gap-1 cursor-pointer"
                         >
                           <X className="w-3.5 h-3.5" /> Reject
                         </button>
                         <button
                           onClick={() => handleApproveSubmission(sub.id)}
-                          className="px-3 py-1.5 rounded bg-lime-accent text-navy-950 font-bold hover:bg-lime-hover transition-colors flex items-center gap-1 cursor-pointer"
+                          className="px-3 py-1.5 rounded-lg bg-lime-accent text-navy-950 font-bold hover:bg-lime-hover transition-colors flex items-center gap-1 cursor-pointer"
                         >
                           <Check className="w-3.5 h-3.5" /> Approve &amp; Publish
                         </button>
@@ -241,7 +241,7 @@ export default function AdminDashboardPage() {
                       <span>{t.name}</span>
                       <Badge variant="subtle">[{t.pricing_model}]</Badge>
                       {t.has_api && (
-                        <span className="px-1.5 py-0.5 rounded bg-lime-accent/10 border border-lime-accent/30 text-[10px] text-lime-accent">
+                        <span className="px-1.5 py-0.5 rounded-md bg-lime-accent/10 border border-lime-accent/30 text-[10px] text-lime-accent">
                           API Enabled
                         </span>
                       )}
@@ -251,7 +251,7 @@ export default function AdminDashboardPage() {
 
                   <button
                     onClick={() => handleToggleToolActive(t.id)}
-                    className={`px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer ${
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
                       t.is_active
                         ? "bg-navy-850 border border-navy-700 text-lime-accent hover:border-red-700 hover:text-red-400"
                         : "bg-red-950/60 border border-red-800 text-red-300 hover:border-lime-accent hover:text-lime-accent"

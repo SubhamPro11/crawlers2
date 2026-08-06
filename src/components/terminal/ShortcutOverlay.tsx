@@ -89,7 +89,7 @@ export const ShortcutOverlay: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-50 bg-navy-950/85 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="w-full max-w-xl bg-navy-950 border border-lime-accent/50 rounded-lg shadow-2xl overflow-hidden font-mono text-slate-100 animate-in fade-in zoom-in-95 duration-150">
+      <div className="w-full max-w-xl bg-navy-950 border border-lime-accent/50 rounded-xl shadow-2xl overflow-hidden font-mono text-slate-100 animate-in fade-in zoom-in-95 duration-150">
         {/* Header Bar */}
         <div className="bg-navy-900 border-b border-navy-800 px-5 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2 text-sm font-bold text-slate-200">
@@ -98,7 +98,7 @@ export const ShortcutOverlay: React.FC = () => {
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            className="text-slate-500 hover:text-slate-200"
+            className="text-slate-500 hover:text-slate-200 cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -111,27 +111,27 @@ export const ShortcutOverlay: React.FC = () => {
               <Zap className="w-3.5 h-3.5" /> Core Global Actions
             </div>
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="flex items-center justify-between p-2 rounded bg-navy-900 border border-navy-850">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-navy-900 border border-navy-850">
                 <span className="text-slate-300">Shortcut Cheat Sheet</span>
-                <kbd className="px-2 py-0.5 bg-navy-800 border border-navy-700 rounded text-lime-accent font-bold">
+                <kbd className="px-2 py-0.5 bg-navy-800 border border-navy-700 rounded-md text-lime-accent font-bold">
                   ?
                 </kbd>
               </div>
-              <div className="flex items-center justify-between p-2 rounded bg-navy-900 border border-navy-850">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-navy-900 border border-navy-850">
                 <span className="text-slate-300">Command Palette</span>
-                <kbd className="px-2 py-0.5 bg-navy-800 border border-navy-700 rounded text-lime-accent font-bold">
+                <kbd className="px-2 py-0.5 bg-navy-800 border border-navy-700 rounded-md text-lime-accent font-bold">
                   ⌘K / Ctrl+K
                 </kbd>
               </div>
-              <div className="flex items-center justify-between p-2 rounded bg-navy-900 border border-navy-850">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-navy-900 border border-navy-850">
                 <span className="text-slate-300">Focus Search Input</span>
-                <kbd className="px-2 py-0.5 bg-navy-800 border border-navy-700 rounded text-lime-accent font-bold">
+                <kbd className="px-2 py-0.5 bg-navy-800 border border-navy-700 rounded-md text-lime-accent font-bold">
                   /
                 </kbd>
               </div>
-              <div className="flex items-center justify-between p-2 rounded bg-navy-900 border border-navy-850">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-navy-900 border border-navy-850">
                 <span className="text-slate-300">Dismiss Overlay</span>
-                <kbd className="px-2 py-0.5 bg-navy-800 border border-navy-700 rounded text-slate-400">
+                <kbd className="px-2 py-0.5 bg-navy-800 border border-navy-700 rounded-md text-slate-400">
                   ESC
                 </kbd>
               </div>
@@ -144,46 +144,46 @@ export const ShortcutOverlay: React.FC = () => {
               <Compass className="w-3.5 h-3.5" /> Quick Navigation Chords (Press &apos;g&apos; then key)
             </div>
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="flex items-center justify-between p-2 rounded bg-navy-900 border border-navy-850">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-navy-900 border border-navy-850">
                 <span className="text-slate-300">Go to Homepage</span>
                 <div className="flex gap-1">
-                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded text-slate-300">g</kbd>
-                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded text-cyan-400 font-bold">h</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded-md text-slate-300">g</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded-md text-cyan-400 font-bold">h</kbd>
                 </div>
               </div>
-              <div className="flex items-center justify-between p-2 rounded bg-navy-900 border border-navy-850">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-navy-900 border border-navy-850">
                 <span className="text-slate-300">Go to API Registry</span>
                 <div className="flex gap-1">
-                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded text-slate-300">g</kbd>
-                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded text-cyan-400 font-bold">a</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded-md text-slate-300">g</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded-md text-cyan-400 font-bold">a</kbd>
                 </div>
               </div>
-              <div className="flex items-center justify-between p-2 rounded bg-navy-900 border border-navy-850">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-navy-900 border border-navy-850">
                 <span className="text-slate-300">Go to Tool Compare</span>
                 <div className="flex gap-1">
-                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded text-slate-300">g</kbd>
-                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded text-cyan-400 font-bold">c</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded-md text-slate-300">g</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded-md text-cyan-400 font-bold">c</kbd>
                 </div>
               </div>
-              <div className="flex items-center justify-between p-2 rounded bg-navy-900 border border-navy-850">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-navy-900 border border-navy-850">
                 <span className="text-slate-300">Surprise Me (Random)</span>
                 <div className="flex gap-1">
-                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded text-slate-300">g</kbd>
-                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded text-cyan-400 font-bold">r</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded-md text-slate-300">g</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded-md text-cyan-400 font-bold">r</kbd>
                 </div>
               </div>
-              <div className="flex items-center justify-between p-2 rounded bg-navy-900 border border-navy-850">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-navy-900 border border-navy-850">
                 <span className="text-slate-300">Go to Changelog</span>
                 <div className="flex gap-1">
-                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded text-slate-300">g</kbd>
-                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded text-cyan-400 font-bold">l</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded-md text-slate-300">g</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded-md text-cyan-400 font-bold">l</kbd>
                 </div>
               </div>
-              <div className="flex items-center justify-between p-2 rounded bg-navy-900 border border-navy-850">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-navy-900 border border-navy-850">
                 <span className="text-slate-300">Submit Tool</span>
                 <div className="flex gap-1">
-                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded text-slate-300">g</kbd>
-                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded text-cyan-400 font-bold">s</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded-md text-slate-300">g</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-navy-800 rounded-md text-cyan-400 font-bold">s</kbd>
                 </div>
               </div>
             </div>

@@ -63,7 +63,7 @@ export const SmartSearch: React.FC = () => {
 
       {/* Floating Results Popup */}
       {isOpen && (
-        <div className="absolute left-0 right-0 top-full mt-2 z-50 bg-navy-900 border border-navy-700 rounded shadow-xl max-h-96 overflow-y-auto divide-y divide-navy-850">
+        <div className="absolute left-0 right-0 top-full mt-2 z-50 bg-navy-900 border border-navy-700 rounded-xl shadow-xl max-h-96 overflow-y-auto divide-y divide-navy-850">
           <div className="p-2 font-mono text-[11px] text-slate-400 bg-navy-950 flex items-center justify-between border-b border-navy-800">
             <span>Query: &quot;{query}&quot;</span>
             <span>{results.length} Matches Found</span>
@@ -93,7 +93,7 @@ export const SmartSearch: React.FC = () => {
                       {tool.name}
                     </span>
                     {tool.has_api && (
-                      <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-navy-800 text-lime-accent border border-lime-accent/20 flex items-center gap-1">
+                      <span className="font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-navy-800 text-lime-accent border border-lime-accent/20 flex items-center gap-1">
                         <Code2 className="w-3 h-3" /> API
                       </span>
                     )}

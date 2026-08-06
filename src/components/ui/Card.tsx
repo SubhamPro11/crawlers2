@@ -37,7 +37,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({
 }) => {
   return (
     <div
-      className={`group relative flex flex-col justify-between p-5 rounded border border-navy-800 bg-navy-900/90 hover:border-navy-600 transition-all duration-200 ${className}`}
+      className={`group relative flex flex-col justify-between p-5 rounded-xl border border-navy-800 bg-navy-900/90 hover:border-navy-600 transition-all duration-200 ${className}`}
     >
       <div>
         {/* Card Header: Name, Pricing Badge & Actions */}
@@ -52,7 +52,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({
             {hasApi && (
               <span
                 title="API Available"
-                className="inline-flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 rounded bg-navy-800 text-lime-accent border border-lime-accent/20"
+                className="inline-flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-navy-800 text-lime-accent border border-lime-accent/20"
               >
                 <Code2 className="w-3 h-3" /> API
               </span>
@@ -66,7 +66,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({
                   e.preventDefault();
                   onBookmarkToggle(id);
                 }}
-                className={`p-1.5 rounded transition-colors ${
+                className={`p-1.5 rounded-lg transition-colors ${
                   isBookmarked
                     ? "text-lime-accent bg-lime-accent/10 border border-lime-accent/30"
                     : "text-slate-500 hover:text-slate-300 hover:bg-navy-800"
@@ -107,7 +107,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({
           {tags.slice(0, 3).map((tag) => (
             <span
               key={tag}
-              className="font-mono text-[11px] text-slate-400 bg-navy-850 px-2 py-0.5 rounded border border-navy-800"
+              className="font-mono text-[11px] text-slate-400 bg-navy-850 px-2 py-0.5 rounded-md border border-navy-800"
             >
               #{tag}
             </span>

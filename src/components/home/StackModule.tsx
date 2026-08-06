@@ -16,8 +16,8 @@ export const StackModule: React.FC<StackModuleProps> = ({ stacks }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
       {/* Featured Primary Stack (Spans 7 Cols) */}
-      <div className="lg:col-span-7 p-6 sm:p-8 rounded border border-lime-accent/30 bg-navy-900/95 flex flex-col justify-between relative overflow-hidden group">
-        <div className="absolute top-0 right-0 px-3 py-1 bg-lime-accent text-navy-950 font-mono text-[10px] font-bold uppercase tracking-wider">
+      <div className="lg:col-span-7 p-6 sm:p-8 rounded-xl border border-lime-accent/30 bg-navy-900/95 flex flex-col justify-between relative overflow-hidden group">
+        <div className="absolute top-0 right-0 px-3 py-1 bg-lime-accent text-navy-950 font-mono text-[10px] font-bold uppercase tracking-wider rounded-bl-lg">
           Primary Featured Stack
         </div>
 
@@ -44,7 +44,7 @@ export const StackModule: React.FC<StackModuleProps> = ({ stacks }) => {
               {primaryStack.toolSlugs.map((slug) => (
                 <span
                   key={slug}
-                  className="px-2.5 py-1 rounded bg-navy-950 text-slate-200 border border-navy-800"
+                  className="px-2.5 py-1 rounded-md bg-navy-950 text-slate-200 border border-navy-800"
                 >
                   ${slug}
                 </span>
@@ -69,7 +69,7 @@ export const StackModule: React.FC<StackModuleProps> = ({ stacks }) => {
         {secondaryStacks.map((stack) => (
           <div
             key={stack.id}
-            className="p-5 rounded border border-navy-800 bg-navy-900/70 hover:border-navy-700 transition-colors flex-1 flex flex-col justify-between"
+            className="p-5 rounded-xl border border-navy-800 bg-navy-900/70 hover:border-navy-700 transition-colors flex-1 flex flex-col justify-between"
           >
             <div>
               <div className="flex items-center justify-between mb-2">

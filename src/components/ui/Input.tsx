@@ -30,7 +30,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
           <input
             ref={ref}
-            className={`w-full bg-navy-900 border text-slate-100 placeholder-slate-500 rounded px-3 py-2 text-sm font-sans transition-all duration-150 focus:outline-none focus:border-lime-accent focus:ring-1 focus:ring-lime-accent ${
+            className={`w-full bg-navy-900 border text-slate-100 placeholder-slate-500 rounded-lg px-3 py-2 text-sm font-sans transition-all duration-150 focus:outline-none focus:border-lime-accent focus:ring-1 focus:ring-lime-accent ${
               promptPrefix ? "pl-9" : leftIcon ? "pl-9" : "pl-3"
             } ${rightElement ? "pr-9" : "pr-3"} ${
               error ? "border-red-600 focus:border-red-500 focus:ring-red-500" : "border-navy-700"

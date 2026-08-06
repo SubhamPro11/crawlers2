@@ -109,14 +109,14 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-3 py-1.5 rounded bg-navy-900 border border-navy-800 text-slate-400 hover:text-slate-200"
+                  className="px-3 py-1.5 rounded-lg bg-navy-900 border border-navy-800 text-slate-400 hover:text-slate-200 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-4 py-1.5 rounded bg-amber-400 text-navy-950 font-bold hover:bg-amber-300 transition-colors cursor-pointer"
+                  className="px-4 py-1.5 rounded-lg bg-amber-400 text-navy-950 font-bold hover:bg-amber-300 transition-colors cursor-pointer"
                 >
                   {loading ? "Submitting..." : "Submit Report"}
                 </button>

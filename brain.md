@@ -96,6 +96,11 @@ Full taxonomy seeds defined in [`supabase/seed.sql`](file:///d:/vs%20code/crawle
   - `lime-accent` (`#A3E635`): High-contrast terminal lime accent
   - `lime-hover` (`#BCF04D`): Hover accent
   - `lime-border` (`rgba(163, 230, 53, 0.3)`): Subtle focus / card highlight glow
+- **Corner Radius Scale**:
+  - `rounded-sm` (`6px` / `--radius-sm`): Tag chips (`#cli`), category pills, small icon chips
+  - `rounded-md` (`10px` / `--radius-md`): Buttons (`Button.tsx`), form inputs (`Input.tsx`), search inputs, CTA action controls
+  - `rounded-lg` (`16px` / `--radius-lg`): Cards (`ToolCard`, `StackModule`, `TaxonomyGrid`), overlay panels (`CommandPalette`, `ShortcutOverlay`, `LinkReportModal`), form cards
+  - `rounded-none` (`0px`): Terminal bracket tags (`[FREE]`, `[FREEMIUM]`, `[PAID]`, `[OPEN-SOURCE]`) preserved as sharp text tokens
 - **Typography Stack**:
   - `font-mono` (`JetBrains_Mono`): Headings, badges, tags, code snippets, prompt prefixes (`$>`)
   - `font-sans` (`Inter`): Body text, longform descriptions, subheadings
@@ -308,3 +313,10 @@ Full taxonomy seeds defined in [`supabase/seed.sql`](file:///d:/vs%20code/crawle
 - **Zero ESLint Warnings**: Verified ESLint check across all TSX and TS files completes with 0 errors and 0 warnings.
 - **Production Build Speedup**: Next.js 16 (Turbopack) compilation time accelerated to **1.15s** with page generation completing in **645ms**.
 - **Pushed to GitHub**: All optimizations pushed to [`https://github.com/SubhamPro11/crawlers2.git`](https://github.com/SubhamPro11/crawlers2.git) on branch `main`.
+
+### Smooth Corners & Rounded Buttons Pass
+- **Systematic Scale Enforced**: Standardized UI corner radii across `rounded-xl` (16px cards/containers/modals), `rounded-lg` (10px buttons/inputs/controls), `rounded-md` (6px tag chips/pills), and `rounded-none` (terminal bracket badges).
+- **Rounded Buttons Site-Wide**: Applied `rounded-lg` button radius scale to all primary/secondary `Button.tsx` instances, Navbar CTAs (`Submit Tool`, `⌘K CLI`), search bar controls, and admin action buttons.
+- **Preserved Terminal Identities**: Kept `[FREE]`, `[FREEMIUM]`, `[PAID]`, `[OPEN-SOURCE]` terminal bracket badges sharp (`rounded-none`).
+- **Accessibility Verification**: Verified focus ring outlines (`focus:ring-2 focus:ring-lime-accent/50`) render cleanly against rounded button contours.
+- **Pushed to GitHub**: Synchronized all changes to [`https://github.com/SubhamPro11/crawlers2.git`](https://github.com/SubhamPro11/crawlers2.git) on branch `main`.

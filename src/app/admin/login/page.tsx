@@ -117,14 +117,14 @@ export default function AdminLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full px-3.5 py-2.5 rounded bg-navy-900 border border-navy-800 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-lime-accent"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-navy-900 border border-navy-800 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-lime-accent"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full mt-2 py-3 px-4 rounded bg-lime-accent text-navy-950 font-bold hover:bg-lime-hover transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full mt-2 py-3 px-4 rounded-lg bg-lime-accent text-navy-950 font-bold hover:bg-lime-hover transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {loading ? (
                   <span>Authenticating...</span>

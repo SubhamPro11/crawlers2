@@ -69,7 +69,7 @@ export default function SubmitPage() {
 
         {/* Page Header */}
         <div className="border-b border-navy-800 pb-6 space-y-2">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-lime-accent/10 border border-lime-accent/30 font-mono text-xs text-lime-accent">
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-lime-accent/10 border border-lime-accent/30 font-mono text-xs text-lime-accent">
             <PlusCircle className="w-3.5 h-3.5" />
             <span>Community Tool Indexing</span>
           </div>
@@ -82,7 +82,7 @@ export default function SubmitPage() {
         </div>
 
         {submitted ? (
-          <div className="p-8 rounded border border-lime-accent/40 bg-navy-900 text-center space-y-4 font-mono">
+          <div className="p-8 rounded-xl border border-lime-accent/40 bg-navy-900 text-center space-y-4 font-mono">
             <div className="w-12 h-12 rounded-full bg-lime-accent/10 text-lime-accent flex items-center justify-center mx-auto border border-lime-accent/30">
               <CheckCircle2 className="w-6 h-6" />
             </div>
@@ -97,9 +97,9 @@ export default function SubmitPage() {
             </div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="p-8 rounded border border-navy-800 bg-navy-900 space-y-6">
+          <form onSubmit={handleSubmit} className="p-8 rounded-xl border border-navy-800 bg-navy-900 space-y-6">
             {errorMsg && (
-              <div className="p-4 rounded bg-red-950/50 border border-red-800 text-red-300 font-mono text-xs flex items-center gap-2">
+              <div className="p-4 rounded-lg bg-red-950/50 border border-red-800 text-red-300 font-mono text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
                 <span>{errorMsg}</span>
               </div>

@@ -16,7 +16,7 @@ export const TaxonomyGrid: React.FC<TaxonomyGridProps> = ({ sections }) => {
         return (
           <div
             key={section.slug}
-            className={`p-6 rounded border border-navy-800 bg-navy-900/60 hover:border-navy-700 transition-all flex flex-col justify-between ${
+            className={`p-6 rounded-xl border border-navy-800 bg-navy-900/60 hover:border-navy-700 transition-all flex flex-col justify-between ${
               isFeatured
                 ? "md:col-span-2 lg:col-span-2 border-lime-accent/40 bg-navy-900"
                 : ""

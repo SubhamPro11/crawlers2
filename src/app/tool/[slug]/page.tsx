@@ -89,7 +89,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
         </div>
 
         {/* Tool Header Card */}
-        <div className="p-8 rounded border border-navy-800 bg-navy-900 space-y-6">
+        <div className="p-8 rounded-xl border border-navy-800 bg-navy-900 space-y-6">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="space-y-2">
               <div className="flex items-center gap-3">
@@ -98,7 +98,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
                 </h1>
                 <Badge pricingModel={tool.pricing_model}>{tool.pricing_model}</Badge>
                 {tool.has_api && (
-                  <span className="inline-flex items-center gap-1 font-mono text-xs px-2 py-0.5 rounded bg-lime-accent/10 text-lime-accent border border-lime-accent/30">
+                  <span className="inline-flex items-center gap-1 font-mono text-xs px-2 py-0.5 rounded-md bg-lime-accent/10 text-lime-accent border border-lime-accent/30">
                     <Code2 className="w-3.5 h-3.5" /> API Access Available
                   </span>
                 )}
@@ -143,7 +143,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
           <div className="border-t border-navy-850 pt-4 flex flex-wrap items-center gap-2 font-mono text-xs">
             <span className="text-slate-500">Tags:</span>
             {tags.map((tag) => (
-              <span key={tag} className="px-2.5 py-1 rounded bg-navy-850 text-slate-300 border border-navy-700">
+              <span key={tag} className="px-2.5 py-1 rounded-md bg-navy-850 text-slate-300 border border-navy-700">
                 #{tag}
               </span>
             ))}
@@ -159,7 +159,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
         </div>
 
         {/* Third-Party Direct Link Notice (Enforcing Hard Constraint) */}
-        <div className="p-4 rounded border border-navy-800 bg-navy-950 font-mono text-xs text-slate-400 flex items-center justify-between">
+        <div className="p-4 rounded-xl border border-navy-800 bg-navy-950 font-mono text-xs text-slate-400 flex items-center justify-between">
           <span>
             Note: Crawlers links directly to official provider sites. We do not iframe or embed third-party web pages.
           </span>

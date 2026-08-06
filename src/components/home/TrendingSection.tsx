@@ -29,7 +29,7 @@ export const TrendingSection: React.FC<TrendingSectionProps> = ({
           </p>
         </div>
 
-        <div className="font-mono text-xs text-slate-500 bg-navy-900 border border-navy-800 px-3 py-1.5 rounded shrink-0">
+        <div className="font-mono text-xs text-slate-500 bg-navy-900 border border-navy-800 px-3 py-1.5 rounded-lg shrink-0">
           Analytics Status: <span className="text-slate-300 font-bold">Live Audit Mode</span>
         </div>
       </div>
