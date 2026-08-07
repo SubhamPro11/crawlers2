@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Flag, Copy, Check } from "lucide-react";
+import { Flag, Copy, Check, ArrowLeftRight } from "lucide-react";
 import { LinkReportModal } from "./LinkReportModal";
+import { useCompare } from "@/context/CompareContext";
 
 interface ToolDetailClientActionsProps {
   toolId: string;
@@ -21,6 +22,8 @@ export const ToolDetailClientActions: React.FC<ToolDetailClientActionsProps> = (
 }) => {
   const [reportOpen, setReportOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const { toggleCompare, isInCompare } = useCompare();
+  const isQueued = isInCompare(toolId) || isInCompare(toolSlug);
 
   const apiSnippet = `curl "https://crawlers.dev/api/tools?tag=${toolSlug}"`;
 
@@ -37,12 +40,31 @@ export const ToolDetailClientActions: React.FC<ToolDetailClientActionsProps> = (
           {hasApi && (
             <button
               onClick={handleCopyApi}
-              className="px-4 py-1.5 rounded-full bg-navy-850 border border-navy-700 text-lime-accent hover:bg-navy-800 transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-1.5 rounded-full bg-navy-850 border border-navy-700 text-lime-accent hover:bg-navy-800 transition-colors flex items-center gap-1.5 cursor-pointer font-semibold"
             >
               {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copied ? "Copied API Endpoint!" : "Copy API Curl Snippet"}</span>
             </button>
           )}
+
+          <button
+            onClick={() =>
+              toggleCompare({
+                id: toolId,
+                name: toolName,
+                slug: toolSlug,
+                url: toolUrl,
+              })
+            }
+            className={`px-4 py-1.5 rounded-full transition-all flex items-center gap-1.5 cursor-pointer font-bold border ${
+              isQueued
+                ? "bg-lime-accent/15 text-lime-accent border-lime-accent/40"
+                : "bg-navy-900 border-navy-800 text-slate-300 hover:border-lime-accent/50 hover:text-lime-accent"
+            }`}
+          >
+            <ArrowLeftRight className="w-3.5 h-3.5" />
+            <span>{isQueued ? "Queued in Compare" : "+ Add to Compare"}</span>
+          </button>
         </div>
 
         {copied && (

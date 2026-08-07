@@ -2,12 +2,41 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Terminal, CornerDownLeft, Shuffle, GitCompare, Search, X } from "lucide-react";
+import { Terminal, CornerDownLeft, Shuffle, ArrowLeftRight, Search, X } from "lucide-react";
 import { MOCK_TOOLS } from "@/lib/mockData";
+
+interface SuggestedCommand {
+  cmd: string;
+  desc: string;
+  icon: React.ComponentType<{ className?: string }>;
+  iconColor: string;
+}
+
+const SUGGESTED_COMMANDS: SuggestedCommand[] = [
+  {
+    cmd: "crawlers --random",
+    desc: "- Surprise me with a random tool detail page",
+    icon: Shuffle,
+    iconColor: "text-lime-accent",
+  },
+  {
+    cmd: "crawlers --compare ollama cursor",
+    desc: "- Side-by-side tool feature comparison matrix",
+    icon: ArrowLeftRight,
+    iconColor: "text-emerald-400",
+  },
+  {
+    cmd: "crawlers --search devtools",
+    desc: "- Instant directory category & tool query",
+    icon: Search,
+    iconColor: "text-amber-400",
+  },
+];
 
 export const CommandPalette: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -29,6 +58,7 @@ export const CommandPalette: React.FC = () => {
 
   useEffect(() => {
     if (isOpen) {
+      setSelectedIndex(0);
       setTimeout(() => inputRef.current?.focus(), 50);
     }
   }, [isOpen]);
@@ -38,7 +68,7 @@ export const CommandPalette: React.FC = () => {
     setInput("");
   };
 
-  // Command handlers
+  // Command execution router
   const handleExecuteCommand = (commandStr: string) => {
     const trimmed = commandStr.trim();
     if (!trimmed) return;
@@ -99,15 +129,15 @@ export const CommandPalette: React.FC = () => {
     <div className="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
       <div className="w-full max-w-2xl bg-navy-950 border border-lime-accent/40 rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden font-mono text-slate-100 animate-in slide-in-from-bottom-4 sm:zoom-in-95 duration-150">
         {/* Terminal Title Bar */}
-        <div className="bg-navy-900 border-b border-navy-800 px-4 py-2 flex items-center justify-between text-xs text-slate-400">
+        <div className="bg-navy-900 border-b border-navy-800 px-4 py-2.5 flex items-center justify-between text-xs text-slate-400">
           <div className="flex items-center gap-2">
             <span className="font-bold text-slate-200 flex items-center gap-1.5">
               <Terminal className="w-3.5 h-3.5 text-lime-accent" /> crawlers-cli v1.0.0
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-[10px] text-slate-500">ESC to close</span>
-            <button onClick={handleClose} className="text-slate-500 hover:text-slate-200">
+            <span className="text-[10px] text-slate-500 font-sans">Press ESC to exit</span>
+            <button onClick={handleClose} className="text-slate-500 hover:text-slate-200 cursor-pointer">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -115,78 +145,74 @@ export const CommandPalette: React.FC = () => {
 
         {/* Command Input Bar */}
         <div className="p-4 bg-navy-900/60 border-b border-navy-850 flex items-center gap-3">
-          <span className="text-lime-accent font-bold">&gt;</span>
+          <span className="text-lime-accent font-bold text-base">&gt;</span>
           <input
             ref={inputRef}
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === "ArrowDown") {
                 e.preventDefault();
-                handleExecuteCommand(input);
+                setSelectedIndex((prev) => (prev + 1) % SUGGESTED_COMMANDS.length);
+              } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                setSelectedIndex((prev) => (prev - 1 + SUGGESTED_COMMANDS.length) % SUGGESTED_COMMANDS.length);
+              } else if (e.key === "Enter") {
+                e.preventDefault();
+                if (input.trim()) {
+                  handleExecuteCommand(input);
+                } else {
+                  handleExecuteCommand(SUGGESTED_COMMANDS[selectedIndex].cmd);
+                }
               }
             }}
-            placeholder="type 'crawlers --random', 'crawlers --compare ollama cursor', or search..."
-            className="flex-1 bg-transparent text-slate-100 placeholder-slate-500 focus:outline-none font-mono text-sm"
+            placeholder="Type 'crawlers --random', '--compare', or search tools..."
+            className="flex-1 bg-transparent text-slate-100 placeholder-slate-500 focus:outline-none font-mono text-sm truncate"
           />
-          <kbd className="px-2 py-0.5 text-[10px] bg-navy-850 border border-navy-700 rounded text-slate-400">
-            ENTER
+          <kbd className="px-2 py-1 text-[10px] bg-navy-850 border border-navy-700 rounded text-slate-400 font-bold shrink-0">
+            ENTER ↵
           </kbd>
         </div>
 
-        {/* Preset Command Hints */}
-        <div className="p-4 space-y-3 max-h-80 overflow-y-auto divide-y divide-navy-850">
-          <div className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+        {/* Suggested Terminal Commands List */}
+        <div className="p-4 space-y-2 max-h-80 overflow-y-auto">
+          <div className="text-[11px] text-slate-500 uppercase tracking-wider font-bold mb-2">
             Suggested Terminal Commands
           </div>
 
-          <div
-            onClick={() => handleExecuteCommand("crawlers --random")}
-            className="pt-2 flex items-center justify-between p-2 rounded hover:bg-navy-850 cursor-pointer transition-colors group"
-          >
-            <div className="flex items-center gap-2 text-xs">
-              <Shuffle className="w-4 h-4 text-lime-accent" />
-              <span className="text-slate-200 font-bold group-hover:text-lime-accent">
-                crawlers --random
-              </span>
-              <span className="text-slate-500 text-[11px]">- Surprise me with a random tool</span>
-            </div>
-            <CornerDownLeft className="w-3.5 h-3.5 text-slate-600 group-hover:text-slate-300" />
-          </div>
-
-          <div
-            onClick={() => handleExecuteCommand("crawlers --compare ollama cursor")}
-            className="pt-2 flex items-center justify-between p-2 rounded hover:bg-navy-850 cursor-pointer transition-colors group"
-          >
-            <div className="flex items-center gap-2 text-xs">
-              <GitCompare className="w-4 h-4 text-cyan-400" />
-              <span className="text-slate-200 font-bold group-hover:text-cyan-400">
-                crawlers --compare ollama cursor
-              </span>
-              <span className="text-slate-500 text-[11px]">- Side-by-side tool comparison</span>
-            </div>
-            <CornerDownLeft className="w-3.5 h-3.5 text-slate-600 group-hover:text-slate-300" />
-          </div>
-
-          <div
-            onClick={() => handleExecuteCommand("crawlers --search devtools")}
-            className="pt-2 flex items-center justify-between p-2 rounded hover:bg-navy-850 cursor-pointer transition-colors group"
-          >
-            <div className="flex items-center gap-2 text-xs">
-              <Search className="w-4 h-4 text-amber-400" />
-              <span className="text-slate-200 font-bold group-hover:text-amber-400">
-                crawlers --search devtools
-              </span>
-              <span className="text-slate-500 text-[11px]">- Instant directory category query</span>
-            </div>
-            <CornerDownLeft className="w-3.5 h-3.5 text-slate-600 group-hover:text-slate-300" />
-          </div>
+          {SUGGESTED_COMMANDS.map((item, index) => {
+            const IconComponent = item.icon;
+            const isSelected = selectedIndex === index;
+            return (
+              <div
+                key={item.cmd}
+                onClick={() => handleExecuteCommand(item.cmd)}
+                onMouseEnter={() => setSelectedIndex(index)}
+                className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer group ${
+                  isSelected
+                    ? "bg-navy-900 border-lime-accent/50 shadow-sm"
+                    : "bg-navy-950/60 border-navy-850 hover:bg-navy-900 hover:border-navy-750"
+                }`}
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <IconComponent className={`w-4 h-4 shrink-0 ${item.iconColor}`} />
+                  <span className={`font-bold text-xs font-mono transition-colors truncate ${isSelected ? "text-lime-accent" : "text-slate-200"}`}>
+                    {item.cmd}
+                  </span>
+                  <span className="text-slate-400 text-[11px] font-sans truncate hidden sm:inline">
+                    {item.desc}
+                  </span>
+                </div>
+                <CornerDownLeft className={`w-3.5 h-3.5 shrink-0 transition-colors ${isSelected ? "text-lime-accent" : "text-slate-600"}`} />
+              </div>
+            );
+          })}
         </div>
 
         {/* Footer info */}
-        <div className="bg-navy-950 border-t border-navy-850 px-4 py-2 text-[11px] text-slate-500 flex items-center justify-between">
-          <span>Tip: Press <kbd className="text-slate-300 font-bold">Cmd+K</kbd> anywhere to open CLI</span>
+        <div className="bg-navy-950 border-t border-navy-850 px-4 py-2.5 text-[11px] text-slate-500 flex items-center justify-between font-mono">
+          <span>Tip: Press <kbd className="text-slate-300 font-bold px-1 bg-navy-850 border border-navy-750 rounded">Cmd+K</kbd> anywhere to open CLI</span>
           <span className="text-lime-accent font-semibold">Crawlers Terminal Engine</span>
         </div>
       </div>
