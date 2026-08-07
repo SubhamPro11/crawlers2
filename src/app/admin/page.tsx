@@ -16,12 +16,14 @@ import { MOCK_TOOLS } from "@/lib/mockData";
 import {
   fetchPendingSubmissions,
   updateSubmissionStatus,
+  fetchPendingLinkReports,
+  updateLinkReportStatus,
   fetchTools,
   fetchAdminAnalytics,
   AdminAnalyticsData,
   supabase,
 } from "@/lib/supabase";
-import { Submission, Tool } from "@/types/database";
+import { Submission, Tool, LinkReport } from "@/types/database";
 
 export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<"submissions" | "tools" | "analytics">("submissions");
@@ -30,6 +32,7 @@ export default function AdminDashboardPage() {
 
   // Real community tool submissions & analytics fetched from database
   const [pendingSubmissions, setPendingSubmissions] = useState<Submission[]>([]);
+  const [pendingReports, setPendingReports] = useState<LinkReport[]>([]);
   const [activeTools, setActiveTools] = useState<Tool[]>(MOCK_TOOLS);
   const [analyticsData, setAnalyticsData] = useState<AdminAnalyticsData | null>(null);
 
@@ -76,6 +79,8 @@ export default function AdminDashboardPage() {
     const loadDashboardData = async () => {
       const realSubmissions = await fetchPendingSubmissions();
       setPendingSubmissions(realSubmissions);
+      const realReports = await fetchPendingLinkReports();
+      setPendingReports(realReports);
       const toolsFromDb = await fetchTools();
       if (toolsFromDb && toolsFromDb.length > 0) {
         setActiveTools(toolsFromDb);
@@ -103,6 +108,16 @@ export default function AdminDashboardPage() {
   const handleRejectSubmission = async (id: string) => {
     await updateSubmissionStatus(id, "rejected");
     setPendingSubmissions((prev) => prev.filter((s) => s.id !== id));
+  };
+
+  const handleResolveReport = async (id: string) => {
+    await updateLinkReportStatus(id, "resolved");
+    setPendingReports((prev) => prev.filter((r) => r.id !== id));
+  };
+
+  const handleDismissReport = async (id: string) => {
+    await updateLinkReportStatus(id, "dismissed");
+    setPendingReports((prev) => prev.filter((r) => r.id !== id));
   };
 
   const handleToggleToolActive = (id: string) => {
@@ -160,7 +175,7 @@ export default function AdminDashboardPage() {
               }`}
             >
               <Inbox className="w-4 h-4" />
-              <span>Review Queue ({pendingSubmissions.length})</span>
+              <span>Review Queue ({pendingSubmissions.length + pendingReports.length})</span>
             </button>
             <button
               onClick={() => setActiveTab("tools")}
@@ -187,13 +202,72 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* Tab 1: Submission Review Queue */}
+        {/* Tab 1: Submission & Report Review Queue */}
         {activeTab === "submissions" && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between text-xs text-slate-400 border-b border-navy-850 pb-2">
-              <span>Pending Community Tool Submissions</span>
-              <span>{pendingSubmissions.length} items awaiting audit</span>
+          <div className="space-y-8">
+            {/* Reported Broken Links Section */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between text-xs text-slate-400 border-b border-navy-850 pb-2">
+                <span className="font-bold text-amber-400">Reported Broken Links & Licensing Alerts</span>
+                <span>{pendingReports.length} reports awaiting maintainer action</span>
+              </div>
+
+              {pendingReports.length === 0 ? (
+                <div className="p-6 rounded border border-navy-800 bg-navy-900/60 text-center space-y-1 text-slate-400">
+                  <div className="text-xs font-mono text-slate-400 font-semibold">No Pending Broken Link Reports</div>
+                  <p className="text-[11px] font-sans text-slate-500">
+                    All user reports have been resolved or dismissed.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {pendingReports.map((report) => (
+                    <div
+                      key={report.id}
+                      className="rounded border border-amber-500/30 bg-navy-900/90 p-4 space-y-3"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div className="flex items-center gap-3">
+                          <span className="font-bold text-slate-100 text-sm">
+                            {report.tools?.name || "Target Tool"}
+                          </span>
+                          <Badge variant="outline" className="text-amber-400 border-amber-500/30 bg-amber-500/10">{report.reason}</Badge>
+                          <span className="text-[11px] text-slate-500 font-sans">
+                            Reported: {new Date(report.reported_at).toLocaleDateString()}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleResolveReport(report.id)}
+                            className="px-3 py-1 rounded-full bg-lime-accent/10 border border-lime-accent/30 text-lime-accent hover:bg-lime-accent hover:text-navy-950 font-bold transition-all text-xs flex items-center gap-1 cursor-pointer"
+                          >
+                            <Check className="w-3.5 h-3.5" /> Resolve Issue
+                          </button>
+                          <button
+                            onClick={() => handleDismissReport(report.id)}
+                            className="px-3 py-1 rounded-full bg-navy-950 border border-navy-800 text-slate-400 hover:text-red-400 hover:border-red-900 transition-colors text-xs flex items-center gap-1 cursor-pointer font-semibold"
+                          >
+                            <X className="w-3.5 h-3.5" /> Dismiss
+                          </button>
+                        </div>
+                      </div>
+                      {report.tools?.url && (
+                        <div className="text-[11px] text-slate-400 font-sans">
+                          Target URL: <a href={report.tools.url} target="_blank" rel="noopener noreferrer" className="text-lime-accent hover:underline">{report.tools.url}</a>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+
+            {/* Pending Community Submissions Section */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between text-xs text-slate-400 border-b border-navy-850 pb-2">
+                <span className="font-bold text-slate-200">Pending Community Tool Submissions</span>
+                <span>{pendingSubmissions.length} items awaiting audit</span>
+              </div>
 
             {pendingSubmissions.length === 0 ? (
               <div className="p-8 rounded border border-navy-800 bg-navy-900 text-center space-y-2 text-slate-400">
@@ -255,6 +329,7 @@ export default function AdminDashboardPage() {
               </div>
             )}
           </div>
+        </div>
         )}
 
         {/* Tab 2: Tool Management */}

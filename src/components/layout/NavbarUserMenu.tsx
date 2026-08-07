@@ -123,7 +123,7 @@ export const NavbarUserMenu: React.FC = () => {
       className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-navy-900 border border-navy-700 text-slate-200 hover:text-lime-accent hover:border-lime-accent/50 transition-all font-mono text-xs font-semibold cursor-pointer"
     >
       <LogIn className="w-3.5 h-3.5 text-lime-accent" />
-      <span>&gt; google_login</span>
+      <span>Sign in with Google</span>
     </button>
   );
 };

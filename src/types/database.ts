@@ -71,6 +71,11 @@ export interface LinkReport {
   tool_id: string;
   reason?: string | null;
   reporter_ip?: string | null;
+  reporter_id?: string | null;
   status: "pending" | "resolved" | "dismissed";
   reported_at: string;
+  tools?: {
+    name: string;
+    url: string;
+  } | null;
 }

@@ -74,6 +74,7 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
           reason: reason,
           status: "pending",
           reported_at: new Date().toISOString(),
+          reporter_id: user?.id ?? null,
         },
       ]);
 
@@ -129,7 +130,7 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
                   className="w-full py-2.5 px-4 rounded-full bg-navy-850 border border-navy-700 text-slate-200 hover:text-lime-accent hover:border-lime-accent/50 transition-colors flex items-center justify-center gap-2 text-xs font-bold cursor-pointer"
                 >
                   <LogIn className="w-4 h-4 text-lime-accent" />
-                  <span>Sign in with Google (OAuth)</span>
+                  <span>Sign in with Google</span>
                 </button>
               </div>
             </div>

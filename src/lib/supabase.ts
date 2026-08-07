@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { Section, Category, Tool, Submission } from "@/types/database";
+import { Section, Category, Tool, Submission, LinkReport } from "@/types/database";
 import { TAXONOMY_SEEDS } from "./taxonomy";
 import { MOCK_TOOLS } from "./mockData";
 
@@ -370,6 +370,39 @@ export async function updateSubmissionStatus(
   if (supabase) {
     const { error } = await supabase
       .from("submissions")
+      .update({ status })
+      .eq("id", id);
+
+    if (error) {
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  }
+  return { success: true };
+}
+
+export async function fetchPendingLinkReports(): Promise<LinkReport[]> {
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("link_reports")
+      .select("*, tools(name, url)")
+      .eq("status", "pending")
+      .order("reported_at", { ascending: false });
+
+    if (!error && data) {
+      return data as LinkReport[];
+    }
+  }
+  return [];
+}
+
+export async function updateLinkReportStatus(
+  id: string,
+  status: "resolved" | "dismissed"
+): Promise<{ success: boolean; error?: string }> {
+  if (supabase) {
+    const { error } = await supabase
+      .from("link_reports")
       .update({ status })
       .eq("id", id);
 

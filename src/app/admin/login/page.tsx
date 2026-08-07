@@ -140,7 +140,7 @@ export default function AdminLoginPage() {
           className="w-full py-3 px-5 rounded-full bg-navy-850 border border-navy-700 text-slate-200 hover:text-lime-accent hover:border-lime-accent/50 transition-colors flex items-center justify-center gap-2 font-mono text-xs cursor-pointer font-bold"
         >
           <LogIn className="w-4 h-4 text-lime-accent" />
-          <span>Sign in with Google (OAuth)</span>
+          <span>Sign in with Google</span>
         </button>
 
         <div className="pt-2 text-center text-[11px] text-slate-500 font-sans border-t border-navy-850">
