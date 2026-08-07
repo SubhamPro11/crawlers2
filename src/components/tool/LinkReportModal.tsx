@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-import { Flag, X, Check, AlertCircle } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import React, { useState, useEffect } from "react";
+import { Flag, X, CheckCircle2, AlertCircle, Lock, LogIn } from "lucide-react";
+import { User } from "@supabase/supabase-js";
+import { supabase, signInWithGoogle } from "@/lib/supabase";
 
 interface LinkReportModalProps {
   toolId: string;
@@ -21,35 +22,76 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
 }) => {
   const [reason, setReason] = useState("404 Link Broken / Site Down");
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [authChecking, setAuthChecking] = useState(true);
+
+  const handleCloseModal = () => {
+    setSubmitted(false);
+    setSubmitError(null);
+    setReason("404 Link Broken / Site Down");
+    onClose();
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    let isMounted = true;
+    if (supabase) {
+      supabase.auth.getUser().then(({ data }) => {
+        if (isMounted) {
+          setUser(data.user ?? null);
+          setAuthChecking(false);
+        }
+      });
+    } else {
+      setAuthChecking(false);
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setSubmitError(null);
 
-    if (supabase) {
-      try {
-        await supabase.from("link_reports").insert([
-          {
-            tool_id: toolId,
-            reason: reason,
-            status: "pending",
-            reported_at: new Date().toISOString(),
-          },
-        ]);
-      } catch (err) {
-        console.error("Report submit error:", err);
-      }
+    if (!supabase) {
+      setSubmitError("Database connection unavailable — try again.");
+      setLoading(false);
+      return;
     }
 
-    setLoading(false);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      onClose();
-    }, 2000);
+    try {
+      const { error } = await supabase.from("link_reports").insert([
+        {
+          tool_id: toolId,
+          reason: reason,
+          status: "pending",
+          reported_at: new Date().toISOString(),
+        },
+      ]);
+
+      if (error) {
+        console.error("Report submit error:", error);
+        setSubmitError("Something went wrong — try again.");
+      } else {
+        setSubmitted(true);
+        setTimeout(() => {
+          handleCloseModal();
+        }, 3000);
+      }
+    } catch (err: unknown) {
+      console.error("Report submit error:", err);
+      setSubmitError("Something went wrong — try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -59,19 +101,55 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
           <div className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5 uppercase tracking-wider">
             <Flag className="w-3.5 h-3.5 text-amber-400" /> report_broken_link
           </div>
-          <button onClick={onClose} className="text-slate-500 hover:text-slate-200 cursor-pointer">
+          <button onClick={handleCloseModal} className="text-slate-500 hover:text-slate-200 cursor-pointer">
             <X className="w-4 h-4" />
           </button>
         </div>
 
         <div className="p-6 space-y-4">
-          {submitted ? (
-            <div className="toast-notification p-6 text-center space-y-2 text-lime-accent">
-              <Check className="w-8 h-8 mx-auto" />
-              <div className="font-bold">Report Logged into Admin Triage Queue</div>
-              <p className="text-xs text-slate-400 font-sans">
-                Thank you for keeping the directory clean and audited.
-              </p>
+          {authChecking ? (
+            <div className="p-6 text-center text-xs font-mono text-slate-500">
+              auth_syncing...
+            </div>
+          ) : !user ? (
+            <div className="p-2 text-center space-y-4 font-mono">
+              <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 mx-auto flex items-center justify-center text-amber-400">
+                <Lock className="w-6 h-6" />
+              </div>
+              <div className="space-y-1.5">
+                <h3 className="text-sm font-bold text-slate-100">Sign in to report this problem</h3>
+                <p className="text-xs text-slate-400 font-sans leading-relaxed">
+                  Reporting broken links or endpoint errors for <strong className="text-slate-200 font-semibold">{toolName}</strong> requires an authenticated account.
+                </p>
+              </div>
+
+              <div className="pt-2">
+                <button
+                  onClick={() => signInWithGoogle(window.location.pathname)}
+                  className="w-full py-2.5 px-4 rounded-full bg-navy-850 border border-navy-700 text-slate-200 hover:text-lime-accent hover:border-lime-accent/50 transition-colors flex items-center justify-center gap-2 text-xs font-bold cursor-pointer"
+                >
+                  <LogIn className="w-4 h-4 text-lime-accent" />
+                  <span>Sign in with Google (OAuth)</span>
+                </button>
+              </div>
+            </div>
+          ) : submitted ? (
+            <div className="p-4 text-center space-y-3 font-mono">
+              <CheckCircle2 className="w-10 h-10 text-lime-accent mx-auto" />
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold text-slate-100">Thanks — your report has been logged</h3>
+                <p className="text-xs text-slate-400 font-sans leading-relaxed">
+                  Our editorial team will verify target URL availability and licensing state.
+                </p>
+              </div>
+              <div className="pt-2">
+                <button
+                  onClick={handleCloseModal}
+                  className="px-5 py-1.5 rounded-full bg-navy-850 border border-navy-700 text-slate-200 hover:text-lime-accent hover:border-lime-accent/50 transition-colors text-xs font-bold cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
@@ -89,7 +167,7 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
                 <select
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
-                  className="w-full px-3 py-2 rounded bg-navy-900 border border-navy-800 text-slate-100 focus:outline-none focus:border-lime-accent"
+                  className="w-full px-3 py-2 rounded bg-navy-900 border border-navy-800 text-slate-100 focus:outline-none focus:border-lime-accent cursor-pointer"
                 >
                   <option value="404 Link Broken / Site Down">404 Link Broken / Site Down</option>
                   <option value="Redirected to Spam or Domain Parked">Redirected to Spam / Domain Parked</option>
@@ -98,25 +176,32 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
                 </select>
               </div>
 
-              <div className="p-3 rounded bg-navy-900 border border-navy-850 text-[11px] text-slate-400 flex items-start gap-2">
+              {submitError && (
+                <div className="p-3 rounded-lg bg-red-950/60 border border-red-800 text-xs text-red-300 flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                  <span>{submitError}</span>
+                </div>
+              )}
+
+              <div className="p-3 rounded-lg bg-navy-950 border border-navy-800 text-[11px] text-slate-400 flex items-start gap-2">
                 <AlertCircle className="w-4 h-4 text-lime-accent shrink-0 mt-0.5" />
                 <span>
-                  Reports directly trigger maintainer triage in the `/admin` control plane.
+                  This report is logged and sent to our team for review.
                 </span>
               </div>
 
               <div className="flex items-center justify-end gap-2 pt-2">
                 <button
                   type="button"
-                  onClick={onClose}
-                  className="px-4 py-1.5 rounded-full bg-navy-900 border border-navy-800 text-slate-400 hover:text-slate-200 cursor-pointer"
+                  onClick={handleCloseModal}
+                  className="px-4 py-1.5 rounded-full bg-navy-900 border border-navy-800 text-slate-400 hover:text-slate-200 cursor-pointer font-bold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-5 py-1.5 rounded-full bg-amber-400 text-navy-950 font-bold hover:bg-amber-300 transition-colors cursor-pointer"
+                  className="px-5 py-1.5 rounded-full bg-amber-400 text-navy-950 font-bold hover:bg-amber-300 transition-colors cursor-pointer disabled:opacity-50"
                 >
                   {loading ? "Submitting..." : "Submit Report"}
                 </button>
