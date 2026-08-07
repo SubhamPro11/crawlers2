@@ -104,14 +104,14 @@ export const SmartSearch: React.FC = () => {
 
   return (
     <div ref={containerRef} className="relative w-full max-w-2xl mx-auto">
-      {/* Terminal Bar Container styling matching crawlers://v1.0.0 line */}
-      <div className="relative flex items-center bg-navy-950/90 border border-navy-700 hover:border-navy-600 focus-within:border-lime-accent focus-within:ring-1 focus-within:ring-lime-accent/40 rounded-xl shadow-lg transition-all duration-200">
-        {/* Terminal $ Prompt */}
-        <div className="pl-3.5 pr-1 font-mono font-bold text-lime-accent text-sm sm:text-base select-none flex items-center gap-1 shrink-0">
+      {/* Full Pill-Shaped Terminal Bar Container */}
+      <div className="relative flex items-center bg-navy-950/90 border border-navy-700 hover:border-navy-600 focus-within:border-lime-accent focus-within:ring-1 focus-within:ring-lime-accent/40 rounded-full shadow-lg transition-all duration-200">
+        {/* Terminal $ Prompt - Padded for curved left pill edge */}
+        <div className="pl-5 sm:pl-6 pr-1.5 font-mono font-bold text-lime-accent text-sm sm:text-base select-none flex items-center gap-1 shrink-0">
           <span>$</span>
         </div>
 
-        {/* Input Field with reserved right padding to avoid hint badge collisions */}
+        {/* Input Field with reserved right padding for curved pill edge & hint badge */}
         <input
           ref={inputRef}
           type="text"
@@ -127,11 +127,11 @@ export const SmartSearch: React.FC = () => {
           }}
           onFocus={() => query.trim() && setIsOpen(true)}
           placeholder="Search 1,000+ tools, categories, APIs..."
-          className="w-full bg-transparent text-slate-100 placeholder-slate-500 text-xs sm:text-sm font-mono py-3.5 pl-1 pr-24 sm:pr-32 focus:outline-none"
+          className="w-full bg-transparent text-slate-100 placeholder-slate-500 text-xs sm:text-sm font-mono py-3.5 pl-1 pr-28 sm:pr-36 focus:outline-none"
         />
 
-        {/* Action / Keyboard Shortcut Hint - Positioned cleanly on the right */}
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2 shrink-0 z-10">
+        {/* Action / Keyboard Shortcut Hint - Padded for curved right pill edge */}
+        <div className="absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 flex items-center gap-2 shrink-0 z-10">
           {query ? (
             <button
               onClick={() => {
@@ -139,15 +139,15 @@ export const SmartSearch: React.FC = () => {
                 setIsOpen(false);
                 inputRef.current?.focus();
               }}
-              className="p-1 rounded text-slate-500 hover:text-slate-200 hover:bg-navy-850 transition-colors"
+              className="p-1 rounded-full text-slate-500 hover:text-slate-200 hover:bg-navy-850 transition-colors"
               title="Clear search"
             >
               <X className="w-4 h-4" />
             </button>
           ) : (
-            <div className="hidden sm:flex items-center gap-1.5 font-mono text-[11px] text-slate-500 bg-navy-900/90 border border-navy-800 px-2 py-0.5 rounded select-none pointer-events-none">
+            <div className="hidden sm:flex items-center gap-1.5 font-mono text-[11px] text-slate-500 bg-navy-900/90 border border-navy-800 px-2.5 py-0.5 rounded-full select-none pointer-events-none">
               <span>press</span>
-              <kbd className="text-slate-300 font-bold bg-navy-800 px-1 rounded border border-navy-700">
+              <kbd className="text-slate-300 font-bold bg-navy-800 px-1.5 py-0.2 rounded border border-navy-700 text-[10px]">
                 /
               </kbd>
               <span>to search</span>

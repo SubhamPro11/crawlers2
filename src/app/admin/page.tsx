@@ -11,8 +11,6 @@ import {
   Inbox,
   Activity,
 } from "lucide-react";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { Badge } from "@/components/ui/Badge";
 import { MOCK_TOOLS } from "@/lib/mockData";
 import {
@@ -116,41 +114,42 @@ export default function AdminDashboardPage() {
   if (!authed) return null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
-      <Navbar />
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1 w-full space-y-8 font-mono">
-        {/* Admin Dashboard Titlebar */}
-        <div className="rounded border border-navy-800 bg-navy-900 p-6 space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-lime-accent/10 border border-lime-accent/30 flex items-center justify-center text-lime-accent">
-                <ShieldAlert className="w-5 h-5" />
-              </div>
-              <div>
-                <div className="text-[10px] text-lime-accent uppercase tracking-wider">
-                  Admin Console v1.2.0 • Maintainer Mode
-                </div>
-                <h1 className="text-2xl font-bold text-slate-100">
-                  Directory Control Plane
-                </h1>
-              </div>
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-12 flex-1 w-full space-y-6 font-mono">
+      {/* Admin Dashboard Header Card */}
+      <div className="rounded-xl border border-navy-800 bg-navy-900/90 p-5 sm:p-6 space-y-4 shadow-lg">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-lime-accent/10 border border-lime-accent/30 flex items-center justify-center text-lime-accent shrink-0">
+              <ShieldAlert className="w-5 h-5" />
             </div>
-
-            <div className="flex items-center gap-3">
-              <span className="text-xs text-slate-400 font-sans">
-                Admin: <strong className="text-slate-200">subhamkr11012004@gmail.com</strong>
-              </span>
-              <button
-                onClick={handleLogout}
-                className="px-4 py-1.5 rounded-full bg-navy-900 border border-navy-700 text-xs text-red-400 hover:bg-red-950/40 hover:border-red-800 transition-colors flex items-center gap-1.5 cursor-pointer"
-              >
-                <LogOut className="w-3.5 h-3.5" /> Logout
-              </button>
+            <div>
+              <div className="text-[10px] text-lime-accent uppercase tracking-wider font-mono font-semibold">
+                Admin Console v1.2.0 • Maintainer Mode
+              </div>
+              <h1 className="text-xl sm:text-2xl font-bold text-slate-100 tracking-tight">
+                Directory Control Plane
+              </h1>
             </div>
           </div>
 
-          {/* Navigation Tabs */}
+          <div className="flex flex-wrap items-center gap-3 font-mono">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-navy-950 border border-navy-800 text-xs text-slate-300">
+              <span className="w-2 h-2 rounded-full bg-lime-accent animate-pulse" />
+              <span>
+                Admin: <strong className="text-slate-100 font-semibold font-mono">subhamkr11012004@gmail.com</strong>
+              </span>
+            </span>
+            <button
+              onClick={handleLogout}
+              className="px-3.5 py-1.5 rounded-full bg-navy-950 border border-navy-800 text-xs text-slate-400 hover:text-red-400 hover:border-red-900/60 transition-colors flex items-center gap-1.5 cursor-pointer font-bold shrink-0"
+              title="Sign out session"
+            >
+              <LogOut className="w-3.5 h-3.5" /> Logout
+            </button>
+          </div>
+        </div>
+
+        {/* Navigation Tabs */}
           <div className="flex items-center gap-2 pt-2 border-t border-navy-850 text-xs">
             <button
               onClick={() => setActiveTab("submissions")}
@@ -454,8 +453,5 @@ export default function AdminDashboardPage() {
           </div>
         )}
       </main>
-
-      <Footer />
-    </div>
   );
 }

@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, PlusCircle, Send, CheckCircle2, AlertCircle } from "lucide-react";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { TAXONOMY_SEEDS } from "@/lib/taxonomy";
@@ -54,10 +52,7 @@ export default function SubmitPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
-      <Navbar />
-
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-8">
+    <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-8">
         {/* Navigation Breadcrumb */}
         <div className="flex items-center gap-2 font-mono text-xs text-slate-400">
           <Link href="/" className="hover:text-lime-accent flex items-center gap-1">
@@ -204,8 +199,5 @@ export default function SubmitPage() {
           </form>
         )}
       </main>
-
-      <Footer />
-    </div>
   );
 }

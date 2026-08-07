@@ -1,8 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft, History, Check, Rss, FileCode } from "lucide-react";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { Badge } from "@/components/ui/Badge";
 import { CHANGELOG_ENTRIES } from "@/lib/changelogData";
 
@@ -19,10 +17,7 @@ export const metadata = {
 
 export default function ChangelogPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
-      <Navbar />
-
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-10">
+    <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-10">
         {/* Navigation Breadcrumb */}
         <div className="flex items-center gap-2 font-mono text-xs text-slate-400">
           <Link href="/" className="hover:text-lime-accent flex items-center gap-1">
@@ -95,8 +90,5 @@ export default function ChangelogPage() {
           ))}
         </div>
       </main>
-
-      <Footer />
-    </div>
   );
 }
