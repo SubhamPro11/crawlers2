@@ -149,6 +149,14 @@ export const MOCK_CURATED_STACKS: CuratedStack[] = [
     iconName: "Terminal",
     toolSlugs: ["ollama", "cursor", "whisper", "autogpt"],
   },
+  {
+    id: "stack-free-llm-api",
+    name: "Free Cloud & Local LLM API Stack",
+    slug: "free-llm-api-stack",
+    description: "High-throughput free API endpoints (Groq, NVIDIA NIM, GitHub Models) combined with offline local runtimes (Ollama, LM Studio).",
+    iconName: "Code2",
+    toolSlugs: ["groq", "nvidia-nim", "github-models", "ollama", "lm-studio"],
+  },
 ];
 
 export const MOCK_TOOL_TAGS: Record<string, string[]> = {
