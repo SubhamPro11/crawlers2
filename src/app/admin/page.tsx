@@ -6,7 +6,6 @@ import {
   ShieldAlert,
   Check,
   X,
-  Eye,
   LogOut,
   Layers,
   Inbox,

@@ -60,12 +60,7 @@ export const SmartSearch: React.FC = () => {
   // Search logic on query change
   useEffect(() => {
     const q = query.trim().toLowerCase();
-    if (!q) {
-      setSearchResults([]);
-      setCategoryResults([]);
-      setIsOpen(false);
-      return;
-    }
+    if (!q) return;
 
     setIsLoading(true);
     setIsOpen(true);
@@ -121,7 +116,15 @@ export const SmartSearch: React.FC = () => {
           ref={inputRef}
           type="text"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            const val = e.target.value;
+            setQuery(val);
+            if (!val.trim()) {
+              setSearchResults([]);
+              setCategoryResults([]);
+              setIsOpen(false);
+            }
+          }}
           onFocus={() => query.trim() && setIsOpen(true)}
           placeholder="Search 1,000+ tools, categories, APIs..."
           className="w-full bg-transparent text-slate-100 placeholder-slate-500 text-xs sm:text-sm font-mono py-3.5 pl-1 pr-24 sm:pr-32 focus:outline-none"

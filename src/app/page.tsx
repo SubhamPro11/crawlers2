@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Terminal, Code2, FolderGit2, Sparkles, ShieldCheck, ArrowRight, TrendingUp } from "lucide-react";
+import { Terminal, FolderGit2, Sparkles, ShieldCheck, ArrowRight, TrendingUp } from "lucide-react";
 import { TAXONOMY_SEEDS } from "@/lib/taxonomy";
 import { MOCK_CURATED_STACKS } from "@/lib/mockData";
 import { fetchTools } from "@/lib/supabase";

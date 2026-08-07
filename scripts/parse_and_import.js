@@ -7,12 +7,7 @@ const content = fs.readFileSync(filePath, "utf-8");
 const lines = content.split("\n");
 const tools = [];
 
-// Regular expression to match markdown links
-// Examples:
-// - [Productivity Directory](https://productivity.directory) - Find, Search & Review AI Productivity Tools
-// - [Altern](https://altern.ai) - Find almost anything related to AI
-// -[Future AI Guide](https://tools.futureaiguide.com/) - The Ultimate AI Hub and AI Tool Directory.
-const linkRegex = /-\s*\[([^\]]+)\]\(([^)]+)\)(?:\s*-\s*|\s*)(.*)/;
+
 
 for (let line of lines) {
   line = line.trim();

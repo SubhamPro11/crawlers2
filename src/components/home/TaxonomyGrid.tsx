@@ -3,7 +3,7 @@ import Link from "next/link";
 import {
   Type,
   Film,
-  Image,
+  Image as ImageIcon,
   Code2,
   BarChart3,
   Bot,
@@ -17,7 +17,7 @@ import { SectionSeed } from "@/lib/taxonomy";
 const SECTION_ICONS: Record<string, React.ReactNode> = {
   "text-writing": <Type className="w-4 h-4" />,
   "audio-video-media": <Film className="w-4 h-4" />,
-  "image-design": <Image className="w-4 h-4" />,
+  "image-design": <ImageIcon className="w-4 h-4" />,
   "code-development": <Code2 className="w-4 h-4" />,
   "data-analytics": <BarChart3 className="w-4 h-4" />,
   "ai-assistants-agents": <Bot className="w-4 h-4" />,

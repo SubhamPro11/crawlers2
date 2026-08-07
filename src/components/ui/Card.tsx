@@ -26,7 +26,7 @@ export interface ToolCardProps {
   indexHex?: string;
 }
 
-export const ToolCard: React.FC<ToolCardProps> = ({
+export const ToolCard: React.FC<ToolCardProps> = React.memo(({
   id,
   name,
   slug,
@@ -50,55 +50,39 @@ export const ToolCard: React.FC<ToolCardProps> = ({
 
   return (
     <div
-      className={`group relative flex flex-col justify-between p-5 rounded-xl border border-navy-800 bg-navy-900/90 hover:border-lime-accent/30 hover:shadow-[0_0_24px_-6px_rgba(163,230,53,0.12)] transition-all duration-300 card-lift ${className}`}
+      className={`group relative p-6 rounded-xl border border-navy-800 bg-navy-900/90 hover:border-lime-accent/50 transition-all duration-300 flex flex-col justify-between space-y-4 hover:shadow-[0_0_24px_-6px_rgba(163,230,53,0.12)] card-lift ${className}`}
     >
-      {/* Subtle hover index ID matching section // 0X. framing */}
-      <div className="absolute top-3 right-3 font-mono text-[10px] text-lime-accent/60 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none select-none tracking-widest bg-navy-950/80 px-1.5 py-0.5 rounded border border-lime-accent/20">
-        #{hexCode}
-      </div>
-
-      <div>
-        {/* Card Header: 42px Thumbnail Slot + Name & Badges */}
-        <div className="flex items-start justify-between gap-3 mb-3">
-          <div className="flex items-start gap-3.5 pr-8">
-            {/* Thumbnail slot (42px) */}
-            <div className="w-[42px] h-[42px] rounded-lg bg-navy-950 border border-navy-800 flex items-center justify-center p-1 group-hover:border-lime-accent/40 transition-colors shrink-0 shadow-inner">
-              <ToolFavicon url={url} name={name} logoUrl={logoUrl} size={30} />
-            </div>
-
-            <div className="space-y-1">
-              <div className="flex flex-wrap items-center gap-2">
+      {/* Upper Section: Title, Badges, Header Metadata */}
+      <div className="space-y-3">
+        <div className="flex items-start justify-between gap-3">
+          {/* Avatar / Favicon Slot */}
+          <div className="flex items-center gap-3 min-w-0">
+            <ToolFavicon url={url} name={name} logoUrl={logoUrl} size={42} />
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
                 <Link
                   href={`/tool/${slug}`}
-                  className="font-mono text-base font-bold text-slate-100 group-hover:text-lime-accent transition-colors underline-offset-4 hover:underline"
+                  className="font-mono text-lg font-bold tracking-tight text-slate-100 group-hover:text-lime-accent transition-colors truncate"
                 >
                   {name}
                 </Link>
-                {hasApi && (
-                  <span
-                    title="API Available"
-                    className="inline-flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 rounded bg-navy-950 text-lime-accent border border-lime-accent/30"
-                  >
-                    <Code2 className="w-3 h-3" /> API
-                  </span>
-                )}
                 {isTemplated ? (
                   <span
-                    title="Pending distinct editorial review"
-                    className="inline-flex items-center text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400/90 border border-amber-500/25"
+                    title="Automated entry pending distinct editorial review"
+                    className="inline-flex items-center text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0"
                   >
                     Needs Review
                   </span>
                 ) : (
                   <span
                     title="Editorially verified positioning"
-                    className="inline-flex items-center text-[10px] font-mono px-1.5 py-0.5 rounded bg-lime-500/10 text-lime-400 border border-lime-500/20"
+                    className="inline-flex items-center text-[10px] font-mono px-1.5 py-0.5 rounded bg-lime-500/10 text-lime-400 border border-lime-500/20 shrink-0"
                   >
                     Verified
                   </span>
                 )}
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 pt-1">
                 <Badge pricingModel={pricingModel}>{pricingModel}</Badge>
                 
                 {/* Compare Quick-Action Button */}
@@ -189,4 +173,6 @@ export const ToolCard: React.FC<ToolCardProps> = ({
       </div>
     </div>
   );
-};
+});
+
+ToolCard.displayName = "ToolCard";
