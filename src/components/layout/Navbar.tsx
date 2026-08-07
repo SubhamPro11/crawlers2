@@ -27,37 +27,40 @@ export const Navbar: React.FC = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-5 font-mono text-xs text-slate-300">
+        <nav className="hidden md:flex items-center gap-4 font-mono text-xs text-slate-300">
           <button
             onClick={() => {
               window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
             }}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-navy-900 border border-navy-800 text-slate-400 hover:text-lime-accent hover:border-lime-accent/40 transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-navy-900 border border-navy-800 text-slate-400 hover:text-lime-accent hover:border-lime-accent/40 transition-colors"
             title="Open Command Palette"
           >
             <span className="text-[10px]">⌘K CLI</span>
           </button>
 
-          <Link href="/#sections" className="nav-link hover:text-lime-accent transition-colors">
-            &gt; taxonomy
+          <Link href="/tools" className="nav-link hover:text-lime-accent transition-colors font-bold">
+            All Tools
           </Link>
-          <Link href="/api" className="nav-link flex items-center gap-1.5 hover:text-lime-accent transition-colors">
-            <Code2 className="w-3.5 h-3.5" /> API Registry
+          <Link href="/stacks" className="nav-link hover:text-lime-accent transition-colors">
+            Stacks
           </Link>
-          <Link href="/compare" className="nav-link flex items-center gap-1.5 hover:text-lime-accent transition-colors">
+          <Link href="/trending" className="nav-link hover:text-lime-accent transition-colors">
+            Trending
+          </Link>
+          <Link href="/api" className="nav-link flex items-center gap-1 hover:text-lime-accent transition-colors">
+            <Code2 className="w-3.5 h-3.5" /> API
+          </Link>
+          <Link href="/compare" className="nav-link flex items-center gap-1 hover:text-lime-accent transition-colors">
             <ArrowLeftRight className="w-3.5 h-3.5" /> Compare
           </Link>
-          <Link href="/random" className="nav-link flex items-center gap-1.5 hover:text-lime-accent transition-colors" title="Surprise me with a random tool">
+          <Link href="/random" className="nav-link flex items-center gap-1 hover:text-lime-accent transition-colors" title="Surprise me with a random tool">
             <Shuffle className="w-3.5 h-3.5 text-lime-accent" /> Random
-          </Link>
-          <Link href="/changelog" className="nav-link flex items-center gap-1.5 hover:text-lime-accent transition-colors">
-            <History className="w-3.5 h-3.5" /> Changelog
           </Link>
           <Link
             href="/submit"
-            className="btn-press flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-lime-accent text-navy-950 font-semibold hover:bg-lime-hover transition-colors"
+            className="btn-press flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-lime-accent text-navy-950 font-semibold hover:bg-lime-hover transition-colors ml-1"
           >
-            <PlusCircle className="w-3.5 h-3.5" /> Submit Tool
+            <PlusCircle className="w-3.5 h-3.5" /> Submit
           </Link>
           <NavbarUserMenu />
         </nav>

@@ -1,8 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, ArrowLeftRight, Check, X } from "lucide-react";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { fetchToolBySlug } from "@/lib/supabase";
 import { MOCK_TOOLS } from "@/lib/mockData";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -21,13 +20,16 @@ interface ComparePageProps {
 export default async function ComparePage({ searchParams }: ComparePageProps) {
   const { tools: toolsQuery } = await searchParams;
 
-  const slugs = toolsQuery ? toolsQuery.split(",") : ["ollama", "cursor"];
-  const toolA = MOCK_TOOLS.find((t) => t.slug === slugs[0]) || MOCK_TOOLS[0];
-  const toolB = MOCK_TOOLS.find((t) => t.slug === slugs[1]) || MOCK_TOOLS[1];
+  const slugs = toolsQuery ? toolsQuery.split(",").filter(Boolean) : ["ollama", "cursor"];
+  
+  const fetchedTools = await Promise.all(slugs.map((slug) => fetchToolBySlug(slug)));
+  const validTools = fetchedTools.filter((t): t is NonNullable<typeof t> => t !== null);
+
+  const toolA = validTools[0] || MOCK_TOOLS[0];
+  const toolB = validTools[1] || MOCK_TOOLS[1];
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
-      <Navbar />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-10">
         {/* Navigation Breadcrumb */}
@@ -122,8 +124,6 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

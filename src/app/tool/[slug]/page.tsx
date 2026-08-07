@@ -2,8 +2,6 @@ import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink, Code2, ShieldCheck, ArrowLeftRight, Calendar } from "lucide-react";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { MOCK_TOOL_TAGS } from "@/lib/mockData";
 import { fetchToolBySlug, fetchTools } from "@/lib/supabase";
 import { Badge } from "@/components/ui/Badge";
@@ -49,6 +47,8 @@ export async function generateMetadata({ params }: ToolDetailPageProps) {
   };
 }
 
+export const revalidate = 3600; // SSG/ISR 1-hour static revalidation
+
 export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
   const { slug } = await params;
   const tool = await fetchToolBySlug(slug);
@@ -59,8 +59,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
 
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dev";
   const tags = MOCK_TOOL_TAGS[tool.slug] || ["ai-tools"];
-  const allTools = await fetchTools();
-  const relatedTools = allTools.filter((t) => t.id !== tool.id).slice(0, 3);
+  const relatedTools = (await fetchTools({ limit: 4 })).filter((t) => t.id !== tool.id).slice(0, 3);
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
@@ -76,7 +75,6 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
           { name: tool.name, item: `${baseUrl}/tool/${tool.slug}` },
         ]}
       />
-      <Navbar />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-10">
         {/* Navigation Breadcrumb */}
@@ -194,8 +192,6 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

@@ -24,31 +24,31 @@ export const Badge: React.FC<BadgeProps> = ({
   };
 
   if (pricingModel) {
-    let colorStyle = "text-slate-400";
+    let colorStyle = "bg-navy-800 text-slate-300 border border-navy-700";
     let formattedLabel = pricingModel.toUpperCase();
 
     switch (pricingModel) {
       case "free":
-        colorStyle = "text-emerald-400";
+        colorStyle = "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30";
         formattedLabel = "FREE";
         break;
       case "freemium":
-        colorStyle = "text-cyan-400";
+        colorStyle = "bg-slate-800/90 text-slate-300 border border-slate-700";
         formattedLabel = "FREEMIUM";
         break;
       case "paid":
-        colorStyle = "text-amber-400";
+        colorStyle = "bg-amber-500/10 text-amber-400 border border-amber-500/30";
         formattedLabel = "PAID";
         break;
       case "open-source":
-        colorStyle = "text-lime-accent";
+        colorStyle = "bg-lime-accent/10 text-lime-accent border border-lime-accent/30";
         formattedLabel = "OPEN-SOURCE";
         break;
     }
 
     return (
-      <span className={`${baseStyles} ${sizeStyles[size]} ${colorStyle} ${className}`}>
-        [{formattedLabel}]
+      <span className={`inline-flex items-center font-mono font-bold tracking-wider uppercase px-2 py-0.5 rounded ${sizeStyles[size]} ${colorStyle} ${className}`}>
+        {formattedLabel}
       </span>
     );
   }

@@ -16,38 +16,25 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Badge } from "@/components/ui/Badge";
 import { MOCK_TOOLS } from "@/lib/mockData";
-import { supabase } from "@/lib/supabase";
+import {
+  fetchPendingSubmissions,
+  updateSubmissionStatus,
+  fetchTools,
+  fetchAdminAnalytics,
+  AdminAnalyticsData,
+  supabase,
+} from "@/lib/supabase";
+import { Submission, Tool } from "@/types/database";
 
 export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<"submissions" | "tools" | "analytics">("submissions");
   const [authed, setAuthed] = useState(false);
   const router = useRouter();
 
-  // Offline/Mock pending submissions for admin triage demonstration
-  const [pendingSubmissions, setPendingSubmissions] = useState([
-    {
-      id: "sub-1",
-      name: "Ollama Desktop",
-      url: "https://ollama.com",
-      description: "Local runner for Llama 3, Mistral, and Gemma models.",
-      category: "Developer & Tech Tools",
-      pricing_model: "open-source" as const,
-      submitted_at: "2026-08-06",
-      submitter_email: "dev@ollama.com",
-    },
-    {
-      id: "sub-2",
-      name: "vLLM Engine",
-      url: "https://github.com/vllm-project/vllm",
-      description: "High-throughput and memory-efficient LLM serving engine.",
-      category: "Developer & Tech Tools",
-      pricing_model: "open-source" as const,
-      submitted_at: "2026-08-05",
-      submitter_email: "team@vllm.ai",
-    },
-  ]);
-
-  const [activeTools, setActiveTools] = useState(MOCK_TOOLS);
+  // Real community tool submissions & analytics fetched from database
+  const [pendingSubmissions, setPendingSubmissions] = useState<Submission[]>([]);
+  const [activeTools, setActiveTools] = useState<Tool[]>(MOCK_TOOLS);
+  const [analyticsData, setAnalyticsData] = useState<AdminAnalyticsData | null>(null);
 
   useEffect(() => {
     // Verify admin session via Supabase Auth or local session token
@@ -62,6 +49,7 @@ export default function AdminDashboardPage() {
           if (user.email === "subhamkr11012004@gmail.com") {
             localStorage.setItem("crawlers_admin_session", "true");
             setAuthed(true);
+            loadDashboardData();
             return;
           }
 
@@ -74,6 +62,7 @@ export default function AdminDashboardPage() {
           if (profile?.role === "admin") {
             localStorage.setItem("crawlers_admin_session", "true");
             setAuthed(true);
+            loadDashboardData();
             return;
           }
         }
@@ -81,9 +70,21 @@ export default function AdminDashboardPage() {
 
       if (localSession === "true") {
         setAuthed(true);
+        loadDashboardData();
       } else {
         router.push("/admin/login");
       }
+    };
+
+    const loadDashboardData = async () => {
+      const realSubmissions = await fetchPendingSubmissions();
+      setPendingSubmissions(realSubmissions);
+      const toolsFromDb = await fetchTools();
+      if (toolsFromDb && toolsFromDb.length > 0) {
+        setActiveTools(toolsFromDb);
+      }
+      const analytics = await fetchAdminAnalytics();
+      setAnalyticsData(analytics);
     };
 
     verifyAuth();
@@ -97,11 +98,13 @@ export default function AdminDashboardPage() {
     router.push("/admin/login");
   };
 
-  const handleApproveSubmission = (id: string) => {
+  const handleApproveSubmission = async (id: string) => {
+    await updateSubmissionStatus(id, "approved");
     setPendingSubmissions((prev) => prev.filter((s) => s.id !== id));
   };
 
-  const handleRejectSubmission = (id: string) => {
+  const handleRejectSubmission = async (id: string) => {
+    await updateSubmissionStatus(id, "rejected");
     setPendingSubmissions((prev) => prev.filter((s) => s.id !== id));
   };
 
@@ -299,44 +302,154 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* Tab 3: Analytics */}
+        {/* Tab 3: Analytics (Read-Only Reporting) */}
         {activeTab === "analytics" && (
-          <div className="space-y-4">
+          <div className="space-y-6 font-mono">
             <div className="flex items-center justify-between text-xs text-slate-400 border-b border-navy-850 pb-2">
-              <span>Verified View Logs Analytics (24h Aggregate)</span>
-              <span>Raw Unpadded Signals</span>
+              <span>Directory Telemetry & Reporting</span>
+              <span>Read-Only Audit Mode</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="rounded border border-navy-800 bg-navy-900 p-5 space-y-1">
-                <div className="text-xs text-slate-400">Total Page Views (24h)</div>
-                <div className="text-3xl font-bold text-lime-accent">0</div>
+            {/* Overview Metric Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="rounded-xl border border-navy-800 bg-navy-900 p-5 space-y-1">
+                <div className="text-xs text-slate-400">Total Indexed Tools</div>
+                <div className="text-3xl font-bold text-slate-100">
+                  {analyticsData?.totalTools || activeTools.length}
+                </div>
                 <div className="text-[10px] text-slate-500 font-sans">
-                  Real traffic from view_logs table
+                  Active directory entries in DB
                 </div>
               </div>
-              <div className="rounded border border-navy-800 bg-navy-900 p-5 space-y-1">
-                <div className="text-xs text-slate-400">Active Listed Tools</div>
-                <div className="text-3xl font-bold text-cyan-400">{activeTools.length}</div>
+
+              <div className="rounded-xl border border-navy-800 bg-navy-900 p-5 space-y-1">
+                <div className="text-xs text-slate-400">API Endpoint Access</div>
+                <div className="text-3xl font-bold text-lime-accent">
+                  {analyticsData?.toolsWithApi || 0}
+                </div>
                 <div className="text-[10px] text-slate-500 font-sans">
-                  All active directory listings
+                  Tools exposing developer APIs
                 </div>
               </div>
-              <div className="rounded border border-navy-800 bg-navy-900 p-5 space-y-1">
-                <div className="text-xs text-slate-400">Audit Status</div>
-                <div className="text-3xl font-bold text-amber-400">Strict</div>
+
+              <div className="rounded-xl border border-navy-800 bg-navy-900 p-5 space-y-1">
+                <div className="text-xs text-slate-400">Community Submissions</div>
+                <div className="text-3xl font-bold text-emerald-400">
+                  {analyticsData?.submissionStats.total || 0}
+                </div>
                 <div className="text-[10px] text-slate-500 font-sans">
-                  Zero fake upvotes or padded counters
+                  {analyticsData?.submissionStats.pending || 0} pending • {analyticsData?.submissionStats.approved || 0} approved
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-navy-800 bg-navy-900 p-5 space-y-1">
+                <div className="text-xs text-slate-400">24h View Log Signals</div>
+                <div className="text-3xl font-bold text-cyan-400">
+                  {Object.values(analyticsData?.trendingData.viewCounts || {}).reduce((a, b) => a + b, 0)}
+                </div>
+                <div className="text-[10px] text-slate-500 font-sans">
+                  Real traffic events from view_logs table
                 </div>
               </div>
             </div>
 
-            <div className="rounded border border-navy-800 bg-navy-900 p-5 space-y-3">
-              <div className="text-xs text-lime-accent font-bold uppercase tracking-wider flex items-center gap-1.5">
-                <Eye className="w-4 h-4" /> Live Traffic Stream Log
+            {/* Category Distribution & Pricing Model Breakdown Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Category Distribution Table */}
+              <div className="rounded-xl border border-navy-800 bg-navy-900 p-5 space-y-4">
+                <div className="text-xs text-lime-accent font-bold uppercase tracking-wider flex items-center justify-between">
+                  <span>Top Taxonomy Categories</span>
+                  <span className="text-[10px] text-slate-500 font-normal">Count</span>
+                </div>
+                {analyticsData?.categoryDistribution && analyticsData.categoryDistribution.length > 0 ? (
+                  <div className="space-y-2.5">
+                    {analyticsData.categoryDistribution.map((item) => (
+                      <div key={item.categoryName} className="space-y-1">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-slate-300 font-sans font-medium">{item.categoryName}</span>
+                          <span className="text-slate-400 font-mono text-[11px]">{item.count} tools</span>
+                        </div>
+                        <div className="w-full bg-navy-950 rounded-full h-1.5 overflow-hidden border border-navy-800">
+                          <div
+                            className="bg-lime-accent h-full rounded-full transition-all duration-300"
+                            style={{
+                              width: `${Math.min(100, (item.count / (analyticsData.totalTools || 1)) * 100 * 5)}%`,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-xs text-slate-500 py-4 text-center">
+                    Indexing taxonomy category metrics...
+                  </div>
+                )}
               </div>
-              <div className="p-3 rounded bg-navy-950 border border-navy-850 text-xs text-slate-500 font-mono">
-                [SYSTEM] Ready to capture view_logs triggers upon production deployment.
+
+              {/* Pricing Model Distribution & Submissions Triage */}
+              <div className="space-y-6">
+                <div className="rounded-xl border border-navy-800 bg-navy-900 p-5 space-y-4">
+                  <div className="text-xs text-lime-accent font-bold uppercase tracking-wider">
+                    Pricing Model Breakdown
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-3 rounded-lg bg-navy-950 border border-navy-850 space-y-1">
+                      <div className="text-[10px] text-slate-400">Open-Source</div>
+                      <div className="text-xl font-bold text-slate-100">
+                        {analyticsData?.pricingBreakdown["open-source"] || 0}
+                      </div>
+                    </div>
+                    <div className="p-3 rounded-lg bg-navy-950 border border-navy-850 space-y-1">
+                      <div className="text-[10px] text-slate-400">Freemium</div>
+                      <div className="text-xl font-bold text-slate-100">
+                        {analyticsData?.pricingBreakdown["freemium"] || 0}
+                      </div>
+                    </div>
+                    <div className="p-3 rounded-lg bg-navy-950 border border-navy-850 space-y-1">
+                      <div className="text-[10px] text-slate-400">Free</div>
+                      <div className="text-xl font-bold text-slate-100">
+                        {analyticsData?.pricingBreakdown["free"] || 0}
+                      </div>
+                    </div>
+                    <div className="p-3 rounded-lg bg-navy-950 border border-navy-850 space-y-1">
+                      <div className="text-[10px] text-slate-400">Paid</div>
+                      <div className="text-xl font-bold text-slate-100">
+                        {analyticsData?.pricingBreakdown["paid"] || 0}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-xl border border-navy-800 bg-navy-900 p-5 space-y-3">
+                  <div className="text-xs text-lime-accent font-bold uppercase tracking-wider flex items-center justify-between">
+                    <span>24h View Log Signals</span>
+                    <span className="text-[10px] bg-lime-accent/10 text-lime-accent px-2 py-0.5 rounded border border-lime-accent/30">
+                      Live Stream
+                    </span>
+                  </div>
+                  <div className="p-3 rounded-lg bg-navy-950 border border-navy-850 text-xs text-slate-400 space-y-1 font-sans">
+                    <div>
+                      Tracking active: <strong className="text-slate-200 font-mono">view_logs</strong> table capturing page view events per tool.
+                    </div>
+                    {analyticsData?.trendingData.tools && analyticsData.trendingData.tools.length > 0 ? (
+                      <div className="pt-2 font-mono text-[11px] text-slate-300 space-y-1">
+                        {analyticsData.trendingData.tools.map((t) => (
+                          <div key={t.id} className="flex justify-between">
+                            <span>{t.name}</span>
+                            <span className="text-lime-accent">
+                              {analyticsData.trendingData.viewCounts[t.id] || 0} views
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-[11px] text-slate-500 font-mono italic pt-1">
+                        0 recorded page views in the last 24h. System ready to register live events.
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

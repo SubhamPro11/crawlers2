@@ -1,3 +1,22 @@
+# Static Assets (Long Cache, Immutable)
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Pre-rendered Static Pages & ISR Routes (1 Hour Cache, Stale While Revalidate)
+/
+  Cache-Control: public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400
+
+/stacks
+  Cache-Control: public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400
+
+/tools/*
+  Cache-Control: public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400
+
+# Dynamic API Routes (No-Store, Must Revalidate)
+/api/*
+  Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate
+
+# Global Security Headers
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
