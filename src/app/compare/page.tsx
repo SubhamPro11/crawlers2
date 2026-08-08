@@ -6,8 +6,24 @@ import { MOCK_TOOLS } from "@/lib/mockData";
 import { CompareClient } from "./CompareClient";
 
 export const metadata = {
-  title: "Compare AI Tools Side-by-Side | Crawlers",
+  title: "Compare AI Tools Side-by-Side",
   description: "Evaluate features, pricing models, API endpoints, and licensing across AI tools.",
+  alternates: {
+    canonical: "/compare",
+  },
+  openGraph: {
+    title: "Compare AI Tools Side-by-Side",
+    description: "Evaluate features, pricing models, API endpoints, and licensing across AI tools.",
+    url: "https://crawlers.dpdns.org/compare",
+    siteName: "Crawlers",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@crawlers",
+    creator: "@crawlers",
+    title: "Compare AI Tools Side-by-Side",
+    description: "Evaluate features, pricing models, API endpoints, and licensing across AI tools.",
+  },
 };
 
 interface ComparePageProps {

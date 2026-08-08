@@ -5,8 +5,24 @@ import { fetchTrendingTools } from "@/lib/supabase";
 import { TrendingSection } from "@/components/home/TrendingSection";
 
 export const metadata = {
-  title: "Live Trending AI Tools Telemetry (24h View Audit) | Crawlers",
+  title: "Live Trending AI Tools Telemetry (24h View Audit)",
   description: "Real-time 24-hour page view telemetry and traffic rankings across verified AI software.",
+  alternates: {
+    canonical: "/trending",
+  },
+  openGraph: {
+    title: "Live Trending AI Tools Telemetry (24h View Audit)",
+    description: "Real-time 24-hour page view telemetry and traffic rankings across verified AI software.",
+    url: "https://crawlers.dpdns.org/trending",
+    siteName: "Crawlers",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@crawlers",
+    creator: "@crawlers",
+    title: "Live Trending AI Tools Telemetry (24h View Audit)",
+    description: "Real-time 24-hour page view telemetry and traffic rankings across verified AI software.",
+  },
 };
 
 export default async function TrendingPage() {

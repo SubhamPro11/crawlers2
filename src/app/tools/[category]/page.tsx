@@ -41,12 +41,31 @@ export async function generateMetadata({ params }: CategoryPageProps) {
   }
 
   if (!matchedCat) {
-    return { title: "Category Not Found | Crawlers" };
+    return { title: "Category Not Found" };
   }
 
+  const title = `${matchedCat.name} AI Tools (${matchedSec?.name})`;
+  const canonicalUrl = `https://crawlers.dpdns.org/${matchedSec?.slug || "tools"}/${matchedCat.slug}`;
+
   return {
-    title: `${matchedCat.name} AI Tools (${matchedSec?.name}) | Crawlers`,
+    title,
     description: matchedCat.description,
+    alternates: {
+      canonical: `/${matchedSec?.slug || "tools"}/${matchedCat.slug}`,
+    },
+    openGraph: {
+      title,
+      description: matchedCat.description,
+      url: canonicalUrl,
+      siteName: "Crawlers",
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "@crawlers",
+      creator: "@crawlers",
+      title,
+      description: matchedCat.description,
+    },
   };
 }
 

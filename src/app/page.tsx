@@ -14,7 +14,9 @@ import { IndexStatusLine } from "@/components/home/IndexStatusLine";
 export const revalidate = 3600; // SSG/ISR 1-hour revalidation
 
 export const metadata = {
-  title: "Crawlers — AI Tools Directory & API Registry",
+  title: {
+    absolute: "Crawlers — AI Tools Directory & API Registry",
+  },
   description: "A human-curated directory of AI tools, API endpoints, and developer infrastructure. Direct source links, audited licensing, zero fabricated metrics.",
 };
 

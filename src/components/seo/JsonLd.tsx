@@ -98,3 +98,58 @@ export const BreadcrumbJsonLd: React.FC<BreadcrumbJsonLdProps> = ({ items }) => 
     />
   );
 };
+
+export interface SiteIdentityJsonLdProps {
+  siteUrl?: string;
+  name?: string;
+  description?: string;
+  logoUrl?: string;
+}
+
+export const SiteIdentityJsonLd: React.FC<SiteIdentityJsonLdProps> = ({
+  siteUrl = "https://crawlers.dpdns.org",
+  name = "Crawlers",
+  description = "A human-curated directory of AI tools, API endpoints, and developer infrastructure with audited licensing and direct source links.",
+  logoUrl = "https://crawlers.dpdns.org/favicon.ico",
+}) => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        name,
+        alternateName: ["Crawlers AI", "Crawlers AI Tools Directory"],
+        url: siteUrl,
+        description,
+        publisher: {
+          "@id": `${siteUrl}/#organization`,
+        },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${siteUrl}/tools?searchQuery={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        },
+      },
+      {
+        "@type": "Organization",
+        "@id": `${siteUrl}/#organization`,
+        name,
+        url: siteUrl,
+        logo: logoUrl,
+        description: "Human-curated AI software directory and API registry.",
+      },
+    ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+};
+

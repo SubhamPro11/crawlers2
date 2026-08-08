@@ -6,8 +6,24 @@ import { ToolCard } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 
 export const metadata = {
-  title: "API Keys & Developer Endpoints Directory | Crawlers",
+  title: "API Keys & Developer Endpoints Directory",
   description: "Audited registry of AI services, LLM providers, and developer tools offering programmatic API access.",
+  alternates: {
+    canonical: "/api",
+  },
+  openGraph: {
+    title: "API Keys & Developer Endpoints Directory",
+    description: "Audited registry of AI services, LLM providers, and developer tools offering programmatic API access.",
+    url: "https://crawlers.dpdns.org/api",
+    siteName: "Crawlers",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@crawlers",
+    creator: "@crawlers",
+    title: "API Keys & Developer Endpoints Directory",
+    description: "Audited registry of AI services, LLM providers, and developer tools offering programmatic API access.",
+  },
 };
 
 export default async function ApiRegistryPage() {

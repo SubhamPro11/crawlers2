@@ -7,8 +7,24 @@ import { StackModule } from "@/components/home/StackModule";
 export const revalidate = 3600; // SSG/ISR 1-hour static revalidation
 
 export const metadata = {
-  title: "Curated Operational AI Stacks & Tool Pipelines | Crawlers",
+  title: "Curated Operational AI Stacks & Tool Pipelines",
   description: "Hand-assembled software tool stacks for solo founders, developers, and content creators.",
+  alternates: {
+    canonical: "/stacks",
+  },
+  openGraph: {
+    title: "Curated Operational AI Stacks & Tool Pipelines",
+    description: "Hand-assembled software tool stacks for solo founders, developers, and content creators.",
+    url: "https://crawlers.dpdns.org/stacks",
+    siteName: "Crawlers",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@crawlers",
+    creator: "@crawlers",
+    title: "Curated Operational AI Stacks & Tool Pipelines",
+    description: "Hand-assembled software tool stacks for solo founders, developers, and content creators.",
+  },
 };
 
 export default function OperationalStacksPage() {

@@ -22,13 +22,32 @@ export async function generateMetadata({ params }: CategoryPageProps) {
 
   if (!section || !category) {
     return {
-      title: "Category Not Found | Crawlers",
+      title: "Category Not Found",
     };
   }
 
+  const title = `${category.name} AI Tools (${section.name})`;
+  const canonicalUrl = `https://crawlers.dpdns.org/${section.slug}/${category.slug}`;
+
   return {
-    title: `${category.name} AI Tools (${section.name}) | Crawlers`,
+    title,
     description: category.description,
+    alternates: {
+      canonical: `/${section.slug}/${category.slug}`,
+    },
+    openGraph: {
+      title,
+      description: category.description,
+      url: canonicalUrl,
+      siteName: "Crawlers",
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "@crawlers",
+      creator: "@crawlers",
+      title,
+      description: category.description,
+    },
   };
 }
 

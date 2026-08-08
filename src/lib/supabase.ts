@@ -21,6 +21,24 @@ export const supabase = isSupabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
 
+// Helper to prevent database queries from hanging Worker execution
+async function withTimeout<T>(promise: PromiseLike<T>, ms = 3000): Promise<T | null> {
+  let timer: NodeJS.Timeout;
+  const timeoutPromise = new Promise<null>((resolve) => {
+    timer = setTimeout(() => resolve(null), ms);
+  });
+
+  try {
+    const result = await Promise.race([promise, timeoutPromise]);
+    clearTimeout(timer!);
+    return result as T;
+  } catch (err) {
+    clearTimeout(timer!);
+    console.error("Supabase request error caught gracefully:", err);
+    return null;
+  }
+}
+
 // Trigger Google OAuth Sign-In
 export async function signInWithGoogle(nextUrl = "/"): Promise<{ error?: string }> {
   if (!supabase) {
@@ -62,13 +80,12 @@ export async function signOutUser(): Promise<{ error?: string }> {
 // Fetch all sections
 export async function fetchSections(): Promise<Section[]> {
   if (supabase) {
-    const { data, error } = await supabase
-      .from("sections")
-      .select("*")
-      .order("display_order", { ascending: true });
+    const res = await withTimeout(
+      supabase.from("sections").select("*").order("display_order", { ascending: true })
+    );
 
-    if (!error && data && data.length > 0) {
-      return data as Section[];
+    if (res && !res.error && res.data && res.data.length > 0) {
+      return res.data as Section[];
     }
   }
 
@@ -86,21 +103,21 @@ export async function fetchSections(): Promise<Section[]> {
 // Fetch categories for a section
 export async function fetchCategoriesBySection(sectionSlug: string): Promise<Category[]> {
   if (supabase) {
-    const { data: sectionData } = await supabase
-      .from("sections")
-      .select("id")
-      .eq("slug", sectionSlug)
-      .single();
+    const secRes = await withTimeout(
+      supabase.from("sections").select("id").eq("slug", sectionSlug).single()
+    );
 
-    if (sectionData) {
-      const { data, error } = await supabase
-        .from("categories")
-        .select("*")
-        .eq("section_id", sectionData.id)
-        .order("display_order", { ascending: true });
+    if (secRes && secRes.data) {
+      const catRes = await withTimeout(
+        supabase
+          .from("categories")
+          .select("*")
+          .eq("section_id", secRes.data.id)
+          .order("display_order", { ascending: true })
+      );
 
-      if (!error && data && data.length > 0) {
-        return data as Category[];
+      if (catRes && !catRes.error && catRes.data && catRes.data.length > 0) {
+        return catRes.data as Category[];
       }
     }
   }
@@ -134,29 +151,24 @@ export async function fetchTools(options?: {
     let query = supabase.from("tools").select("*").eq("is_active", true);
 
     if (options?.categorySlug) {
-      const { data: catData } = await supabase
-        .from("categories")
-        .select("id")
-        .eq("slug", options.categorySlug)
-        .single();
-      if (catData) {
-        query = query.eq("category_id", catData.id);
+      const catRes = await withTimeout(
+        supabase.from("categories").select("id").eq("slug", options.categorySlug).single()
+      );
+      if (catRes && catRes.data) {
+        query = query.eq("category_id", catRes.data.id);
       }
     } else if (options?.sectionSlug) {
-      const { data: sectionData } = await supabase
-        .from("sections")
-        .select("id")
-        .eq("slug", options.sectionSlug)
-        .single();
-      if (sectionData) {
-        const { data: catList } = await supabase
-          .from("categories")
-          .select("id")
-          .eq("section_id", sectionData.id);
-        if (catList && catList.length > 0) {
+      const secRes = await withTimeout(
+        supabase.from("sections").select("id").eq("slug", options.sectionSlug).single()
+      );
+      if (secRes && secRes.data) {
+        const catListRes = await withTimeout(
+          supabase.from("categories").select("id").eq("section_id", secRes.data.id)
+        );
+        if (catListRes && catListRes.data && catListRes.data.length > 0) {
           query = query.in(
             "category_id",
-            catList.map((c) => c.id)
+            catListRes.data.map((c) => c.id)
           );
         }
       }
@@ -180,10 +192,10 @@ export async function fetchTools(options?: {
       query = query.limit(options.limit);
     }
 
-    const { data, error } = await query.order("added_at", { ascending: false });
+    const res = await withTimeout(query.order("added_at", { ascending: false }));
 
-    if (!error && data && data.length > 0) {
-      return data as Tool[];
+    if (res && !res.error && res.data && res.data.length > 0) {
+      return res.data as Tool[];
     }
   }
 
@@ -239,13 +251,11 @@ export async function fetchPaginatedTools(options?: {
     let query = supabase.from("tools").select("*", { count: "exact" }).eq("is_active", true);
 
     if (options?.categorySlug && options.categorySlug !== "all") {
-      const { data: catData } = await supabase
-        .from("categories")
-        .select("id")
-        .eq("slug", options.categorySlug)
-        .single();
-      if (catData) {
-        query = query.eq("category_id", catData.id);
+      const catRes = await withTimeout(
+        supabase.from("categories").select("id").eq("slug", options.categorySlug).single()
+      );
+      if (catRes && catRes.data) {
+        query = query.eq("category_id", catRes.data.id);
       }
     }
 
@@ -267,12 +277,12 @@ export async function fetchPaginatedTools(options?: {
       query = query.order("added_at", { ascending: false });
     }
 
-    const { data, count, error } = await query.range(from, to);
+    const res = await withTimeout(query.range(from, to));
 
-    if (!error && data) {
-      const totalCount = count || data.length;
+    if (res && !res.error && res.data) {
+      const totalCount = res.count || res.data.length;
       return {
-        tools: data as Tool[],
+        tools: res.data as Tool[],
         totalCount,
         page,
         pageSize,
@@ -302,17 +312,19 @@ export async function fetchPaginatedTools(options?: {
 // Fetch single tool detail by slug
 export async function fetchToolBySlug(slug: string): Promise<Tool | null> {
   if (supabase) {
-    const { data, error } = await supabase
-      .from("tools")
-      .select("*")
-      .eq("slug", slug)
-      .eq("is_active", true)
-      .single();
+    const res = await withTimeout(
+      supabase
+        .from("tools")
+        .select("*")
+        .eq("slug", slug)
+        .eq("is_active", true)
+        .single()
+    );
 
-    if (!error && data) {
+    if (res && !res.error && res.data) {
       // Log view asynchronously
-      supabase.from("view_logs").insert({ tool_id: data.id }).then(() => {});
-      return data as Tool;
+      supabase.from("view_logs").insert({ tool_id: res.data.id }).then(() => {});
+      return res.data as Tool;
     }
   }
 

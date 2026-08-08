@@ -5,8 +5,24 @@ import { fetchPaginatedTools } from "@/lib/supabase";
 import { VerifiedToolsGrid } from "@/components/home/VerifiedToolsGrid";
 
 export const metadata = {
-  title: "Complete AI Tools Directory Index (1,000+ Software) | Crawlers",
+  title: "Complete AI Tools Directory Index (1,000+ Software)",
   description: "Browse the complete paginated index of human-curated AI software, developer tools, and API endpoints.",
+  alternates: {
+    canonical: "/tools",
+  },
+  openGraph: {
+    title: "Complete AI Tools Directory Index (1,000+ Software)",
+    description: "Browse the complete paginated index of human-curated AI software, developer tools, and API endpoints.",
+    url: "https://crawlers.dpdns.org/tools",
+    siteName: "Crawlers",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@crawlers",
+    creator: "@crawlers",
+    title: "Complete AI Tools Directory Index (1,000+ Software)",
+    description: "Browse the complete paginated index of human-curated AI software, developer tools, and API endpoints.",
+  },
 };
 
 interface ToolsPageProps {

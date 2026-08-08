@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: ToolDetailPageProps) {
     };
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dev";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
   const canonicalUrl = `${baseUrl}/tool/${tool.slug}`;
 
   return {
@@ -36,12 +36,16 @@ export async function generateMetadata({ params }: ToolDetailPageProps) {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: `${tool.name} | Crawlers Directory`,
+      title: `${tool.name} — AI Tool Review & API Access`,
       description: tool.description,
       url: canonicalUrl,
+      siteName: "Crawlers",
     },
     twitter: {
-      title: `${tool.name} AI Tool`,
+      card: "summary_large_image",
+      site: "@crawlers",
+      creator: "@crawlers",
+      title: `${tool.name} — AI Tool Review & API Access`,
       description: tool.description,
     },
   };
@@ -57,7 +61,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
     notFound();
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dev";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
   const tags = MOCK_TOOL_TAGS[tool.slug] || ["ai-tools"];
   const relatedTools = (await fetchTools({ limit: 4 })).filter((t) => t.id !== tool.id).slice(0, 3);
 

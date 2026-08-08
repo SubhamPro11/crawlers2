@@ -5,13 +5,27 @@ import { Badge } from "@/components/ui/Badge";
 import { CHANGELOG_ENTRIES } from "@/lib/changelogData";
 
 export const metadata = {
-  title: "Public Changelog & Release Notes | Crawlers",
+  title: "Public Changelog & Release Notes",
   description: "Chronological log of directory features, database schema updates, and taxonomy additions.",
   alternates: {
+    canonical: "/changelog",
     types: {
       "application/rss+xml": "/changelog/rss.xml",
       "application/feed+json": "/changelog/feed.json",
     },
+  },
+  openGraph: {
+    title: "Public Changelog & Release Notes",
+    description: "Chronological log of directory features, database schema updates, and taxonomy additions.",
+    url: "https://crawlers.dpdns.org/changelog",
+    siteName: "Crawlers",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@crawlers",
+    creator: "@crawlers",
+    title: "Public Changelog & Release Notes",
+    description: "Chronological log of directory features, database schema updates, and taxonomy additions.",
   },
 };
 

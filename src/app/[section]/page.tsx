@@ -18,13 +18,32 @@ export async function generateMetadata({ params }: SectionPageProps) {
 
   if (!section) {
     return {
-      title: "Section Not Found | Crawlers",
+      title: "Section Not Found",
     };
   }
 
+  const title = `${section.name} AI Tools & Categories`;
+  const canonicalUrl = `https://crawlers.dpdns.org/${section.slug}`;
+
   return {
-    title: `${section.name} AI Tools & Categories | Crawlers`,
+    title,
     description: section.description,
+    alternates: {
+      canonical: `/${section.slug}`,
+    },
+    openGraph: {
+      title,
+      description: section.description,
+      url: canonicalUrl,
+      siteName: "Crawlers",
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "@crawlers",
+      creator: "@crawlers",
+      title,
+      description: section.description,
+    },
   };
 }
 

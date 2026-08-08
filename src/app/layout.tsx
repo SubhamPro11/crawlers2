@@ -4,6 +4,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ClientOverlays } from "@/components/layout/ClientOverlays";
 import { CompareProvider } from "@/context/CompareContext";
+import { SiteIdentityJsonLd } from "@/components/seo/JsonLd";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -16,7 +17,7 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dev";
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -44,13 +45,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: baseUrl,
-    siteName: "Crawlers AI Tools Directory",
+    siteName: "Crawlers",
     title: "Crawlers — AI Tools Directory & API Registry",
     description:
       "A human-curated directory of AI tools, API endpoints, and developer infrastructure.",
   },
   twitter: {
     card: "summary_large_image",
+    site: "@crawlers",
+    creator: "@crawlers",
     title: "Crawlers — AI Tools Directory",
     description:
       "Human-curated AI tools directory, API registry, and developer infrastructure index.",
@@ -66,11 +69,18 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  verification: {
+    google: "REPLACE_WITH_GSC_CODE",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${jetbrainsMono.variable} ${inter.variable} h-full antialiased`}>
+      <head>
+        <meta name="google-site-verification" content="REPLACE_WITH_GSC_CODE" />
+        <SiteIdentityJsonLd siteUrl={baseUrl} />
+      </head>
       <body className="min-h-full flex flex-col bg-navy-950 text-slate-100 selection:bg-lime-accent/30 selection:text-lime-accent">
         <CompareProvider>
           <Navbar />
