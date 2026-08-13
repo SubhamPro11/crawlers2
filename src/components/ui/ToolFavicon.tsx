@@ -68,6 +68,7 @@ export const ToolFavicon: React.FC<ToolFaviconProps> = ({
         width={size}
         height={size}
         loading="lazy"
+        decoding="async"
         onError={() => setFailed(true)}
         className="rounded-sm object-contain w-full h-full"
       />

@@ -1,8 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft, TrendingUp } from "lucide-react";
-import { fetchTrendingTools } from "@/lib/supabase";
+import { getCachedTrendingTools } from "@/lib/cached-queries";
 import { TrendingSection } from "@/components/home/TrendingSection";
+
+export const revalidate = 600; // SSG/ISR 10-minute revalidation for trending telemetry
 
 export const metadata = {
   title: "Live Trending AI Tools Telemetry (24h View Audit)",
@@ -26,7 +28,7 @@ export const metadata = {
 };
 
 export default async function TrendingPage() {
-  const { tools, viewCounts, sparklines } = await fetchTrendingTools();
+  const { tools, viewCounts, sparklines } = await getCachedTrendingTools();
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">

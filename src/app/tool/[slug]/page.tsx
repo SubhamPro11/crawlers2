@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink, Code2, ShieldCheck, ArrowLeftRight, Calendar } from "lucide-react";
 import { MOCK_TOOL_TAGS } from "@/lib/mockData";
-import { fetchToolBySlug, fetchTools } from "@/lib/supabase";
+import { getCachedToolBySlug, getCachedTools } from "@/lib/cached-queries";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ToolCard } from "@/components/ui/Card";
@@ -18,7 +18,7 @@ interface ToolDetailPageProps {
 
 export async function generateMetadata({ params }: ToolDetailPageProps) {
   const { slug } = await params;
-  const tool = await fetchToolBySlug(slug);
+  const tool = await getCachedToolBySlug(slug);
 
   if (!tool) {
     return {
@@ -55,7 +55,7 @@ export const revalidate = 3600; // SSG/ISR 1-hour static revalidation
 
 export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
   const { slug } = await params;
-  const tool = await fetchToolBySlug(slug);
+  const tool = await getCachedToolBySlug(slug);
 
   if (!tool) {
     notFound();
@@ -63,7 +63,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
 
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
   const tags = MOCK_TOOL_TAGS[tool.slug] || ["ai-tools"];
-  const relatedTools = (await fetchTools({ limit: 4 })).filter((t) => t.id !== tool.id).slice(0, 3);
+  const relatedTools = (await getCachedTools({ limit: 4 })).filter((t) => t.id !== tool.id).slice(0, 3);
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">

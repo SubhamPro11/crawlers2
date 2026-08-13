@@ -99,7 +99,7 @@ export const NavbarUserMenu: React.FC = () => {
         <div className="flex items-center gap-2 px-3.5 py-1 rounded-full bg-navy-900 border border-navy-800 text-slate-200">
           {avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={avatarUrl} alt={displayName} className="w-4 h-4 rounded-full" />
+            <img src={avatarUrl} alt={displayName} width={16} height={16} loading="lazy" className="w-4 h-4 rounded-full object-cover" />
           ) : (
             <span className="w-2 h-2 rounded-full bg-lime-accent animate-pulse" />
           )}

@@ -100,19 +100,34 @@ export default function AdminDashboardPage() {
     router.push("/admin/login");
   };
 
+  const triggerRevalidation = async () => {
+    try {
+      await fetch("/api/revalidate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ secret: "crawlers-cache-revalidate" }),
+      });
+    } catch (err) {
+      console.warn("On-demand revalidation trigger error:", err);
+    }
+  };
+
   const handleApproveSubmission = async (id: string) => {
     await updateSubmissionStatus(id, "approved");
     setPendingSubmissions((prev) => prev.filter((s) => s.id !== id));
+    await triggerRevalidation();
   };
 
   const handleRejectSubmission = async (id: string) => {
     await updateSubmissionStatus(id, "rejected");
     setPendingSubmissions((prev) => prev.filter((s) => s.id !== id));
+    await triggerRevalidation();
   };
 
   const handleResolveReport = async (id: string) => {
     await updateLinkReportStatus(id, "resolved");
     setPendingReports((prev) => prev.filter((r) => r.id !== id));
+    await triggerRevalidation();
   };
 
   const handleDismissReport = async (id: string) => {
@@ -120,10 +135,11 @@ export default function AdminDashboardPage() {
     setPendingReports((prev) => prev.filter((r) => r.id !== id));
   };
 
-  const handleToggleToolActive = (id: string) => {
+  const handleToggleToolActive = async (id: string) => {
     setActiveTools((prev) =>
       prev.map((t) => (t.id === id ? { ...t, is_active: !t.is_active } : t))
     );
+    await triggerRevalidation();
   };
 
   if (!authed) return null;

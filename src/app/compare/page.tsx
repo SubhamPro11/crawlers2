@@ -1,9 +1,11 @@
 import React, { Suspense } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowLeftRight } from "lucide-react";
-import { fetchTools, fetchToolBySlug } from "@/lib/supabase";
+import { getCachedTools, getCachedToolBySlug } from "@/lib/cached-queries";
 import { MOCK_TOOLS } from "@/lib/mockData";
 import { CompareClient } from "./CompareClient";
+
+export const revalidate = 3600; // SSG/ISR 1-hour static revalidation
 
 export const metadata = {
   title: "Compare AI Tools Side-by-Side",
@@ -35,10 +37,10 @@ interface ComparePageProps {
 export default async function ComparePage({ searchParams }: ComparePageProps) {
   const { tools: toolsQuery } = await searchParams;
 
-  const allDbTools = (await fetchTools()) || MOCK_TOOLS;
+  const allDbTools = (await getCachedTools()) || MOCK_TOOLS;
 
   const slugs = toolsQuery ? toolsQuery.split(",").filter(Boolean) : ["ollama", "cursor"];
-  const fetchedTools = await Promise.all(slugs.map((slug) => fetchToolBySlug(slug)));
+  const fetchedTools = await Promise.all(slugs.map((slug) => getCachedToolBySlug(slug)));
   const initialTools = fetchedTools.filter((t): t is NonNullable<typeof t> => t !== null);
 
   return (

@@ -1,8 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft, ShieldCheck, ChevronLeft, ChevronRight } from "lucide-react";
-import { fetchPaginatedTools } from "@/lib/supabase";
+import { getCachedPaginatedTools } from "@/lib/cached-queries";
 import { VerifiedToolsGrid } from "@/components/home/VerifiedToolsGrid";
+
+export const revalidate = 3600; // SSG/ISR 1-hour revalidation
 
 export const metadata = {
   title: "Complete AI Tools Directory Index (1,000+ Software)",
@@ -43,7 +45,7 @@ export default async function ToolsDirectoryPage({ searchParams }: ToolsPageProp
   const hasApi = params.api === "true";
   const sortBy = (params.sort as "recently_added" | "name_asc") || "recently_added";
 
-  const { tools, totalCount, totalPages } = await fetchPaginatedTools({
+  const { tools, totalCount, totalPages } = await getCachedPaginatedTools({
     page,
     pageSize: 24,
     categorySlug,
@@ -84,10 +86,11 @@ export default async function ToolsDirectoryPage({ searchParams }: ToolsPageProp
               Page <strong className="text-slate-200">{page}</strong> of <strong className="text-slate-200">{totalPages}</strong> ({totalCount} total tools)
             </div>
 
-            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
               {page > 1 ? (
                 <Link
                   href={`/tools?page=${page - 1}${categorySlug !== "all" ? `&category=${categorySlug}` : ""}${pricingModel !== "all" ? `&pricing=${pricingModel}` : ""}${hasApi ? "&api=true" : ""}`}
+                  prefetch={true}
                   className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-navy-900 border border-navy-800 text-slate-200 hover:border-lime-accent/40 hover:text-lime-accent transition-colors"
                 >
                   <ChevronLeft className="w-4 h-4" /> Previous Page
@@ -109,6 +112,7 @@ export default async function ToolsDirectoryPage({ searchParams }: ToolsPageProp
                     <Link
                       key={pageNum}
                       href={`/tools?page=${pageNum}${categorySlug !== "all" ? `&category=${categorySlug}` : ""}${pricingModel !== "all" ? `&pricing=${pricingModel}` : ""}${hasApi ? "&api=true" : ""}`}
+                      prefetch={true}
                       className={`px-2.5 py-1 rounded font-mono ${
                         pageNum === page
                           ? "bg-lime-accent text-navy-950 font-bold"
@@ -124,6 +128,7 @@ export default async function ToolsDirectoryPage({ searchParams }: ToolsPageProp
               {page < totalPages ? (
                 <Link
                   href={`/tools?page=${page + 1}${categorySlug !== "all" ? `&category=${categorySlug}` : ""}${pricingModel !== "all" ? `&pricing=${pricingModel}` : ""}${hasApi ? "&api=true" : ""}`}
+                  prefetch={true}
                   className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-navy-900 border border-navy-800 text-slate-200 hover:border-lime-accent/40 hover:text-lime-accent transition-colors font-bold"
                 >
                   Next Page <ChevronRight className="w-4 h-4" />

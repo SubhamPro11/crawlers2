@@ -1,16 +1,42 @@
-# Static Assets (Long Cache, Immutable)
+# Static Build Assets (Long Cache, Immutable)
 /_next/static/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Favicons and Root Static Assets
+/favicon.ico
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/llms.txt
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/llms-full.txt
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/search-index.json
+  Cache-Control: public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400
 
 # Pre-rendered Static Pages & ISR Routes (1 Hour Cache, Stale While Revalidate)
 /
   Cache-Control: public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400
 
-/stacks
+/tools
   Cache-Control: public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400
 
 /tools/*
   Cache-Control: public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400
+
+/tool/*
+  Cache-Control: public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400
+
+/stacks
+  Cache-Control: public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400
+
+/compare
+  Cache-Control: public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400
+
+# 10-Minute Trending Telemetry Cache
+/trending
+  Cache-Control: public, max-age=600, s-maxage=600, stale-while-revalidate=86400
 
 # Dynamic API Routes (No-Store, Must Revalidate)
 /api/*

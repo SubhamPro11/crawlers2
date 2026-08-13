@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { fetchTools } from "@/lib/supabase";
+import { getCachedTools } from "@/lib/cached-queries";
 import { MOCK_TOOL_TAGS } from "@/lib/mockData";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600; // 1-hour ISR edge cache
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   const limitParam = searchParams.get("limit");
   const limit = limitParam ? parseInt(limitParam, 10) : 50;
 
-  let tools = await fetchTools({
+  let tools = await getCachedTools({
     categorySlug: categoryParam || undefined,
     limit: limit > 100 ? 100 : limit,
   });
@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
-      "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
+      "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
       "X-RateLimit-Limit": "100",
       "X-RateLimit-Remaining": "99",
       "X-RateLimit-Reset": Math.floor(Date.now() / 1000 + 3600).toString(),

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, FolderGit2 } from "lucide-react";
 import { TAXONOMY_SEEDS } from "@/lib/taxonomy";
-import { fetchTools } from "@/lib/supabase";
+import { getCachedTools } from "@/lib/cached-queries";
 import { ToolCard } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -40,22 +40,24 @@ export async function generateMetadata({ params }: CategoryPageProps) {
     }
   }
 
-  if (!matchedCat) {
-    return { title: "Category Not Found" };
+  if (!matchedCat || !matchedSec) {
+    return {
+      title: "Category Not Found",
+    };
   }
 
-  const title = `${matchedCat.name} AI Tools (${matchedSec?.name})`;
-  const canonicalUrl = `https://crawlers.dpdns.org/${matchedSec?.slug || "tools"}/${matchedCat.slug}`;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
+  const canonicalUrl = `${baseUrl}/tools/${matchedCat.slug}`;
 
   return {
-    title,
-    description: matchedCat.description,
+    title: `${matchedCat.name} AI Software & APIs — Directory Index`,
+    description: `Curated index of tools for ${matchedCat.name}: ${matchedCat.description}. Verified endpoints and direct links.`,
     alternates: {
-      canonical: `/${matchedSec?.slug || "tools"}/${matchedCat.slug}`,
+      canonical: canonicalUrl,
     },
     openGraph: {
-      title,
-      description: matchedCat.description,
+      title: `${matchedCat.name} AI Software & APIs — Directory Index`,
+      description: `Curated index of tools for ${matchedCat.name}: ${matchedCat.description}`,
       url: canonicalUrl,
       siteName: "Crawlers",
     },
@@ -63,13 +65,13 @@ export async function generateMetadata({ params }: CategoryPageProps) {
       card: "summary_large_image",
       site: "@crawlers",
       creator: "@crawlers",
-      title,
-      description: matchedCat.description,
+      title: `${matchedCat.name} AI Software & APIs — Directory Index`,
+      description: `Curated index of tools for ${matchedCat.name}: ${matchedCat.description}`,
     },
   };
 }
 
-export default async function DedicatedCategoryPage({ params }: CategoryPageProps) {
+export default async function ToolsCategoryPage({ params }: CategoryPageProps) {
   const { category: categorySlug } = await params;
   let category;
   let section;
@@ -87,7 +89,7 @@ export default async function DedicatedCategoryPage({ params }: CategoryPageProp
     notFound();
   }
 
-  const categoryTools = await fetchTools({ categorySlug });
+  const categoryTools = await getCachedTools({ categorySlug });
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">

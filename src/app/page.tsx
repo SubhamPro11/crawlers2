@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Terminal, FolderGit2, Sparkles, ShieldCheck, ArrowRight, TrendingUp } from "lucide-react";
 import { TAXONOMY_SEEDS } from "@/lib/taxonomy";
 import { MOCK_CURATED_STACKS } from "@/lib/mockData";
-import { fetchTools } from "@/lib/supabase";
+import { getCachedTools } from "@/lib/cached-queries";
 import { ToolCard } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { SmartSearch } from "@/components/search/SmartSearch";
@@ -22,7 +22,7 @@ export const metadata = {
 
 export default async function HomePage() {
   // Fetch lightweight 6-tool preview for static homepage
-  const previewTools = await fetchTools({ limit: 6 });
+  const previewTools = await getCachedTools({ limit: 6 });
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">

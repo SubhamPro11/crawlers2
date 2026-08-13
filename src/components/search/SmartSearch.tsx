@@ -6,25 +6,21 @@ import { Search, X, Code2, ArrowRight, FolderGit2, CornerDownLeft } from "lucide
 import { Badge } from "@/components/ui/Badge";
 import { ToolFavicon } from "@/components/ui/ToolFavicon";
 import { Tool } from "@/types/database";
-import { fetchTools } from "@/lib/supabase";
-import { TAXONOMY_SEEDS } from "@/lib/taxonomy";
-
-interface CategoryMatch {
-  name: string;
-  slug: string;
-  description: string;
-  sectionName: string;
-  sectionSlug: string;
-}
+import { searchDirectory, getSearchIndex, SearchCategoryMatch } from "@/lib/searchClient";
 
 export const SmartSearch: React.FC = () => {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [searchResults, setSearchResults] = useState<Tool[]>([]);
-  const [categoryResults, setCategoryResults] = useState<CategoryMatch[]>([]);
+  const [categoryResults, setCategoryResults] = useState<SearchCategoryMatch[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Eagerly preheat local search index on mount
+  useEffect(() => {
+    getSearchIndex().catch(() => {});
+  }, []);
 
   // Global '/' keyboard shortcut to focus search input
   useEffect(() => {
@@ -57,46 +53,29 @@ export const SmartSearch: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Search logic on query change
+  // Local instant search on query change (< 1ms execution, 0 network calls per keystroke)
   useEffect(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return;
+    const q = query.trim();
+    if (!q) {
+      setSearchResults([]);
+      setCategoryResults([]);
+      setIsLoading(false);
+      return;
+    }
 
-    setIsLoading(true);
     setIsOpen(true);
+    let isCurrent = true;
 
-    // Search taxonomy categories locally
-    const matchedCategories: CategoryMatch[] = [];
-    TAXONOMY_SEEDS.forEach((sec) => {
-      sec.categories.forEach((cat) => {
-        if (
-          cat.name.toLowerCase().includes(q) ||
-          cat.description.toLowerCase().includes(q) ||
-          cat.slug.toLowerCase().includes(q)
-        ) {
-          matchedCategories.push({
-            name: cat.name,
-            slug: cat.slug,
-            description: cat.description,
-            sectionName: sec.name,
-            sectionSlug: sec.slug,
-          });
-        }
-      });
-    });
-    setCategoryResults(matchedCategories.slice(0, 4));
-
-    // Fetch tool search results from Supabase
-    let isMounted = true;
-    fetchTools({ searchQuery: query.trim(), limit: 8 }).then((tools) => {
-      if (isMounted) {
-        setSearchResults(tools);
+    searchDirectory(q, { toolLimit: 8, categoryLimit: 4 }).then((res) => {
+      if (isCurrent) {
+        setCategoryResults(res.categories);
+        setSearchResults(res.tools);
         setIsLoading(false);
       }
     });
 
     return () => {
-      isMounted = false;
+      isCurrent = false;
     };
   }, [query]);
 

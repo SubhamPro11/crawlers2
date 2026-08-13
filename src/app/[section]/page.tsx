@@ -3,8 +3,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Terminal, FolderGit2, ArrowRight } from "lucide-react";
 import { TAXONOMY_SEEDS } from "@/lib/taxonomy";
-import { fetchTools } from "@/lib/supabase";
+import { getCachedTools } from "@/lib/cached-queries";
 import { ToolCard } from "@/components/ui/Card";
+
+export const revalidate = 3600; // SSG/ISR 1-hour static revalidation
+
+export async function generateStaticParams() {
+  return TAXONOMY_SEEDS.map((s) => ({ section: s.slug }));
+}
 
 interface SectionPageProps {
   params: Promise<{
@@ -55,7 +61,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
     notFound();
   }
 
-  const sectionTools = await fetchTools({ sectionSlug });
+  const sectionTools = await getCachedTools({ sectionSlug });
 
   // Group categories by subgroup
   const subgroupMap: Record<string, typeof section.categories> = {};

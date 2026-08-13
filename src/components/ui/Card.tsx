@@ -62,6 +62,7 @@ export const ToolCard: React.FC<ToolCardProps> = React.memo(({
               <div className="flex items-center gap-2">
                 <Link
                   href={`/tool/${slug}`}
+                  prefetch={true}
                   className="font-mono text-lg font-bold tracking-tight text-slate-100 group-hover:text-lime-accent transition-colors truncate"
                 >
                   {name}
@@ -131,6 +132,7 @@ export const ToolCard: React.FC<ToolCardProps> = React.memo(({
             {categorySlug ? (
               <Link
                 href={`/category/${categorySlug}`}
+                prefetch={true}
                 className="text-slate-300 hover:text-lime-accent transition-colors"
               >
                 {categoryName}

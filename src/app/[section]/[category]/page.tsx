@@ -3,10 +3,22 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, SlidersHorizontal } from "lucide-react";
 import { TAXONOMY_SEEDS } from "@/lib/taxonomy";
-import { fetchTools } from "@/lib/supabase";
+import { getCachedTools } from "@/lib/cached-queries";
 import { ToolCard } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
+
+export const revalidate = 3600; // SSG/ISR 1-hour static revalidation
+
+export async function generateStaticParams() {
+  const params: { section: string; category: string }[] = [];
+  TAXONOMY_SEEDS.forEach((sec) => {
+    sec.categories.forEach((cat) => {
+      params.push({ section: sec.slug, category: cat.slug });
+    });
+  });
+  return params;
+}
 
 interface CategoryPageProps {
   params: Promise<{
@@ -60,7 +72,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     notFound();
   }
 
-  const categoryTools = await fetchTools({ categorySlug });
+  const categoryTools = await getCachedTools({ categorySlug });
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-10">
