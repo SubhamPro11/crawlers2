@@ -135,7 +135,7 @@ export function StyleGuideClient() {
           <Badge pricingModel="open-source">Open Source</Badge>
           <Badge variant="lime">Featured Stack</Badge>
           <Badge variant="outline">#devtools</Badge>
-          <Badge variant="subtle">v1.4.0</Badge>
+          <Badge variant="subtle">v1.26.0</Badge>
         </div>
       </section>
 

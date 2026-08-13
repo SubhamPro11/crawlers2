@@ -164,7 +164,7 @@ export const CommandPalette: React.FC = () => {
         <div className="bg-navy-900 border-b border-navy-800 px-4 py-2.5 flex items-center justify-between text-xs text-slate-400">
           <div className="flex items-center gap-2">
             <span className="font-bold text-slate-200 flex items-center gap-1.5">
-              <Terminal className="w-3.5 h-3.5 text-lime-accent" /> crawlers-cli v1.0.0
+              <Terminal className="w-3.5 h-3.5 text-lime-accent" /> crawlers-cli v1.26.0
             </span>
           </div>
           <div className="flex items-center gap-3">

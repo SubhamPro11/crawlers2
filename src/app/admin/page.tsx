@@ -155,7 +155,7 @@ export default function AdminDashboardPage() {
             </div>
             <div>
               <div className="text-[10px] text-lime-accent uppercase tracking-wider font-mono font-semibold">
-                Admin Console v1.2.0 • Maintainer Mode
+                Admin Console v1.26.0 • Maintainer Mode
               </div>
               <h1 className="text-xl sm:text-2xl font-bold text-slate-100 tracking-tight">
                 Directory Control Plane

@@ -68,7 +68,7 @@ export const Footer: React.FC = () => {
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-6 border-t border-navy-850 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-slate-500">
-        <div>&copy; {new Date().getFullYear()} Crawlers Directory &middot; est.&nbsp;2025 &middot; v1.0.0</div>
+        <div>&copy; {new Date().getFullYear()} Crawlers Directory &middot; est.&nbsp;2025 &middot; v1.26.0</div>
         <div className="text-slate-400">
           Maintained by one developer. Zero automated affiliate feeds, zero&nbsp;algorithmic&nbsp;curation.
         </div>

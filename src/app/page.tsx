@@ -31,7 +31,7 @@ export default async function HomePage() {
         <div className="max-w-5xl mx-auto text-center space-y-6">
           <div className="crt-badge animate-hero inline-flex items-center gap-2 px-3 py-1 rounded bg-lime-accent/10 border border-lime-accent/30 font-mono text-xs text-lime-accent">
             <Terminal className="w-3.5 h-3.5 text-lime-accent" />
-            <span>crawlers://v1.0.0 --audit=manual --feeds=zero</span>
+            <span>crawlers://v1.26.0 --audit=manual --feeds=zero</span>
           </div>
 
           <h1 className="animate-hero-delayed text-3xl sm:text-5xl md:text-6xl font-mono font-extrabold text-slate-100 leading-[1.08] tracking-[-0.04em]">
