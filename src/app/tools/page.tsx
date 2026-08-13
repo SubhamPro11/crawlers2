@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, ShieldCheck, ChevronLeft, ChevronRight } from "lucide-react";
 import { getCachedPaginatedTools } from "@/lib/cached-queries";
 import { VerifiedToolsGrid } from "@/components/home/VerifiedToolsGrid";
+import { BreadcrumbJsonLd, CollectionPageJsonLd } from "@/components/seo/JsonLd";
 
 export const revalidate = 3600; // SSG/ISR 1-hour revalidation
 
@@ -38,6 +39,7 @@ interface ToolsPageProps {
 }
 
 export default async function ToolsDirectoryPage({ searchParams }: ToolsPageProps) {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
   const params = await searchParams;
   const page = parseInt(params.page || "1", 10);
   const categorySlug = params.category || "all";
@@ -56,6 +58,17 @@ export default async function ToolsDirectoryPage({ searchParams }: ToolsPageProp
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
+      <CollectionPageJsonLd
+        name="Complete AI Tools Directory Index"
+        description={`Browse ${totalCount} verified AI software, tools, and developer APIs.`}
+        url={`${baseUrl}/tools`}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", item: baseUrl },
+          { name: "Tools Directory", item: `${baseUrl}/tools` },
+        ]}
+      />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-10">
         {/* Navigation Breadcrumb */}
         <div className="flex items-center gap-2 font-mono text-xs text-slate-400">

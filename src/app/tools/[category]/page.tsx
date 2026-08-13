@@ -7,6 +7,7 @@ import { getCachedTools } from "@/lib/cached-queries";
 import { ToolCard } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { BreadcrumbJsonLd, CollectionPageJsonLd } from "@/components/seo/JsonLd";
 
 export const revalidate = 3600; // SSG/ISR 1-hour static revalidation
 
@@ -89,10 +90,24 @@ export default async function ToolsCategoryPage({ params }: CategoryPageProps) {
     notFound();
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
   const categoryTools = await getCachedTools({ categorySlug });
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
+      <CollectionPageJsonLd
+        name={`${category.name} AI Software & APIs`}
+        description={category.description}
+        url={`${baseUrl}/tools/${category.slug}`}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", item: baseUrl },
+          { name: "Tools Directory", item: `${baseUrl}/tools` },
+          { name: section.name, item: `${baseUrl}/${section.slug}` },
+          { name: category.name, item: `${baseUrl}/tools/${category.slug}` },
+        ]}
+      />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-10">
         {/* Breadcrumb navigation */}
         <div className="flex items-center gap-2 font-mono text-xs text-slate-400">

@@ -71,11 +71,17 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
         name={tool.name}
         description={tool.description}
         url={tool.url}
+        applicationCategory="DeveloperApplication"
+        operatingSystem="All"
+        offers={{
+          price: tool.pricing_model === "free" ? "0" : "0",
+          priceCurrency: "USD",
+        }}
       />
       <BreadcrumbJsonLd
         items={[
           { name: "Home", item: baseUrl },
-          { name: "Tools", item: `${baseUrl}/` },
+          { name: "Tools Directory", item: `${baseUrl}/tools` },
           { name: tool.name, item: `${baseUrl}/tool/${tool.slug}` },
         ]}
       />

@@ -1,13 +1,15 @@
 import { MetadataRoute } from "next";
 import { TAXONOMY_SEEDS } from "@/lib/taxonomy";
-import { fetchTools } from "@/lib/supabase";
+import { getCachedTools } from "@/lib/cached-queries";
 import { MOCK_TOOLS } from "@/lib/mockData";
+
+export const revalidate = 3600; // Regenerate sitemap every hour via ISR
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
   const now = new Date();
 
-  // Static routes
+  // Core Landing & Directory Pages
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
@@ -19,7 +21,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/tools`,
       lastModified: now,
       changeFrequency: "daily",
-      priority: 0.9,
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/trending`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.85,
     },
     {
       url: `${baseUrl}/stacks`,
@@ -28,19 +36,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/trending`,
+      url: `${baseUrl}/compare`,
       lastModified: now,
-      changeFrequency: "daily",
-      priority: 0.8,
+      changeFrequency: "weekly",
+      priority: 0.75,
     },
     {
       url: `${baseUrl}/api`,
-      lastModified: now,
-      changeFrequency: "daily",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/compare`,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.7,
@@ -55,39 +57,49 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/changelog`,
       lastModified: now,
       changeFrequency: "weekly",
-      priority: 0.5,
+      priority: 0.6,
     },
   ];
 
-  // Section routes
+  // 9 Top-Level Section Hubs
   const sectionRoutes: MetadataRoute.Sitemap = TAXONOMY_SEEDS.map((section) => ({
     url: `${baseUrl}/${section.slug}`,
     lastModified: now,
     changeFrequency: "weekly",
-    priority: 0.8,
+    priority: 0.85,
   }));
 
-  // Category routes
-  const categoryRoutes: MetadataRoute.Sitemap = TAXONOMY_SEEDS.flatMap((section) =>
-    section.categories.map((cat) => ({
-      url: `${baseUrl}/${section.slug}/${cat.slug}`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    }))
-  );
+  // 43 Canonical Category URLs (/tools/[category] & /[section]/[category])
+  const categoryRoutes: MetadataRoute.Sitemap = [];
+  TAXONOMY_SEEDS.forEach((section) => {
+    section.categories.forEach((cat) => {
+      // Primary category link
+      categoryRoutes.push({
+        url: `${baseUrl}/tools/${cat.slug}`,
+        lastModified: now,
+        changeFrequency: "weekly",
+        priority: 0.8,
+      });
+      // Section-nested category link
+      categoryRoutes.push({
+        url: `${baseUrl}/${section.slug}/${cat.slug}`,
+        lastModified: now,
+        changeFrequency: "weekly",
+        priority: 0.8,
+      });
+    });
+  });
 
-  // Dynamic tool detail routes from database (with fallback to mock dataset)
-  const dbTools = await fetchTools();
+  // Dynamic Tool Detail Routes (1,000+ Tools)
+  const dbTools = await getCachedTools();
   const tools = dbTools && dbTools.length > 0 ? dbTools : MOCK_TOOLS;
 
   const toolRoutes: MetadataRoute.Sitemap = tools.map((tool) => ({
     url: `${baseUrl}/tool/${tool.slug}`,
     lastModified: new Date(tool.updated_at || tool.added_at || now),
     changeFrequency: "weekly",
-    priority: 0.7,
+    priority: 0.75,
   }));
 
   return [...staticRoutes, ...sectionRoutes, ...categoryRoutes, ...toolRoutes];
 }
-

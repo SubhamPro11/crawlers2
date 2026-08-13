@@ -18,6 +18,14 @@ const inter = Inter({
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
+const googleVerification =
+  process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+  process.env.GOOGLE_SITE_VERIFICATION ||
+  "";
+const bingVerification =
+  process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION ||
+  process.env.BING_SITE_VERIFICATION ||
+  "";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -35,11 +43,13 @@ export const metadata: Metadata = {
     "open source AI",
     "terminal UI",
     "curated software",
+    "API registry",
+    "AI infrastructure",
   ],
   authors: [{ name: "Crawlers Editorial Team" }],
   creator: "Crawlers Directory",
   alternates: {
-    canonical: "./",
+    canonical: baseUrl,
   },
   openGraph: {
     type: "website",
@@ -48,7 +58,7 @@ export const metadata: Metadata = {
     siteName: "Crawlers",
     title: "Crawlers — AI Tools Directory & API Registry",
     description:
-      "A human-curated directory of AI tools, API endpoints, and developer infrastructure.",
+      "A human-curated directory of AI tools, API endpoints, and developer infrastructure. Direct source links, audited licensing, zero fabricated metrics.",
   },
   twitter: {
     card: "summary_large_image",
@@ -70,7 +80,8 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "REPLACE_WITH_GSC_CODE",
+    ...(googleVerification && { google: googleVerification }),
+    ...(bingVerification && { yandex: undefined, other: { "msvalidate.01": bingVerification } }),
   },
 };
 
@@ -78,7 +89,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${jetbrainsMono.variable} ${inter.variable} h-full antialiased`}>
       <head>
-        <meta name="google-site-verification" content="REPLACE_WITH_GSC_CODE" />
+        {googleVerification && (
+          <meta name="google-site-verification" content={googleVerification} />
+        )}
         <SiteIdentityJsonLd siteUrl={baseUrl} />
       </head>
       <body className="min-h-full flex flex-col bg-navy-950 text-slate-100 selection:bg-lime-accent/30 selection:text-lime-accent">

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, TrendingUp } from "lucide-react";
 import { getCachedTrendingTools } from "@/lib/cached-queries";
 import { TrendingSection } from "@/components/home/TrendingSection";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
 export const revalidate = 600; // SSG/ISR 10-minute revalidation for trending telemetry
 
@@ -28,10 +29,17 @@ export const metadata = {
 };
 
 export default async function TrendingPage() {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
   const { tools, viewCounts, sparklines } = await getCachedTrendingTools();
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", item: baseUrl },
+          { name: "Traffic Telemetry", item: `${baseUrl}/trending` },
+        ]}
+      />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-8">
         {/* Navigation Breadcrumb */}
         <div className="flex items-center gap-2 font-mono text-xs text-slate-400">

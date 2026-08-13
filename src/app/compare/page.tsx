@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowLeftRight } from "lucide-react";
 import { getCachedTools, getCachedToolBySlug } from "@/lib/cached-queries";
 import { MOCK_TOOLS } from "@/lib/mockData";
 import { CompareClient } from "./CompareClient";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
 export const revalidate = 3600; // SSG/ISR 1-hour static revalidation
 
@@ -35,6 +36,7 @@ interface ComparePageProps {
 }
 
 export default async function ComparePage({ searchParams }: ComparePageProps) {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
   const { tools: toolsQuery } = await searchParams;
 
   const allDbTools = (await getCachedTools()) || MOCK_TOOLS;
@@ -45,6 +47,12 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-950 text-slate-100 grain-overlay">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", item: baseUrl },
+          { name: "Tool Comparison", item: `${baseUrl}/compare` },
+        ]}
+      />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-8">
         {/* Navigation Breadcrumb */}
         <div className="flex items-center gap-2 font-mono text-xs text-slate-400">

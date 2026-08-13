@@ -7,6 +7,7 @@ import { getCachedTools } from "@/lib/cached-queries";
 import { ToolCard } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { BreadcrumbJsonLd, CollectionPageJsonLd } from "@/components/seo/JsonLd";
 
 export const revalidate = 3600; // SSG/ISR 1-hour static revalidation
 
@@ -38,14 +39,15 @@ export async function generateMetadata({ params }: CategoryPageProps) {
     };
   }
 
-  const title = `${category.name} AI Tools (${section.name})`;
-  const canonicalUrl = `https://crawlers.dpdns.org/${section.slug}/${category.slug}`;
+  const title = `${category.name} AI Tools — ${section.name}`;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
+  const canonicalUrl = `${baseUrl}/${section.slug}/${category.slug}`;
 
   return {
     title,
     description: category.description,
     alternates: {
-      canonical: `/${section.slug}/${category.slug}`,
+      canonical: canonicalUrl,
     },
     openGraph: {
       title,
@@ -72,10 +74,24 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     notFound();
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
   const categoryTools = await getCachedTools({ categorySlug });
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-10">
+    <>
+      <CollectionPageJsonLd
+        name={`${category.name} AI Software & APIs`}
+        description={category.description}
+        url={`${baseUrl}/${section.slug}/${category.slug}`}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", item: baseUrl },
+          { name: section.name, item: `${baseUrl}/${section.slug}` },
+          { name: category.name, item: `${baseUrl}/${section.slug}/${category.slug}` },
+        ]}
+      />
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-10">
         {/* Breadcrumb navigation */}
         <div className="flex items-center gap-2 font-mono text-xs text-slate-400">
           <Link href="/" className="hover:text-lime-accent flex items-center gap-1">
@@ -147,5 +163,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           />
         )}
       </main>
+    </>
   );
 }

@@ -5,6 +5,7 @@ import { ArrowLeft, Terminal, FolderGit2, ArrowRight } from "lucide-react";
 import { TAXONOMY_SEEDS } from "@/lib/taxonomy";
 import { getCachedTools } from "@/lib/cached-queries";
 import { ToolCard } from "@/components/ui/Card";
+import { BreadcrumbJsonLd, CollectionPageJsonLd } from "@/components/seo/JsonLd";
 
 export const revalidate = 3600; // SSG/ISR 1-hour static revalidation
 
@@ -28,14 +29,15 @@ export async function generateMetadata({ params }: SectionPageProps) {
     };
   }
 
-  const title = `${section.name} AI Tools & Categories`;
-  const canonicalUrl = `https://crawlers.dpdns.org/${section.slug}`;
+  const title = `${section.name} AI Software & APIs — Directory Section 0${section.number}`;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
+  const canonicalUrl = `${baseUrl}/${section.slug}`;
 
   return {
     title,
     description: section.description,
     alternates: {
-      canonical: `/${section.slug}`,
+      canonical: canonicalUrl,
     },
     openGraph: {
       title,
@@ -61,6 +63,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
     notFound();
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crawlers.dpdns.org";
   const sectionTools = await getCachedTools({ sectionSlug, limit: 12 });
 
   // Group categories by subgroup
@@ -72,7 +75,19 @@ export default async function SectionPage({ params }: SectionPageProps) {
   });
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-10">
+    <>
+      <CollectionPageJsonLd
+        name={`${section.name} AI Software & APIs`}
+        description={section.description}
+        url={`${baseUrl}/${section.slug}`}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", item: baseUrl },
+          { name: section.name, item: `${baseUrl}/${section.slug}` },
+        ]}
+      />
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full space-y-10">
         {/* Breadcrumbs */}
         <div className="flex items-center gap-2 font-mono text-xs text-slate-400">
           <Link href="/" className="hover:text-lime-accent flex items-center gap-1">
@@ -156,5 +171,6 @@ export default async function SectionPage({ params }: SectionPageProps) {
           </div>
         </div>
       </main>
+    </>
   );
 }
