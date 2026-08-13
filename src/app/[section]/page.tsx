@@ -61,7 +61,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
     notFound();
   }
 
-  const sectionTools = await getCachedTools({ sectionSlug });
+  const sectionTools = await getCachedTools({ sectionSlug, limit: 12 });
 
   // Group categories by subgroup
   const subgroupMap: Record<string, typeof section.categories> = {};

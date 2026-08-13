@@ -17,66 +17,97 @@ import { Tool, Section, Category } from "@/types/database";
  */
 export const CACHE_REVALIDATE_SECONDS = 3600;
 
-export const getCachedPaginatedTools = unstable_cache(
-  async (options?: Parameters<typeof fetchPaginatedToolsRaw>[0]): Promise<PaginatedToolsResult> => {
-    return fetchPaginatedToolsRaw(options);
-  },
-  ["paginated-tools-cache"],
-  {
-    revalidate: CACHE_REVALIDATE_SECONDS,
-    tags: ["tools", "tools-paginated"],
-  }
-);
+export async function getCachedPaginatedTools(options?: {
+  page?: number;
+  pageSize?: number;
+  limit?: number;
+  categorySlug?: string;
+  pricingModel?: string;
+  hasApi?: boolean;
+  sortBy?: "recently_added" | "name_asc";
+}): Promise<PaginatedToolsResult> {
+  const page = options?.page || 1;
+  const limit = options?.limit || options?.pageSize || 24;
+  const category = options?.categorySlug || "all";
+  const pricing = options?.pricingModel || "all";
+  const api = options?.hasApi ? "api" : "no-api";
+  const sort = options?.sortBy || "recently_added";
 
-export const getCachedTools = unstable_cache(
-  async (options?: Parameters<typeof fetchToolsRaw>[0]): Promise<Tool[]> => {
-    return fetchToolsRaw(options);
-  },
-  ["tools-cache"],
-  {
-    revalidate: CACHE_REVALIDATE_SECONDS,
-    tags: ["tools"],
-  }
-);
+  const fetcher = unstable_cache(
+    async () => fetchPaginatedToolsRaw({ ...options, pageSize: limit }),
+    ["paginated-tools-v3", `p-${page}`, `l-${limit}`, `c-${category}`, `pr-${pricing}`, `a-${api}`, `s-${sort}`],
+    {
+      revalidate: CACHE_REVALIDATE_SECONDS,
+      tags: ["tools", "tools-paginated"],
+    }
+  );
 
-export const getCachedToolBySlug = unstable_cache(
-  async (slug: string): Promise<Tool | null> => {
-    return fetchToolBySlugRaw(slug);
-  },
-  ["tool-by-slug-cache"],
-  {
-    revalidate: CACHE_REVALIDATE_SECONDS,
-    tags: ["tools"],
-  }
-);
+  return fetcher();
+}
+
+export async function getCachedTools(options?: {
+  categorySlug?: string;
+  sectionSlug?: string;
+  limit?: number;
+}): Promise<Tool[]> {
+  const category = options?.categorySlug || "all";
+  const section = options?.sectionSlug || "all";
+  const limit = options?.limit || 1000;
+
+  const fetcher = unstable_cache(
+    async () => fetchToolsRaw(options),
+    ["tools-v2", `c-${category}`, `s-${section}`, `l-${limit}`],
+    {
+      revalidate: CACHE_REVALIDATE_SECONDS,
+      tags: ["tools"],
+    }
+  );
+
+  return fetcher();
+}
+
+export async function getCachedToolBySlug(slug: string): Promise<Tool | null> {
+  const fetcher = unstable_cache(
+    async () => fetchToolBySlugRaw(slug),
+    ["tool-slug-v2", slug],
+    {
+      revalidate: CACHE_REVALIDATE_SECONDS,
+      tags: ["tools", `tool-${slug}`],
+    }
+  );
+
+  return fetcher();
+}
 
 export const getCachedSections = unstable_cache(
   async (): Promise<Section[]> => {
     return fetchSectionsRaw();
   },
-  ["sections-cache"],
+  ["sections-cache-v2"],
   {
     revalidate: CACHE_REVALIDATE_SECONDS,
     tags: ["sections", "taxonomy"],
   }
 );
 
-export const getCachedCategoriesBySection = unstable_cache(
-  async (sectionSlug: string): Promise<Category[]> => {
-    return fetchCategoriesBySectionRaw(sectionSlug);
-  },
-  ["categories-by-section-cache"],
-  {
-    revalidate: CACHE_REVALIDATE_SECONDS,
-    tags: ["categories", "taxonomy"],
-  }
-);
+export async function getCachedCategoriesBySection(sectionSlug: string): Promise<Category[]> {
+  const fetcher = unstable_cache(
+    async () => fetchCategoriesBySectionRaw(sectionSlug),
+    ["categories-by-sec-v2", sectionSlug],
+    {
+      revalidate: CACHE_REVALIDATE_SECONDS,
+      tags: ["categories", "taxonomy"],
+    }
+  );
+
+  return fetcher();
+}
 
 export const getCachedTrendingTools = unstable_cache(
   async () => {
     return fetchTrendingToolsRaw();
   },
-  ["trending-tools-cache"],
+  ["trending-tools-cache-v2"],
   {
     revalidate: 600, // 10-minute cache for trending analytics
     tags: ["trending", "tools"],

@@ -17,10 +17,10 @@ export const SmartSearch: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Eagerly preheat local search index on mount
-  useEffect(() => {
+  // Preheat index lazily when user interacts with search
+  const preheatIndex = () => {
     getSearchIndex().catch(() => {});
-  }, []);
+  };
 
   // Global '/' keyboard shortcut to focus search input
   useEffect(() => {
@@ -104,7 +104,11 @@ export const SmartSearch: React.FC = () => {
               setIsOpen(false);
             }
           }}
-          onFocus={() => query.trim() && setIsOpen(true)}
+          onFocus={() => {
+            preheatIndex();
+            if (query.trim()) setIsOpen(true);
+          }}
+          onMouseEnter={preheatIndex}
           placeholder="Search 1,000+ tools, categories, APIs..."
           className="w-full bg-transparent text-slate-100 placeholder-slate-500 text-xs sm:text-sm font-mono py-3.5 pl-1 pr-28 sm:pr-36 focus:outline-none"
         />
@@ -176,7 +180,7 @@ export const SmartSearch: React.FC = () => {
                 {categoryResults.map((cat) => (
                   <Link
                     key={cat.slug}
-                    href={`/category/${cat.slug}`}
+                    href={`/tools/${cat.slug}`}
                     onClick={() => setIsOpen(false)}
                     className="flex items-center justify-between p-2 rounded-lg hover:bg-navy-850 transition-colors group"
                   >
