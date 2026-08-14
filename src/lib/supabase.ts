@@ -38,7 +38,9 @@ async function withTimeout<T>(promise: PromiseLike<T>, ms = 3000): Promise<T | n
 // Trigger Google OAuth Sign-In
 export async function signInWithGoogle(nextUrl = "/"): Promise<{ error?: string }> {
   if (!supabase) {
-    return { error: "Supabase client is not configured." };
+    const errorMsg = "Supabase client is not configured. Verify NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are present during build.";
+    console.error("[Auth Error]", errorMsg);
+    return { error: errorMsg };
   }
 
   const origin = typeof window !== "undefined" ? window.location.origin : "";
@@ -56,6 +58,7 @@ export async function signInWithGoogle(nextUrl = "/"): Promise<{ error?: string 
   });
 
   if (error) {
+    console.error("[Auth Error] Google OAuth initiation failed:", error.message);
     return { error: error.message };
   }
   return {};

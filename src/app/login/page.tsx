@@ -40,7 +40,11 @@ function LoginContent() {
 
   const handleGoogleSignIn = async () => {
     setSigningIn(true);
-    await signInWithGoogle(next);
+    const { error } = await signInWithGoogle(next);
+    if (error) {
+      console.error("[Login Page] Google sign-in failed:", error);
+      setSigningIn(false);
+    }
   };
 
   if (loading || isAuthenticated) {
