@@ -67,9 +67,6 @@ export async function signOutUser(): Promise<{ error?: string }> {
     const { error } = await supabase.auth.signOut();
     if (error) return { error: error.message };
   }
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("crawlers_admin_session");
-  }
   return {};
 }
 
