@@ -1,5 +1,9 @@
 import React from "react";
 
+function safeJsonLd(data: unknown): string {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
+
 export interface SoftwareApplicationJsonLdProps {
   name: string;
   description: string;
@@ -53,7 +57,7 @@ export const SoftwareApplicationJsonLd: React.FC<SoftwareApplicationJsonLdProps>
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(schema) }}
     />
   );
 };
@@ -74,7 +78,7 @@ export const CollectionPageJsonLd: React.FC<CollectionPageJsonLdProps> = ({
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(schema) }}
     />
   );
 };
@@ -94,7 +98,7 @@ export const BreadcrumbJsonLd: React.FC<BreadcrumbJsonLdProps> = ({ items }) => 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(schema) }}
     />
   );
 };
@@ -148,8 +152,9 @@ export const SiteIdentityJsonLd: React.FC<SiteIdentityJsonLdProps> = ({
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(schema) }}
     />
   );
 };
+
 

@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath, revalidateTag } from "next/cache";
 
-const REVALIDATION_SECRET =
-  process.env.REVALIDATION_SECRET || "crawlers-cache-revalidate-secret";
+const REVALIDATION_SECRET = process.env.REVALIDATION_SECRET;
 
 export async function POST(request: NextRequest) {
+  if (!REVALIDATION_SECRET) {
+    return NextResponse.json(
+      { error: "REVALIDATION_SECRET is not configured on server" },
+      { status: 500 }
+    );
+  }
+
   try {
     const body = await request.json().catch(() => ({}));
     const secret =
@@ -13,7 +19,7 @@ export async function POST(request: NextRequest) {
       body.secret;
 
     // Verify authentication
-    if (secret !== REVALIDATION_SECRET && secret !== "crawlers-cache-revalidate") {
+    if (secret !== REVALIDATION_SECRET) {
       return NextResponse.json(
         { error: "Invalid revalidation secret token" },
         { status: 401 }
@@ -55,18 +61,25 @@ export async function POST(request: NextRequest) {
       now: Date.now(),
     });
   } catch (err: unknown) {
-    const errorMessage = err instanceof Error ? err.message : "Internal error";
+    console.error("Failed to revalidate cache:", err);
     return NextResponse.json(
-      { error: "Failed to revalidate cache", details: errorMessage },
+      { error: "Failed to revalidate cache" },
       { status: 500 }
     );
   }
 }
 
 export async function GET(request: NextRequest) {
+  if (!REVALIDATION_SECRET) {
+    return NextResponse.json(
+      { error: "REVALIDATION_SECRET is not configured on server" },
+      { status: 500 }
+    );
+  }
+
   const secret = request.nextUrl.searchParams.get("secret");
 
-  if (secret !== REVALIDATION_SECRET && secret !== "crawlers-cache-revalidate") {
+  if (secret !== REVALIDATION_SECRET) {
     return NextResponse.json(
       { error: "Invalid revalidation secret token" },
       { status: 401 }

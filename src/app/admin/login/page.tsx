@@ -18,13 +18,7 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     if (!supabase) {
-      // Mock admin fallback for dev offline testing
-      if (email === "subhamkr11012004@gmail.com" && password.length >= 6) {
-        localStorage.setItem("crawlers_admin_session", "true");
-        router.push("/admin");
-        return;
-      }
-      setError("Invalid credentials or Supabase disconnected.");
+      setError("Supabase client is not configured.");
       setLoading(false);
       return;
     }
@@ -42,15 +36,14 @@ export default function AdminLoginPage() {
       }
 
       if (data.user) {
-        // Verify profile role
+        // Verify profile role in database
         const { data: profile } = await supabase
           .from("profiles")
           .select("role")
           .eq("id", data.user.id)
           .single();
 
-        if (profile?.role === "admin" || email === "subhamkr11012004@gmail.com") {
-          localStorage.setItem("crawlers_admin_session", "true");
+        if (profile?.role === "admin") {
           router.push("/admin");
         } else {
           setError("Access denied: Account does not hold administrator privileges.");

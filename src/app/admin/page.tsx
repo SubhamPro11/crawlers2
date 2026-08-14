@@ -24,10 +24,12 @@ import {
   supabase,
 } from "@/lib/supabase";
 import { Submission, Tool, LinkReport } from "@/types/database";
+import { revalidateDirectoryCache } from "./actions";
 
 export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<"submissions" | "tools" | "analytics">("submissions");
   const [authed, setAuthed] = useState(false);
+  const [adminEmail, setAdminEmail] = useState<string>("");
   const router = useRouter();
 
   // Real community tool submissions & analytics fetched from database
@@ -37,38 +39,27 @@ export default function AdminDashboardPage() {
   const [analyticsData, setAnalyticsData] = useState<AdminAnalyticsData | null>(null);
 
   useEffect(() => {
-    // Verify admin session via Supabase Auth or local session token
+    // Verify admin session strictly via Supabase Auth and database role
     const verifyAuth = async () => {
-      const localSession = localStorage.getItem("crawlers_admin_session");
-      
-      if (supabase) {
-        const { data } = await supabase.auth.getUser();
-        const user = data?.user;
-
-        if (user) {
-          if (user.email === "subhamkr11012004@gmail.com") {
-            localStorage.setItem("crawlers_admin_session", "true");
-            setAuthed(true);
-            loadDashboardData();
-            return;
-          }
-
-          const { data: profile } = await supabase
-            .from("profiles")
-            .select("role")
-            .eq("id", user.id)
-            .single();
-
-          if (profile?.role === "admin") {
-            localStorage.setItem("crawlers_admin_session", "true");
-            setAuthed(true);
-            loadDashboardData();
-            return;
-          }
-        }
+      if (!supabase) {
+        router.push("/admin/login");
+        return;
       }
 
-      if (localSession === "true") {
+      const { data: { user }, error } = await supabase.auth.getUser();
+      if (error || !user) {
+        router.push("/admin/login");
+        return;
+      }
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single();
+
+      if (profile?.role === "admin") {
+        setAdminEmail(user.email || "Admin");
         setAuthed(true);
         loadDashboardData();
       } else {
@@ -93,7 +84,6 @@ export default function AdminDashboardPage() {
   }, [router]);
 
   const handleLogout = async () => {
-    localStorage.removeItem("crawlers_admin_session");
     if (supabase) {
       await supabase.auth.signOut();
     }
@@ -102,11 +92,7 @@ export default function AdminDashboardPage() {
 
   const triggerRevalidation = async () => {
     try {
-      await fetch("/api/revalidate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ secret: "crawlers-cache-revalidate" }),
-      });
+      await revalidateDirectoryCache();
     } catch (err) {
       console.warn("On-demand revalidation trigger error:", err);
     }
@@ -167,7 +153,7 @@ export default function AdminDashboardPage() {
             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-navy-950 border border-navy-800 text-xs text-slate-300">
               <span className="w-2 h-2 rounded-full bg-lime-accent animate-pulse" />
               <span>
-                Admin: <strong className="text-slate-100 font-semibold font-mono">subhamkr11012004@gmail.com</strong>
+                Admin: <strong className="text-slate-100 font-semibold font-mono">{adminEmail || "Authenticated"}</strong>
               </span>
             </span>
             <button
