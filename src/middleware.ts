@@ -37,14 +37,12 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Edge protection for /admin routes
+  // Redirect legacy /admin/login to /admin
   const pathname = request.nextUrl.pathname;
-  if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
-    if (!user) {
-      const loginUrl = request.nextUrl.clone();
-      loginUrl.pathname = "/admin/login";
-      return NextResponse.redirect(loginUrl);
-    }
+  if (pathname.startsWith("/admin/login")) {
+    const adminUrl = request.nextUrl.clone();
+    adminUrl.pathname = "/admin";
+    return NextResponse.redirect(adminUrl);
   }
 
   return response;

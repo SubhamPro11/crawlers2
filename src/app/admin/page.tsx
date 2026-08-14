@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   ShieldAlert,
   Check,
@@ -10,6 +10,7 @@ import {
   Layers,
   Inbox,
   Activity,
+  Lock,
 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { MOCK_TOOLS } from "@/lib/mockData";
@@ -28,9 +29,8 @@ import { revalidateDirectoryCache } from "./actions";
 
 export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<"submissions" | "tools" | "analytics">("submissions");
-  const [authed, setAuthed] = useState(false);
+  const [authStatus, setAuthStatus] = useState<"checking" | "authorized" | "unauthorized">("checking");
   const [adminEmail, setAdminEmail] = useState<string>("");
-  const router = useRouter();
 
   // Real community tool submissions & analytics fetched from database
   const [pendingSubmissions, setPendingSubmissions] = useState<Submission[]>([]);
@@ -39,16 +39,16 @@ export default function AdminDashboardPage() {
   const [analyticsData, setAnalyticsData] = useState<AdminAnalyticsData | null>(null);
 
   useEffect(() => {
-    // Verify admin session strictly via Supabase Auth and database role
+    // Verify admin session strictly via Supabase Auth and database profiles.role
     const verifyAuth = async () => {
       if (!supabase) {
-        router.push("/admin/login");
+        setAuthStatus("unauthorized");
         return;
       }
 
       const { data: { user }, error } = await supabase.auth.getUser();
       if (error || !user) {
-        router.push("/admin/login");
+        setAuthStatus("unauthorized");
         return;
       }
 
@@ -60,10 +60,10 @@ export default function AdminDashboardPage() {
 
       if (profile?.role === "admin") {
         setAdminEmail(user.email || "Admin");
-        setAuthed(true);
+        setAuthStatus("authorized");
         loadDashboardData();
       } else {
-        router.push("/admin/login");
+        setAuthStatus("unauthorized");
       }
     };
 
@@ -81,13 +81,13 @@ export default function AdminDashboardPage() {
     };
 
     verifyAuth();
-  }, [router]);
+  }, []);
 
   const handleLogout = async () => {
     if (supabase) {
       await supabase.auth.signOut();
     }
-    router.push("/admin/login");
+    setAuthStatus("unauthorized");
   };
 
   const triggerRevalidation = async () => {
@@ -128,7 +128,41 @@ export default function AdminDashboardPage() {
     await triggerRevalidation();
   };
 
-  if (!authed) return null;
+  if (authStatus === "checking") {
+    return (
+      <main className="flex-1 flex items-center justify-center p-8 font-mono text-xs text-slate-500">
+        <span className="animate-pulse">$ verifying_admin_permissions...</span>
+      </main>
+    );
+  }
+
+  if (authStatus === "unauthorized") {
+    return (
+      <main className="flex-1 flex items-center justify-center px-4 py-20 font-mono">
+        <div className="w-full max-w-md p-8 rounded-xl border border-navy-800 bg-navy-900 text-center space-y-4 shadow-xl">
+          <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 mx-auto flex items-center justify-center text-amber-400">
+            <Lock className="w-6 h-6" />
+          </div>
+          <div className="space-y-1.5">
+            <h1 className="text-base font-bold text-slate-100 tracking-tight uppercase">
+              Restricted Access
+            </h1>
+            <p className="text-xs text-slate-400 font-sans leading-relaxed">
+              This area is restricted to authorized maintainers.
+            </p>
+          </div>
+          <div className="pt-2 border-t border-navy-850">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1.5 text-xs text-lime-accent hover:underline font-semibold"
+            >
+              ← Return to Directory
+            </Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-12 flex-1 w-full space-y-6 font-mono">
