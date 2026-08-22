@@ -38,7 +38,7 @@ async function withTimeout<T>(promise: PromiseLike<T>, ms = 3000): Promise<T | n
 // Trigger Google OAuth Sign-In
 export async function signInWithGoogle(nextUrl = "/"): Promise<{ error?: string }> {
   if (!supabase) {
-    const errorMsg = "Supabase client is not configured. Verify NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are present in your environment.";
+    const errorMsg = "Supabase environment variables (NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY) are missing or not configured.";
     console.error("[Auth Error]", errorMsg);
     return { error: errorMsg };
   }
@@ -51,7 +51,7 @@ export async function signInWithGoogle(nextUrl = "/"): Promise<{ error?: string 
     const cleanNext = nextUrl.startsWith("/") && !nextUrl.startsWith("//") ? nextUrl : "/";
     const redirectTo = `${origin}/auth/callback?next=${encodeURIComponent(cleanNext)}`;
 
-    const { error } = await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo,
@@ -66,6 +66,11 @@ export async function signInWithGoogle(nextUrl = "/"): Promise<{ error?: string 
       console.error("[Auth Error] Google OAuth initiation failed:", error.message);
       return { error: error.message };
     }
+
+    if (data?.url && typeof window !== "undefined") {
+      window.location.href = data.url;
+    }
+
     return {};
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "An unexpected error occurred during Google sign in";
@@ -73,6 +78,7 @@ export async function signInWithGoogle(nextUrl = "/"): Promise<{ error?: string 
     return { error: message };
   }
 }
+
 
 
 // Sign out current user session

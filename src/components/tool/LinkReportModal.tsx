@@ -126,13 +126,17 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
 
               <div className="pt-2">
                 <button
-                  onClick={() =>
-                    signInWithGoogle(
+                  onClick={async () => {
+                    const currentUrl =
                       typeof window !== "undefined"
                         ? `${window.location.pathname}${window.location.search}`
-                        : "/"
-                    )
-                  }
+                        : "/";
+                    const { error } = await signInWithGoogle(currentUrl);
+                    if (error) {
+                      console.error("[Modal] Google sign-in failed:", error);
+                      window.location.href = `/login?error=initiation_failed&error_description=${encodeURIComponent(error)}&next=${encodeURIComponent(currentUrl)}`;
+                    }
+                  }}
                   className="w-full py-2.5 px-4 rounded-full bg-navy-850 border border-navy-700 text-slate-200 hover:text-lime-accent hover:border-lime-accent/50 transition-colors flex items-center justify-center gap-2 text-xs font-bold cursor-pointer"
                 >
                   <LogIn className="w-4 h-4 text-lime-accent" />

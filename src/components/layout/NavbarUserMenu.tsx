@@ -65,6 +65,7 @@ export const NavbarUserMenu: React.FC = () => {
     const { error } = await signInWithGoogle(currentUrl);
     if (error) {
       console.error("[Navbar] Google sign-in failed:", error);
+      window.location.href = `/login?error=initiation_failed&error_description=${encodeURIComponent(error)}&next=${encodeURIComponent(currentUrl)}`;
     }
   };
 
