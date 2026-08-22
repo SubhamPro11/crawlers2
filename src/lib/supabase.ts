@@ -38,31 +38,42 @@ async function withTimeout<T>(promise: PromiseLike<T>, ms = 3000): Promise<T | n
 // Trigger Google OAuth Sign-In
 export async function signInWithGoogle(nextUrl = "/"): Promise<{ error?: string }> {
   if (!supabase) {
-    const errorMsg = "Supabase client is not configured. Verify NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are present during build.";
+    const errorMsg = "Supabase client is not configured. Verify NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are present in your environment.";
     console.error("[Auth Error]", errorMsg);
     return { error: errorMsg };
   }
 
-  const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const redirectTo = `${origin}/auth/callback?next=${encodeURIComponent(nextUrl)}`;
+  try {
+    const origin = typeof window !== "undefined" && window.location.origin
+      ? window.location.origin.replace(/\/$/, "")
+      : (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "");
 
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo,
-      queryParams: {
-        access_type: "offline",
-        prompt: "consent",
+    const cleanNext = nextUrl.startsWith("/") && !nextUrl.startsWith("//") ? nextUrl : "/";
+    const redirectTo = `${origin}/auth/callback?next=${encodeURIComponent(cleanNext)}`;
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo,
+        queryParams: {
+          access_type: "offline",
+          prompt: "select_account",
+        },
       },
-    },
-  });
+    });
 
-  if (error) {
-    console.error("[Auth Error] Google OAuth initiation failed:", error.message);
-    return { error: error.message };
+    if (error) {
+      console.error("[Auth Error] Google OAuth initiation failed:", error.message);
+      return { error: error.message };
+    }
+    return {};
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "An unexpected error occurred during Google sign in";
+    console.error("[Auth Error] Google OAuth exception:", message);
+    return { error: message };
   }
-  return {};
 }
+
 
 // Sign out current user session
 export async function signOutUser(): Promise<{ error?: string }> {

@@ -59,7 +59,10 @@ export const NavbarUserMenu: React.FC = () => {
   }, [checkProfileRole]);
 
   const handleSignIn = async () => {
-    const { error } = await signInWithGoogle(window.location.pathname);
+    const currentUrl = typeof window !== "undefined"
+      ? `${window.location.pathname}${window.location.search}`
+      : "/";
+    const { error } = await signInWithGoogle(currentUrl);
     if (error) {
       console.error("[Navbar] Google sign-in failed:", error);
     }

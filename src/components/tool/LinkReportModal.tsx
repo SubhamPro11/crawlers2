@@ -126,7 +126,13 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
 
               <div className="pt-2">
                 <button
-                  onClick={() => signInWithGoogle(window.location.pathname)}
+                  onClick={() =>
+                    signInWithGoogle(
+                      typeof window !== "undefined"
+                        ? `${window.location.pathname}${window.location.search}`
+                        : "/"
+                    )
+                  }
                   className="w-full py-2.5 px-4 rounded-full bg-navy-850 border border-navy-700 text-slate-200 hover:text-lime-accent hover:border-lime-accent/50 transition-colors flex items-center justify-center gap-2 text-xs font-bold cursor-pointer"
                 >
                   <LogIn className="w-4 h-4 text-lime-accent" />

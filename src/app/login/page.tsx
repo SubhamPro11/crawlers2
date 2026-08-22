@@ -3,7 +3,7 @@
 import React, { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Terminal, LogIn, ArrowLeft, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { Terminal, LogIn, ArrowLeft, ShieldCheck, CheckCircle2, AlertCircle } from "lucide-react";
 import { supabase, signInWithGoogle } from "@/lib/supabase";
 
 function LoginContent() {
@@ -12,8 +12,14 @@ function LoginContent() {
   const rawNext = searchParams.get("next") || "/";
   const next = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/";
 
+  const urlError = searchParams.get("error");
+  const urlErrorDesc = searchParams.get("error_description");
+
   const [loading, setLoading] = useState(true);
   const [signingIn, setSigningIn] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(
+    urlErrorDesc || urlError || null
+  );
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -40,12 +46,15 @@ function LoginContent() {
 
   const handleGoogleSignIn = async () => {
     setSigningIn(true);
+    setErrorMessage(null);
     const { error } = await signInWithGoogle(next);
     if (error) {
       console.error("[Login Page] Google sign-in failed:", error);
+      setErrorMessage(error);
       setSigningIn(false);
     }
   };
+
 
   if (loading || isAuthenticated) {
     return (
@@ -73,6 +82,19 @@ function LoginContent() {
             Authenticate to access directory management, submit software tools, and report broken endpoints.
           </p>
         </div>
+
+        {/* Error Alert */}
+        {errorMessage && (
+          <div className="p-3.5 rounded-xl bg-red-950/60 border border-red-800 text-xs text-red-300 flex items-start gap-2.5">
+            <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <span className="font-bold block text-red-200">Authentication Failed</span>
+              <span className="text-[11px] font-sans text-red-300 leading-normal block">
+                {errorMessage}
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* Action Button */}
         <div className="space-y-3 pt-2">
