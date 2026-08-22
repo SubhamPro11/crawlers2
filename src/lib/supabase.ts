@@ -3,10 +3,14 @@ import { Section, Category, Tool, Submission, LinkReport } from "@/types/databas
 import { TAXONOMY_SEEDS } from "./taxonomy";
 import { MOCK_TOOLS } from "./mockData";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseUrl =
+  process.env.NEXT_PUBLIC_SUPABASE_URL ||
+  "https://pmeacccwxsejxhzoeyic.supabase.co";
+
 const supabaseAnonKey =
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+  "sb_publishable_AvdWqSLptj3FHgLOrvRZXw_NQIjs_El";
 
 export const isSupabaseConfigured = Boolean(
   supabaseUrl &&
@@ -16,7 +20,7 @@ export const isSupabaseConfigured = Boolean(
 );
 
 export const supabase = isSupabaseConfigured
-  ? createBrowserClient(supabaseUrl!, supabaseAnonKey!)
+  ? createBrowserClient(supabaseUrl, supabaseAnonKey)
   : null;
 
 // Helper to prevent database queries from hanging Worker execution
