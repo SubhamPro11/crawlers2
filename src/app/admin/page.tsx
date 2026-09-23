@@ -11,6 +11,7 @@ import {
   Inbox,
   Activity,
   Lock,
+  LogIn,
 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { MOCK_TOOLS } from "@/lib/mockData";
@@ -23,7 +24,10 @@ import {
   fetchAdminAnalytics,
   AdminAnalyticsData,
   supabase,
+  signInWithGoogle,
+  signOutUser,
 } from "@/lib/supabase";
+import { User } from "@supabase/supabase-js";
 import { Submission, Tool, LinkReport } from "@/types/database";
 import { revalidateDirectoryCache } from "./actions";
 
@@ -31,6 +35,8 @@ export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<"submissions" | "tools" | "analytics">("submissions");
   const [authStatus, setAuthStatus] = useState<"checking" | "authorized" | "unauthorized">("checking");
   const [adminEmail, setAdminEmail] = useState<string>("");
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [signingIn, setSigningIn] = useState(false);
 
   // Real community tool submissions & analytics fetched from database
   const [pendingSubmissions, setPendingSubmissions] = useState<Submission[]>([]);
@@ -48,9 +54,14 @@ export default function AdminDashboardPage() {
 
       const { data: { user }, error } = await supabase.auth.getUser();
       if (error || !user) {
+        setCurrentUser(null);
         setAuthStatus("unauthorized");
         return;
       }
+
+      setCurrentUser(user);
+
+      const isOwnerEmail = user.email?.toLowerCase() === "subhamkr11012004@gmail.com";
 
       const { data: profile } = await supabase
         .from("profiles")
@@ -58,7 +69,25 @@ export default function AdminDashboardPage() {
         .eq("id", user.id)
         .single();
 
-      if (profile?.role === "admin") {
+      const isAdmin = profile?.role === "admin" || isOwnerEmail;
+
+      if (isAdmin) {
+        // Auto-heal/ensure profile exists and has admin role in database
+        if (profile?.role !== "admin") {
+          try {
+            await supabase.from("profiles").upsert({
+              id: user.id,
+              email: user.email,
+              role: "admin",
+              display_name: user.user_metadata?.full_name || user.user_metadata?.name || "Admin",
+              avatar_url: user.user_metadata?.avatar_url || user.user_metadata?.picture || "",
+              updated_at: new Date().toISOString(),
+            });
+          } catch (e) {
+            console.warn("Failed to auto-upsert admin profile:", e);
+          }
+        }
+
         setAdminEmail(user.email || "Admin");
         setAuthStatus("authorized");
         loadDashboardData();
@@ -81,13 +110,35 @@ export default function AdminDashboardPage() {
     };
 
     verifyAuth();
+
+    // Listen to Auth State Changes
+    const { data: authListener } = supabase?.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        verifyAuth();
+      } else {
+        setCurrentUser(null);
+        setAuthStatus("unauthorized");
+      }
+    }) ?? { data: null };
+
+    return () => {
+      authListener?.subscription.unsubscribe();
+    };
   }, []);
 
   const handleLogout = async () => {
-    if (supabase) {
-      await supabase.auth.signOut();
-    }
+    await signOutUser();
+    setCurrentUser(null);
     setAuthStatus("unauthorized");
+  };
+
+  const handleAdminSignIn = async () => {
+    setSigningIn(true);
+    const { error } = await signInWithGoogle("/admin");
+    if (error) {
+      console.error("[Admin Login Error]", error);
+      setSigningIn(false);
+    }
   };
 
   const triggerRevalidation = async () => {
@@ -139,25 +190,49 @@ export default function AdminDashboardPage() {
   if (authStatus === "unauthorized") {
     return (
       <main className="flex-1 flex items-center justify-center px-4 py-20 font-mono">
-        <div className="w-full max-w-md p-8 rounded-xl border border-navy-800 bg-navy-900 text-center space-y-4 shadow-xl">
+        <div className="w-full max-w-md p-8 rounded-2xl border border-navy-800 bg-navy-900 text-center space-y-5 shadow-2xl">
           <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 mx-auto flex items-center justify-center text-amber-400">
             <Lock className="w-6 h-6" />
           </div>
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <h1 className="text-base font-bold text-slate-100 tracking-tight uppercase">
-              Restricted Access
+              {currentUser ? "Restricted Access" : "Authentication Required"}
             </h1>
             <p className="text-xs text-slate-400 font-sans leading-relaxed">
-              This area is restricted to authorized maintainers.
+              {currentUser
+                ? `Signed in as ${currentUser.email}. This account does not have administrator privileges.`
+                : "This control plane is restricted to authorized directory maintainers. Please authenticate with your admin account."}
             </p>
           </div>
-          <div className="pt-2 border-t border-navy-850">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-1.5 text-xs text-lime-accent hover:underline font-semibold"
-            >
-              ← Return to Directory
-            </Link>
+
+          <div className="pt-2 flex flex-col gap-3">
+            {!currentUser ? (
+              <button
+                onClick={handleAdminSignIn}
+                disabled={signingIn}
+                className="w-full py-2.5 px-4 rounded-full bg-lime-accent text-navy-950 font-bold hover:bg-lime-accent/90 transition-all flex items-center justify-center gap-2 text-xs cursor-pointer shadow-lg disabled:opacity-50"
+              >
+                <LogIn className="w-4 h-4" />
+                <span>{signingIn ? "Authenticating..." : "> sign_in_with_google"}</span>
+              </button>
+            ) : (
+              <button
+                onClick={handleLogout}
+                className="w-full py-2 px-4 rounded-full border border-red-700/50 bg-red-950/30 text-red-300 hover:bg-red-900/40 transition-all flex items-center justify-center gap-2 text-xs cursor-pointer"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Switch Account / Sign Out</span>
+              </button>
+            )}
+
+            <div className="pt-2 border-t border-navy-850">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-xs text-lime-accent hover:underline font-semibold"
+              >
+                ← Return to Directory
+              </Link>
+            </div>
           </div>
         </div>
       </main>

@@ -11,12 +11,16 @@ export const NavbarUserMenu: React.FC = () => {
   const [userRole, setUserRole] = useState<string>("user");
   const [loading, setLoading] = useState(true);
 
-  const checkProfileRole = useCallback(async (userId: string) => {
+  const checkProfileRole = useCallback(async (currentUser: User) => {
+    if (currentUser.email?.toLowerCase() === "subhamkr11012004@gmail.com") {
+      setUserRole("admin");
+      return;
+    }
     if (supabase) {
       const { data: profile } = await supabase
         .from("profiles")
         .select("role")
-        .eq("id", userId)
+        .eq("id", currentUser.id)
         .single();
 
       if (profile?.role === "admin") {
@@ -37,7 +41,7 @@ export const NavbarUserMenu: React.FC = () => {
     supabase.auth.getUser().then(({ data }) => {
       setUser(data.user);
       if (data.user) {
-        checkProfileRole(data.user.id);
+        checkProfileRole(data.user);
       }
       setLoading(false);
     });
@@ -47,7 +51,7 @@ export const NavbarUserMenu: React.FC = () => {
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       if (currentUser) {
-        checkProfileRole(currentUser.id);
+        checkProfileRole(currentUser);
       } else {
         setUserRole("user");
       }
