@@ -3,11 +3,16 @@ const path = require("path");
 const { createClient } = require("@supabase/supabase-js");
 
 const DEFAULT_SUPABASE_URL = "https://pmeacccwxsejxhzoeyic.supabase.co";
-const DEFAULT_SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtZWFjY2N3eHNlanhoem9leWljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMTExMjcsImV4cCI6MjEwMTU4NzEyN30.miFV9xJDd35TdiQTJyhiGr_NGqKEKm4wm8cfaX02qqw";
+const DEFAULT_SUPABASE_KEY =
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+  "sb_publishable_AvdWqSLptj3FHgLOrvRZXw_NQIjs_El";
 
-const supabase = createClient(DEFAULT_SUPABASE_URL, DEFAULT_SUPABASE_ANON_KEY);
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || DEFAULT_SUPABASE_URL;
+const supabase = createClient(supabaseUrl, DEFAULT_SUPABASE_KEY);
 
+// Canonical 9 sections and 43 categories matching supabase/seed.sql and src/lib/taxonomy.ts
 const TAXONOMY_SEEDS = [
   {
     number: 1,
@@ -19,8 +24,8 @@ const TAXONOMY_SEEDS = [
       { name: "Copywriting", slug: "copywriting", subgroup: "Content Generation & Copywriting", description: "Marketing copy generators, ad headlines, and landing page text creation." },
       { name: "Resume Tools", slug: "resume-tools", subgroup: "Content Generation & Copywriting", description: "AI resume builders, cover letter engines, and career profile optimizers." },
       { name: "Transcription", slug: "transcription", subgroup: "Document Processing & Audio Transcription", description: "Speech-to-text conversion and automated meeting transcript generation." },
-      { name: "Document AI", slug: "document-ai", subgroup: "Document Processing & Audio Transcription", description: "PDF parsing, contract summary engines, and structured document extraction." }
-    ]
+      { name: "Document AI", slug: "document-ai", subgroup: "Document Processing & Audio Transcription", description: "PDF parsing, contract summary engines, and structured document extraction." },
+    ],
   },
   {
     number: 2,
@@ -32,8 +37,8 @@ const TAXONOMY_SEEDS = [
       { name: "Podcast Tools", slug: "podcast-tools", subgroup: "Video & Animation Production", description: "Automated audio cleanup, show notes generation, and clip extraction." },
       { name: "Music Generation", slug: "music-generation", subgroup: "Audio, Speech & Music Processing", description: "AI composition tools, background track generation, and stem isolation." },
       { name: "Voice Cloning", slug: "voice-cloning", subgroup: "Audio, Speech & Music Processing", description: "Custom voice model creation and acoustic voice replication." },
-      { name: "Text-to-Speech", slug: "text-to-speech", subgroup: "Audio, Speech & Music Processing", description: "High-fidelity audio narration and natural speech synthesis engines." }
-    ]
+      { name: "Text-to-Speech", slug: "text-to-speech", subgroup: "Audio, Speech & Music Processing", description: "High-fidelity audio narration and natural speech synthesis engines." },
+    ],
   },
   {
     number: 3,
@@ -41,86 +46,89 @@ const TAXONOMY_SEEDS = [
     slug: "design-3d-creative",
     description: "Image generation, logo design, 3D modeling, spatial computing, and fashion design.",
     categories: [
-      { name: "Image Generation", slug: "image-generation", subgroup: "Visual Art & Design Generation", description: "Prompt-driven text-to-image synthesis and style transfer engines." },
-      { name: "Logo Design", slug: "logo-design", subgroup: "Visual Art & Design Generation", description: "Brand identity, vector logo generators, and typography design tools." },
-      { name: "3D Modeling", slug: "3d-modeling", subgroup: "3D & Spatial Computing", description: "Text-to-3D mesh generation, texture synthesis, and spatial asset tools." },
-      { name: "Spatial Computing", slug: "spatial-computing", subgroup: "3D & Spatial Computing", description: "NeRF, Gaussian Splatting, and AR/VR environment generation." },
-      { name: "Fashion AI", slug: "fashion-ai", subgroup: "Industrial & Product Design", description: "Virtual apparel try-on, textile pattern generation, and fashion concepts." }
-    ]
+      { name: "Image Generation", slug: "image-generation", subgroup: "2D Visuals & Graphics", description: "Diffusion models, concept art generators, and image edit pipelines." },
+      { name: "Logo Generator", slug: "logo-generator", subgroup: "2D Visuals & Graphics", description: "Brand mark creation, vector logo generators, and identity design tools." },
+      { name: "Fashion Design", slug: "fashion-design", subgroup: "2D Visuals & Graphics", description: "Apparel design, virtual try-on models, and pattern creation." },
+      { name: "3D Modeling", slug: "3d-modeling", subgroup: "3D, Immersive & Spatial", description: "Text-to-3D asset generators, mesh refinement, and texture synthesis." },
+      { name: "AR/VR", slug: "ar-vr", subgroup: "3D, Immersive & Spatial", description: "Spatial environment generation, interactive AR experiences, and VR tools." },
+    ],
   },
   {
     number: 4,
-    name: "Code & Development",
-    slug: "code-development",
-    description: "AI code assist, no-code application builders, developer tools, and agentic frameworks.",
+    name: "Productivity & Business",
+    slug: "productivity-business",
+    description: "Workflow automation, project management, meeting tools, CRM, and financial assistant platforms.",
     categories: [
-      { name: "Code Assistants", slug: "code-assistants", subgroup: "Software Engineering & IDE Tools", description: "In-IDE autocomplete, inline refactoring, and code explanation assistants." },
-      { name: "No-Code Builders", slug: "no-code-builders", subgroup: "Software Engineering & IDE Tools", description: "Prompt-to-UI generators and full-stack web application scaffolding." },
-      { name: "Developer Tools", slug: "devtools", subgroup: "Developer Infrastructure & APIs", description: "Terminal assistants, API registries, and debugging engines." },
-      { name: "AI Frameworks", slug: "ai-frameworks", subgroup: "Developer Infrastructure & APIs", description: "Agent orchestrators, RAG frameworks, and model fine-tuning SDKs." }
-    ]
+      { name: "Project Management", slug: "project-management", subgroup: "Workflow & Project Management", description: "Smart task scheduling, project summaries, and backlog prioritization." },
+      { name: "CRM", slug: "crm", subgroup: "Workflow & Project Management", description: "Customer relationship management, sentiment tracking, and deal analytics." },
+      { name: "Meeting Assistants", slug: "meeting-assistants", subgroup: "Workflow & Project Management", description: "Automated meeting notes, action item extractors, and attendance bots." },
+      { name: "Email Assistants", slug: "email-assistants", subgroup: "Communication & Operations", description: "Smart inbox triage, draft generation, and follow-up reminders." },
+      { name: "Finance Tools", slug: "finance-tools", subgroup: "Communication & Operations", description: "Invoice processing, expense auditing, and financial forecasting AI." },
+    ],
   },
   {
     number: 5,
-    name: "Data & Analytics",
-    slug: "data-analytics",
-    description: "Data analysis, business intelligence, interactive visualization, and financial AI.",
+    name: "Developer & Tech Tools",
+    slug: "developer-tech-tools",
+    description: "AI coding copilots, developer infrastructure, API tools, no-code builders, and browser extensions.",
     categories: [
-      { name: "Data Analysis", slug: "data-analysis", subgroup: "Business Intelligence & Insights", description: "Automated EDA, natural language SQL generation, and tabular insights." },
-      { name: "Business Intelligence", slug: "business-intelligence", subgroup: "Business Intelligence & Insights", description: "Executive dashboards, predictive forecasting, and revenue analytics." },
-      { name: "Data Visualization", slug: "data-visualization", subgroup: "Data Engineering & Processing", description: "Chart generation, interactive data storyboards, and graph visualization." },
-      { name: "Financial AI", slug: "financial-ai", subgroup: "Finance & Quantitative Analytics", description: "Stock analysis, algorithmic trading signals, and financial report parsing." }
-    ]
+      { name: "Code Assistants", slug: "code-assistants", subgroup: "Code & Infrastructure", description: "Code completion, inline refactoring, bug fixing, and test generators." },
+      { name: "DevTools", slug: "devtools", subgroup: "Code & Infrastructure", description: "CI/CD pipeline optimizers, telemetry analytics, and CLI extensions." },
+      { name: "API Tools", slug: "api-tools", subgroup: "Code & Infrastructure", description: "API key registries, documentation engines, and mock server generators." },
+      { name: "No-Code Builders", slug: "no-code-builders", subgroup: "Platforms & Extensions", description: "Prompt-driven web builders, workflow automation, and app creators." },
+      { name: "AI Extensions", slug: "ai-extensions", subgroup: "Platforms & Extensions", description: "Browser extensions, IDE plugins, and terminal productivity enhancements." },
+    ],
   },
   {
     number: 6,
-    name: "AI Assistants & Agents",
-    slug: "ai-assistants-agents",
-    description: "Autonomous agents, personal productivity assistants, enterprise chatbots, and workflow automation.",
+    name: "Data, Models & Security",
+    slug: "data-models-security",
+    description: "Database AI extensions, cybersecurity tools, computer vision pipelines, and content moderation.",
     categories: [
-      { name: "Personal Assistants", slug: "personal-assistants", subgroup: "Autonomous Agents & Workflow", description: "Task management, calendar scheduling, and context-aware life assistants." },
-      { name: "AI Agents", slug: "ai-agents", subgroup: "Autonomous Agents & Workflow", description: "Multi-step autonomous agents capable of Web browsing, API execution, and coding." },
-      { name: "Chatbots", slug: "chatbots", subgroup: "Conversational Interfaces", description: "Customer support bots, conversational knowledge bases, and custom GPTs." },
-      { name: "Workflow Automation", slug: "workflow-automation", subgroup: "Autonomous Agents & Workflow", description: "Zapier/Make alternatives with native LLM step execution." }
-    ]
+      { name: "Database Tools", slug: "database-tools", subgroup: "Data Architecture & Analytics", description: "Text-to-SQL generation, vector index optimizers, and migration generators." },
+      { name: "Computer Vision", slug: "computer-vision", subgroup: "Data Architecture & Analytics", description: "Object detection, OCR extraction, and visual inspection models." },
+      { name: "Cybersecurity", slug: "cybersecurity", subgroup: "Security & Governance", description: "Vulnerability scanners, threat intelligence, and log anomaly detection." },
+      { name: "Content Moderation", slug: "content-moderation", subgroup: "Security & Governance", description: "Automated safety filters, hallucination detection, and PII redact engines." },
+    ],
   },
   {
     number: 7,
-    name: "Infrastructure & DevOps",
-    slug: "infrastructure-devops",
-    description: "Model hosting, vector databases, MLOps platforms, and specialized GPU cloud compute.",
+    name: "Marketing, Sales & SEO",
+    slug: "marketing-sales-seo",
+    description: "Lead generation, social management, automated ad creatives, and e-commerce optimization.",
     categories: [
-      { name: "Model Hosting", slug: "model-hosting", subgroup: "Model Infrastructure & Cloud Compute", description: "Serverless LLM endpoints, dedicated GPU clusters, and model serving APIs." },
-      { name: "Vector Databases", slug: "vector-databases", subgroup: "Model Infrastructure & Cloud Compute", description: "High-dimensional vector storage, ANN indexing, and embedding retrieval engines." },
-      { name: "MLOps", slug: "mlops", subgroup: "Lifecycle Management & Monitoring", description: "Experiment tracking, model evaluation, prompt monitoring, and observability." },
-      { name: "Cloud Compute", slug: "cloud-compute", subgroup: "Model Infrastructure & Cloud Compute", description: "On-demand GPU instances (H100, A100) for deep learning training." }
-    ]
+      { name: "Lead Generation", slug: "lead-generation", subgroup: "Sales Engine & Outreach", description: "Prospect enrichment, cold outreach personalization, and pipeline scoring." },
+      { name: "E-Commerce", slug: "e-commerce", subgroup: "Sales Engine & Outreach", description: "Product description generators, pricing intelligence, and store AI." },
+      { name: "Social Media Tools", slug: "social-media-tools", subgroup: "Brand & Audience", description: "Post schedulers, thread generators, and engagement analytics." },
+      { name: "Ad Generator", slug: "ad-generator", subgroup: "Brand & Audience", description: "Multi-channel ad variations, creative testing, and copy optimization." },
+    ],
   },
   {
     number: 8,
-    name: "Security & Compliance",
-    slug: "security-compliance",
-    description: "AI red teaming, data privacy, guardrails, and bias detection software.",
+    name: "Search, Chat & AI Agents",
+    slug: "search-chat-ai-agents",
+    description: "Autonomous agent frameworks, chatbot builders, personal AI assistants, and research engines.",
     categories: [
-      { name: "AI Security", slug: "ai-security", subgroup: "Security, Safety & Compliance", description: "Prompt injection defense, LLM vulnerability scanning, and red teaming tools." },
-      { name: "Data Privacy", slug: "data-privacy", subgroup: "Security, Safety & Compliance", description: "PII masking, synthetic data generation, and enterprise data governance." },
-      { name: "Bias Detection", slug: "bias-detection", subgroup: "Security, Safety & Compliance", description: "Model fairness evaluation, toxicity scoring, and hallucination monitoring." }
-    ]
+      { name: "AI Agents", slug: "ai-agents", subgroup: "Autonomous Agents & Systems", description: "Multi-agent orchestration frameworks, goal-directed task runners." },
+      { name: "Research Tools", slug: "research-tools", subgroup: "Autonomous Agents & Systems", description: "Academic paper summaries, web synthesis engines, and fact checkers." },
+      { name: "Chatbot Builders", slug: "chatbot-builders", subgroup: "Conversational Interfaces", description: "Custom RAG chatbot creation, customer support bots, and knowledge base sync." },
+      { name: "Personal Assistants", slug: "personal-assistants", subgroup: "Conversational Interfaces", description: "Executive assistants, daily planners, and habit tracking bots." },
+    ],
   },
   {
     number: 9,
     name: "Education & Lifestyle",
     slug: "education-lifestyle",
-    description: "AI tutors, gaming AI engines, health trackers, legal tools, and marketing platforms.",
+    description: "Adaptive learning tools, language acquisition, wellness guidance, gaming, and accessibility utilities.",
     categories: [
-      { name: "Learning & Education", slug: "learning-education", subgroup: "Education & Knowledge Management", description: "AI flashcard generators, personalized tutoring, and research paper summaries." },
-      { name: "Gaming AI", slug: "gaming-ai", subgroup: "Entertainment & Gaming", description: "NPC dialogue engines, procedural asset generation, and game design AI." },
-      { name: "Health & Wellness", slug: "health-wellness", subgroup: "Health, Legal & Domain Tools", description: "Symptom checkers, fitness planning, and medical paper research assistants." },
-      { name: "Legal AI", slug: "legal-ai", subgroup: "Health, Legal & Domain Tools", description: "Contract analysis, legal research search engines, and compliance drafting." },
-      { name: "Marketing & Sales", slug: "marketing-sales", subgroup: "Business Intelligence & Insights", description: "Lead enrichment, outbound email generators, and SEO content scoring." },
-      { name: "Productivity", slug: "productivity", subgroup: "Autonomous Agents & Workflow", description: "Note-taking, summary engines, and distraction-free AI workspaces." }
-    ]
-  }
+      { name: "Learning Tools", slug: "learning-tools", subgroup: "Learning & Knowledge Systems", description: "Personalized tutor bots, flashcard generators, and study plan tools." },
+      { name: "Language Learning", slug: "language-learning", subgroup: "Learning & Knowledge Systems", description: "Conversational language practice and pronunciation feedback engines." },
+      { name: "Accessibility", slug: "accessibility", subgroup: "Learning & Knowledge Systems", description: "Screen reader enrichers, alt-text generators, and sensory assistance AI." },
+      { name: "Wellness", slug: "wellness", subgroup: "Lifestyle & Leisure", description: "Mindfulness assistants, sleep trackers, and fitness plan generators." },
+      { name: "Gaming", slug: "gaming", subgroup: "Lifestyle & Leisure", description: "NPC dialog generators, procedural map builders, and game asset tools." },
+      { name: "Travel", slug: "travel", subgroup: "Lifestyle & Leisure", description: "Itinerary planners, flight price predictors, and local culture guides." },
+    ],
+  },
 ];
 
 const MOCK_TOOLS = [
@@ -182,7 +190,7 @@ const MOCK_TOOLS = [
     name: "Claude by Anthropic",
     slug: "claude",
     url: "https://anthropic.com/claude",
-    description: "State-of-the-art reasoning model suite (Claude 3.5 Sonnet & Haiku) featuring 200k context window, artifacts preview, and computer use capability.",
+    description: "State-of-the-art reasoning model suite featuring 200k context window, artifacts preview, and computer use capability.",
     pricing_model: "freemium",
     category_slug: "ai-agents",
     has_api: true,
@@ -193,13 +201,53 @@ const MOCK_TOOLS = [
     url: "https://pinecone.io",
     description: "Serverless vector database designed for high-throughput similarity search, RAG pipelines, and real-time embedding indexing.",
     pricing_model: "freemium",
-    category_slug: "vector-databases",
+    category_slug: "database-tools",
     has_api: true,
-  }
+  },
 ];
 
+// Helper to resolve category slug from text
+function getCategorySlug(name, desc) {
+  const text = (name + " " + desc).toLowerCase();
+  if (text.includes("agent") || text.includes("agents") || text.includes("autonomous")) return "ai-agents";
+  if (text.includes("chatbot") || text.includes("chat bot") || text.includes("customer support")) return "chatbot-builders";
+  if (text.includes("sql") || text.includes("database") || text.includes("vector") || text.includes("postgres")) return "database-tools";
+  if (text.includes("vision") || text.includes("ocr") || text.includes("detection")) return "computer-vision";
+  if (text.includes("security") || text.includes("guardrail") || text.includes("vulnerability")) return "cybersecurity";
+  if (text.includes("coding") || text.includes("copilot") || text.includes("autocomplete") || text.includes("refactor")) return "code-assistants";
+  if (text.includes("no-code") || text.includes("builder") || text.includes("low-code")) return "no-code-builders";
+  if (text.includes("api") || text.includes("sdk") || text.includes("framework")) return "api-tools";
+  if (text.includes("logo") || text.includes("vector logo")) return "logo-generator";
+  if (text.includes("fashion") || text.includes("apparel") || text.includes("try-on")) return "fashion-design";
+  if (text.includes("3d") || text.includes("mesh") || text.includes("render")) return "3d-modeling";
+  if (text.includes("ar/vr") || text.includes("vr") || text.includes("spatial")) return "ar-vr";
+  if (text.includes("image") || text.includes("art") || text.includes("photo") || text.includes("design") || text.includes("avatar")) return "image-generation";
+  if (text.includes("video") || text.includes("animation")) return "video-generator";
+  if (text.includes("podcast") || text.includes("show notes")) return "podcast-tools";
+  if (text.includes("music") || text.includes("audio track") || text.includes("beat")) return "music-generation";
+  if (text.includes("speech") || text.includes("voice") || text.includes("narration")) return "text-to-speech";
+  if (text.includes("transcription") || text.includes("speech to text")) return "transcription";
+  if (text.includes("document") || text.includes("pdf") || text.includes("contract")) return "document-ai";
+  if (text.includes("resume") || text.includes("cover letter")) return "resume-tools";
+  if (text.includes("copy") || text.includes("writing") || text.includes("content writer")) return "copywriting";
+  if (text.includes("social") || text.includes("twitter") || text.includes("linkedin")) return "social-media-tools";
+  if (text.includes("ad ") || text.includes("advertising") || text.includes("campaign")) return "ad-generator";
+  if (text.includes("ecommerce") || text.includes("store") || text.includes("product")) return "e-commerce";
+  if (text.includes("lead") || text.includes("seo") || text.includes("outreach") || text.includes("sales")) return "lead-generation";
+  if (text.includes("meeting") || text.includes("notes") || text.includes("calendar")) return "meeting-assistants";
+  if (text.includes("email") || text.includes("inbox")) return "email-assistants";
+  if (text.includes("crm")) return "crm";
+  if (text.includes("finance") || text.includes("tax") || text.includes("invoice") || text.includes("legal")) return "finance-tools";
+  if (text.includes("game") || text.includes("gaming")) return "gaming";
+  if (text.includes("wellness") || text.includes("health") || text.includes("fitness")) return "wellness";
+  if (text.includes("language")) return "language-learning";
+  if (text.includes("learning") || text.includes("education") || text.includes("tutor") || text.includes("study")) return "learning-tools";
+  if (text.includes("task") || text.includes("project") || text.includes("productivity") || text.includes("workflow")) return "project-management";
+  return "devtools";
+}
+
 async function seedDatabase() {
-  console.log("--- Step 1: Seeding Sections & Categories ---");
+  console.log("=== Step 1: Seeding Canonical Sections & Categories ===");
   const categoryMap = {}; // slug -> UUID
 
   for (const sSeed of TAXONOMY_SEEDS) {
@@ -248,140 +296,135 @@ async function seedDatabase() {
     }
   }
 
-  console.log(`Successfully seeded sections and mapped ${Object.keys(categoryMap).length} categories.`);
+  console.log(`Seeded sections and mapped ${Object.keys(categoryMap).length} categories.`);
 
-  console.log("--- Step 2: Parsing tools from no read.md ---");
-  const filePath = path.join(__dirname, "../no read.md");
-  const content = fs.readFileSync(filePath, "utf-8");
-  const lines = content.split("\n");
+  console.log("=== Step 2: Parsing Tool Catalog ===");
+  const { data: existingTools } = await supabase.from("tools").select("slug, name");
+  const seenSlugs = new Set((existingTools || []).map((t) => t.slug));
+  const seenNames = new Set((existingTools || []).map((t) => t.name.toLowerCase()));
 
   const parsedTools = [];
-  const seenSlugs = new Set();
 
-  // Helper to resolve category
-  function getCategorySlug(name, desc) {
-    const text = (name + " " + desc).toLowerCase();
-    if (text.includes("agent") || text.includes("agents")) return "ai-agents";
-    if (text.includes("coding") || text.includes("dev") || text.includes("github")) return "devtools";
-    if (text.includes("headshot") || text.includes("image") || text.includes("design")) return "image-generation";
-    if (text.includes("writing") || text.includes("copy") || text.includes("resume")) return "copywriting";
-    if (text.includes("video") || text.includes("audio") || text.includes("music")) return "video-generator";
-    if (text.includes("learning") || text.includes("education") || text.includes("course")) return "learning-education";
-    if (text.includes("sales") || text.includes("marketing") || text.includes("seo")) return "marketing-sales";
-    if (text.includes("productivity") || text.includes("work")) return "productivity";
-    return "devtools"; // Default directory category
-  }
-
-  // First add MOCK_TOOLS
+  // Seed baseline mock tools first if missing
   for (const mTool of MOCK_TOOLS) {
-    seenSlugs.add(mTool.slug);
-    parsedTools.push({
-      name: mTool.name,
-      slug: mTool.slug,
-      url: mTool.url,
-      description: mTool.description,
-      pricing_model: mTool.pricing_model,
-      category_id: categoryMap[mTool.category_slug] || categoryMap["devtools"],
-      has_api: mTool.has_api,
-      is_active: true,
-    });
-  }
-
-  for (let line of lines) {
-    line = line.trim();
-    if (!line.includes("[")) continue;
-    if (line.includes("](#")) continue;
-    if (line.includes("Top AI Directories") && line.includes("topaidirectories.com")) continue;
-
-    const match = line.match(/\[([^\]]+)\]\(([^)]+)\)(.*)/);
-    if (match) {
-      let name = match[1].trim();
-      let url = match[2].trim();
-      let desc = match[3].trim();
-
-      // Clean description string
-      if (desc.startsWith("-")) desc = desc.substring(1).trim();
-      if (desc.startsWith("–")) desc = desc.substring(1).trim();
-      if (desc.startsWith("—")) desc = desc.substring(1).trim();
-      if (desc.startsWith(")") || desc.startsWith("]")) desc = desc.substring(1).trim();
-      
-      // Clean up markdown formatting in description
-      desc = desc.replace(/^\*+/, "").replace(/\*+$/, "").trim();
-      if (desc.startsWith("-")) desc = desc.substring(1).trim();
-
-      if (!desc || desc.length < 5) {
-        desc = `${name} is a curated directory and platform for discovering AI tools and software.`;
-      }
-
-      name = name.replace(/^#\d+\s*/, "").replace(/^-\s*/, "").trim();
-
-      // Generate unique slug
-      let baseSlug = name
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "");
-
-      if (!baseSlug) baseSlug = `directory-${Date.now()}`;
-
-      let slug = baseSlug;
-      let counter = 1;
-      while (seenSlugs.has(slug)) {
-        slug = `${baseSlug}-${counter}`;
-        counter++;
-      }
-      seenSlugs.add(slug);
-
-      // Determine pricing model
-      let pricing_model = "freemium";
-      const textLower = (name + " " + desc).toLowerCase();
-      if (textLower.includes("free") && !textLower.includes("freemium")) {
-        pricing_model = "free";
-      } else if (textLower.includes("open-source") || textLower.includes("github.com")) {
-        pricing_model = "open-source";
-      } else if (textLower.includes("paid") || textLower.includes("premium")) {
-        pricing_model = "paid";
-      }
-
-      const has_api = textLower.includes("api") || textLower.includes("sdk");
-      const categorySlug = getCategorySlug(name, desc);
-      const category_id = categoryMap[categorySlug] || categoryMap["devtools"];
-
+    if (!seenSlugs.has(mTool.slug) && !seenNames.has(mTool.name.toLowerCase())) {
+      seenSlugs.add(mTool.slug);
+      seenNames.add(mTool.name.toLowerCase());
       parsedTools.push({
-        name,
-        slug,
-        url,
-        description: desc,
-        pricing_model,
-        category_id,
-        has_api,
+        name: mTool.name,
+        slug: mTool.slug,
+        url: mTool.url,
+        description: mTool.description,
+        pricing_model: mTool.pricing_model,
+        category_id: categoryMap[mTool.category_slug] || categoryMap["devtools"],
+        has_api: mTool.has_api,
         is_active: true,
       });
     }
   }
 
-  console.log(`Total tools to insert into Supabase: ${parsedTools.length}`);
+  // Check for catalog files: AITool.md or alternative
+  const catalogPaths = [
+    path.join(__dirname, "../AITool.md"),
+    path.join(__dirname, "../new ai b.md"),
+  ];
 
-  console.log("--- Step 3: Upserting tools into Supabase ---");
-  // Batch insert in chunks of 50
-  const chunkSize = 50;
-  let insertedCount = 0;
+  for (const filePath of catalogPaths) {
+    if (!fs.existsSync(filePath)) continue;
 
-  for (let i = 0; i < parsedTools.length; i += chunkSize) {
-    const chunk = parsedTools.slice(i, i + chunkSize);
-    const { data, error } = await supabase
-      .from("tools")
-      .upsert(chunk, { onConflict: "slug" })
-      .select();
+    console.log(`Reading tools from ${path.basename(filePath)}...`);
+    const content = fs.readFileSync(filePath, "utf-8");
+    const lines = content.split("\n");
 
-    if (error) {
-      console.error(`Error inserting chunk ${i / chunkSize}:`, error.message);
-    } else {
-      insertedCount += data ? data.length : chunk.length;
-      console.log(`Inserted chunk ${i / chunkSize + 1} (${chunk.length} tools).`);
+    let currentHeading = "Developer Tools";
+
+    for (let line of lines) {
+      line = line.trim();
+      if (!line) continue;
+
+      if (line.startsWith("#")) {
+        const headingText = line.replace(/^#+\s*/, "").trim();
+        if (headingText && !headingText.toLowerCase().includes("master list") && !headingText.toLowerCase().includes("awesome")) {
+          currentHeading = headingText;
+        }
+        continue;
+      }
+
+      // Match markdown links: 1. [Name](url) or - [Name](url) - description
+      const match = line.match(/^(?:\d+\.|\-|\*)\s*\[([^\]]+)\]\(([^)]+)\)(.*)/);
+      if (match) {
+        let name = match[1].trim();
+        let url = match[2].trim();
+        let desc = match[3] ? match[3].trim() : "";
+
+        if (desc.startsWith("-") || desc.startsWith("–") || desc.startsWith("—")) {
+          desc = desc.substring(1).trim();
+        }
+
+        if (!desc || desc.length < 10) {
+          desc = `${name} is an AI tool specialized in ${currentHeading.toLowerCase()}. Direct access and verified directory indexing.`;
+        }
+
+        const nameKey = name.toLowerCase();
+        if (seenNames.has(nameKey)) continue; // Skip duplicates cleanly!
+
+        let baseSlug = name
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "");
+
+        if (!baseSlug || seenSlugs.has(baseSlug)) continue;
+
+        seenNames.add(nameKey);
+        seenSlugs.add(baseSlug);
+
+        let pricing_model = "freemium";
+        const textLower = (name + " " + desc).toLowerCase();
+        if (textLower.includes("free") && !textLower.includes("freemium")) pricing_model = "free";
+        else if (textLower.includes("open-source") || url.includes("github.com")) pricing_model = "open-source";
+        else if (textLower.includes("paid")) pricing_model = "paid";
+
+        const has_api = textLower.includes("api") || textLower.includes("sdk") || url.includes("github.com");
+        const categorySlug = getCategorySlug(name, currentHeading + " " + desc);
+        const category_id = categoryMap[categorySlug] || categoryMap["devtools"];
+
+        parsedTools.push({
+          name,
+          slug: baseSlug,
+          url,
+          description: desc,
+          pricing_model,
+          category_id,
+          has_api,
+          is_active: true,
+        });
+      }
     }
   }
 
-  console.log(`--- DONE! Successfully processed & upserted ${insertedCount} tools to Supabase tools table! ---`);
+  console.log(`Parsed ${parsedTools.length} new unique tools to insert.`);
+
+  if (parsedTools.length > 0) {
+    const chunkSize = 50;
+    let insertedCount = 0;
+
+    for (let i = 0; i < parsedTools.length; i += chunkSize) {
+      const chunk = parsedTools.slice(i, i + chunkSize);
+      const { data, error } = await supabase
+        .from("tools")
+        .upsert(chunk, { onConflict: "slug" })
+        .select();
+
+      if (error) {
+        console.error(`Error inserting chunk ${Math.floor(i / chunkSize) + 1}:`, error.message);
+      } else {
+        insertedCount += data ? data.length : chunk.length;
+        console.log(`Upserted chunk ${Math.floor(i / chunkSize) + 1} (${chunk.length} tools).`);
+      }
+    }
+
+    console.log(`Done! Upserted ${insertedCount} tools to Supabase.`);
+  }
 }
 
 seedDatabase().catch(console.error);

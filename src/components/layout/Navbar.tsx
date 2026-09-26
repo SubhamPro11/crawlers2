@@ -34,6 +34,7 @@ export const Navbar: React.FC = () => {
             }}
             className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-navy-900 border border-navy-800 text-slate-400 hover:text-lime-accent hover:border-lime-accent/40 transition-colors"
             title="Open Command Palette"
+            aria-label="Open Command Palette (Cmd+K)"
           >
             <span className="text-[10px]">⌘K CLI</span>
           </button>
@@ -48,19 +49,19 @@ export const Navbar: React.FC = () => {
             Trending
           </Link>
           <Link href="/api" className="nav-link flex items-center gap-1 hover:text-lime-accent transition-colors">
-            <Code2 className="w-3.5 h-3.5" /> API
+            <Code2 className="w-3.5 h-3.5" aria-hidden="true" /> API
           </Link>
           <Link href="/compare" className="nav-link flex items-center gap-1 hover:text-lime-accent transition-colors">
-            <ArrowLeftRight className="w-3.5 h-3.5" /> Compare
+            <ArrowLeftRight className="w-3.5 h-3.5" aria-hidden="true" /> Compare
           </Link>
           <Link href="/random" className="nav-link flex items-center gap-1 hover:text-lime-accent transition-colors" title="Surprise me with a random tool">
-            <Shuffle className="w-3.5 h-3.5 text-lime-accent" /> Random
+            <Shuffle className="w-3.5 h-3.5 text-lime-accent" aria-hidden="true" /> Random
           </Link>
           <Link
             href="/submit"
             className="btn-press flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-lime-accent text-navy-950 font-semibold hover:bg-lime-hover transition-colors ml-1"
           >
-            <PlusCircle className="w-3.5 h-3.5" /> Submit
+            <PlusCircle className="w-3.5 h-3.5" aria-hidden="true" /> Submit
           </Link>
           <NavbarUserMenu />
         </nav>
@@ -68,16 +69,18 @@ export const Navbar: React.FC = () => {
         {/* Mobile Toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 w-9 h-9 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-100 hover:bg-navy-850"
-          aria-label="Toggle menu"
+          className="md:hidden p-2 w-9 h-9 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-100 hover:bg-navy-850 cursor-pointer"
+          aria-label="Toggle navigation menu"
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-navigation"
         >
-          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          {mobileOpen ? <X className="w-5 h-5" aria-hidden="true" /> : <Menu className="w-5 h-5" aria-hidden="true" />}
         </button>
       </div>
 
       {/* Mobile Drawer */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-navy-850 bg-navy-900 px-4 py-4 space-y-3 font-mono text-sm">
+        <div id="mobile-navigation" className="md:hidden border-t border-navy-850 bg-navy-900 px-4 py-4 space-y-3 font-mono text-sm">
           <Link
             href="/"
             onClick={() => setMobileOpen(false)}

@@ -15,7 +15,7 @@ function LoginContent() {
   const urlError = searchParams.get("error");
   const urlErrorDesc = searchParams.get("error_description");
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(Boolean(supabase));
   const [signingIn, setSigningIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(
     urlErrorDesc || urlError || null
@@ -23,21 +23,19 @@ function LoginContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+    if (!supabase) return;
     let mounted = true;
-    if (supabase) {
-      supabase.auth.getUser().then(({ data }) => {
-        if (mounted) {
-          if (data.user) {
-            setIsAuthenticated(true);
-            router.replace(next);
-          } else {
-            setLoading(false);
-          }
+
+    supabase.auth.getUser().then(({ data }) => {
+      if (mounted) {
+        if (data.user) {
+          setIsAuthenticated(true);
+          router.replace(next);
+        } else {
+          setLoading(false);
         }
-      });
-    } else {
-      setLoading(false);
-    }
+      }
+    });
 
     return () => {
       mounted = false;
@@ -107,11 +105,22 @@ function LoginContent() {
               <span>Redirecting to Google...</span>
             ) : (
               <>
-                <LogIn className="w-4 h-4" />
+                <LogIn className="w-4 h-4" aria-hidden="true" />
                 <span>Continue with Google</span>
               </>
             )}
           </button>
+          <p className="text-[11px] text-center text-slate-400 font-sans leading-normal">
+            By signing in, you agree to Crawlers&apos;{" "}
+            <Link href="/terms" className="text-lime-accent underline font-mono">
+              Terms &amp; Conditions
+            </Link>{" "}
+            and acknowledge our{" "}
+            <Link href="/privacy" className="text-lime-accent underline font-mono">
+              Privacy Policy (DPDP Act)
+            </Link>
+            .
+          </p>
         </div>
 
         {/* Feature Badges */}

@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Flag, X, CheckCircle2, AlertCircle, Lock, LogIn } from "lucide-react";
 import { User } from "@supabase/supabase-js";
 import { supabase, signInWithGoogle } from "@/lib/supabase";
@@ -20,12 +22,13 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const router = useRouter();
   const [reason, setReason] = useState("404 Link Broken / Site Down");
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const [authChecking, setAuthChecking] = useState(true);
+  const [authChecking, setAuthChecking] = useState(Boolean(supabase));
 
   const handleCloseModal = () => {
     setSubmitted(false);
@@ -35,19 +38,15 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
   };
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !supabase) return;
 
     let isMounted = true;
-    if (supabase) {
-      supabase.auth.getUser().then(({ data }) => {
-        if (isMounted) {
-          setUser(data.user ?? null);
-          setAuthChecking(false);
-        }
-      });
-    } else {
-      setAuthChecking(false);
-    }
+    supabase.auth.getUser().then(({ data }) => {
+      if (isMounted) {
+        setUser(data.user ?? null);
+        setAuthChecking(false);
+      }
+    });
 
     return () => {
       isMounted = false;
@@ -96,14 +95,23 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="report-modal-title"
+      className="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4"
+    >
       <div className="w-full max-w-md rounded-t-3xl sm:rounded-3xl border border-navy-800 bg-navy-900 font-mono text-slate-100 shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4 sm:zoom-in-95 duration-150">
         <div className="px-5 py-3 border-b border-navy-800 flex items-center justify-between bg-navy-950">
-          <div className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5 uppercase tracking-wider">
-            <Flag className="w-3.5 h-3.5 text-amber-400" /> report_broken_link
+          <div id="report-modal-title" className="text-[11px] text-slate-300 font-bold flex items-center gap-1.5 uppercase tracking-wider">
+            <Flag className="w-3.5 h-3.5 text-amber-400" aria-hidden="true" /> report_broken_link
           </div>
-          <button onClick={handleCloseModal} className="text-slate-500 hover:text-slate-200 cursor-pointer">
-            <X className="w-4 h-4" />
+          <button
+            onClick={handleCloseModal}
+            aria-label="Close report dialog"
+            className="text-slate-400 hover:text-slate-100 cursor-pointer p-1"
+          >
+            <X className="w-4 h-4" aria-hidden="true" />
           </button>
         </div>
 
@@ -134,7 +142,9 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
                     const { error } = await signInWithGoogle(currentUrl);
                     if (error) {
                       console.error("[Modal] Google sign-in failed:", error);
-                      window.location.href = `/login?error=initiation_failed&error_description=${encodeURIComponent(error)}&next=${encodeURIComponent(currentUrl)}`;
+                      router.push(
+                        `/login?error=initiation_failed&error_description=${encodeURIComponent(error)}&next=${encodeURIComponent(currentUrl)}`
+                      );
                     }
                   }}
                   className="w-full py-2.5 px-4 rounded-full bg-navy-850 border border-navy-700 text-slate-200 hover:text-lime-accent hover:border-lime-accent/50 transition-colors flex items-center justify-center gap-2 text-xs font-bold cursor-pointer"
@@ -174,8 +184,11 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-slate-300 font-semibold block">$ issue_type</label>
+                <label htmlFor="report-reason-select" className="text-slate-300 font-semibold block cursor-pointer">
+                  $ issue_type
+                </label>
                 <select
+                  id="report-reason-select"
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
                   className="w-full px-3 py-2 rounded bg-navy-900 border border-navy-800 text-slate-100 focus:outline-none focus:border-lime-accent cursor-pointer"
@@ -189,15 +202,19 @@ export const LinkReportModal: React.FC<LinkReportModalProps> = ({
 
               {submitError && (
                 <div className="p-3 rounded-lg bg-red-950/60 border border-red-800 text-xs text-red-300 flex items-start gap-2">
-                  <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                  <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" aria-hidden="true" />
                   <span>{submitError}</span>
                 </div>
               )}
 
               <div className="p-3 rounded-lg bg-navy-950 border border-navy-800 text-[11px] text-slate-400 flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 text-lime-accent shrink-0 mt-0.5" />
+                <AlertCircle className="w-4 h-4 text-lime-accent shrink-0 mt-0.5" aria-hidden="true" />
                 <span>
-                  This report is logged and sent to our team for review.
+                  Report metadata and your account ID are logged strictly for link maintenance and spam moderation in accordance with our{" "}
+                  <Link href="/privacy" target="_blank" className="text-lime-accent underline font-mono">
+                    Privacy Policy
+                  </Link>
+                  .
                 </span>
               </div>
 

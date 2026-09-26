@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Terminal, CornerDownLeft, Shuffle, ArrowLeftRight, Search, X, Code2, Layers } from "lucide-react";
 import { searchDirectory, getSearchIndex, SearchResults } from "@/lib/searchClient";
-import { Tool } from "@/types/database";
 
 interface SuggestedCommand {
   cmd: string;
@@ -47,7 +46,10 @@ export const CommandPalette: React.FC = () => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        setIsOpen((prev) => !prev);
+        setIsOpen((prev) => {
+          if (!prev) setSelectedIndex(0);
+          return !prev;
+        });
       }
       if (e.key === "Escape") {
         setIsOpen(false);
@@ -61,7 +63,6 @@ export const CommandPalette: React.FC = () => {
   // Focus input and warm up search index when opened
   useEffect(() => {
     if (isOpen) {
-      setSelectedIndex(0);
       getSearchIndex().catch(() => {});
       setTimeout(() => inputRef.current?.focus(), 50);
     }
@@ -71,8 +72,6 @@ export const CommandPalette: React.FC = () => {
   useEffect(() => {
     const q = input.trim();
     if (!q) {
-      setSearchResults({ tools: [], categories: [] });
-      setSelectedIndex(0);
       return;
     }
 
@@ -80,7 +79,6 @@ export const CommandPalette: React.FC = () => {
     const cleanQuery = q.startsWith("crawlers --search") ? q.replace("crawlers --search", "").trim() : q;
 
     if (!cleanQuery) {
-      setSearchResults({ tools: [], categories: [] });
       return;
     }
 
@@ -99,7 +97,11 @@ export const CommandPalette: React.FC = () => {
   const handleClose = () => {
     setIsOpen(false);
     setInput("");
+    setSelectedIndex(0);
   };
+
+  const isSearching = input.trim().length > 0;
+  const activeSearchResults = isSearching ? searchResults : { tools: [], categories: [] };
 
   // Command execution router
   const handleExecuteCommand = (commandStr: string) => {
@@ -135,14 +137,14 @@ export const CommandPalette: React.FC = () => {
     }
 
     // Direct tool or category match execution
-    if (searchResults.tools.length > 0) {
-      const tool = searchResults.tools[selectedIndex] || searchResults.tools[0];
+    if (activeSearchResults.tools.length > 0) {
+      const tool = activeSearchResults.tools[selectedIndex] || activeSearchResults.tools[0];
       router.push(`/tool/${tool.slug}`);
       return;
     }
 
-    if (searchResults.categories.length > 0) {
-      const cat = searchResults.categories[0];
+    if (activeSearchResults.categories.length > 0) {
+      const cat = activeSearchResults.categories[0];
       router.push(`/tools/${cat.slug}`);
       return;
     }
@@ -152,25 +154,33 @@ export const CommandPalette: React.FC = () => {
 
   if (!isOpen) return null;
 
-  const isSearching = input.trim().length > 0;
   const listItemsCount = isSearching
-    ? searchResults.tools.length + searchResults.categories.length
+    ? activeSearchResults.tools.length + activeSearchResults.categories.length
     : SUGGESTED_COMMANDS.length;
 
   return (
-    <div className="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cli-modal-title"
+      className="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4"
+    >
       <div className="w-full max-w-2xl bg-navy-950 border border-lime-accent/40 rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden font-mono text-slate-100 animate-in slide-in-from-bottom-4 sm:zoom-in-95 duration-150">
         {/* Terminal Title Bar */}
         <div className="bg-navy-900 border-b border-navy-800 px-4 py-2.5 flex items-center justify-between text-xs text-slate-400">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-200 flex items-center gap-1.5">
-              <Terminal className="w-3.5 h-3.5 text-lime-accent" /> crawlers-cli v1.26.0
+            <span id="cli-modal-title" className="font-bold text-slate-200 flex items-center gap-1.5">
+              <Terminal className="w-3.5 h-3.5 text-lime-accent" aria-hidden="true" /> crawlers-cli v1.26.0
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-[10px] text-slate-500 font-sans">Press ESC to exit</span>
-            <button onClick={handleClose} className="text-slate-500 hover:text-slate-200 cursor-pointer">
-              <X className="w-4 h-4" />
+            <span className="text-[10px] text-slate-400 font-sans">Press ESC to exit</span>
+            <button
+              onClick={handleClose}
+              aria-label="Close terminal palette"
+              className="text-slate-400 hover:text-slate-100 cursor-pointer p-1"
+            >
+              <X className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -195,13 +205,13 @@ export const CommandPalette: React.FC = () => {
               } else if (e.key === "Enter") {
                 e.preventDefault();
                 if (isSearching) {
-                  if (selectedIndex < searchResults.tools.length) {
-                    const tool = searchResults.tools[selectedIndex];
+                  if (selectedIndex < activeSearchResults.tools.length) {
+                    const tool = activeSearchResults.tools[selectedIndex];
                     handleClose();
                     router.push(`/tool/${tool.slug}`);
                   } else {
-                    const catIndex = selectedIndex - searchResults.tools.length;
-                    const cat = searchResults.categories[catIndex];
+                    const catIndex = selectedIndex - activeSearchResults.tools.length;
+                    const cat = activeSearchResults.categories[catIndex];
                     if (cat) {
                       handleClose();
                       router.push(`/tools/${cat.slug}`);
@@ -214,8 +224,9 @@ export const CommandPalette: React.FC = () => {
                 }
               }
             }}
-            placeholder="Type 'crawlers --random', '--compare', or search 1,000+ tools..."
-            className="flex-1 bg-transparent text-slate-100 placeholder-slate-500 focus:outline-none font-mono text-sm truncate"
+            placeholder="Type 'crawlers --random', '--compare', or search 838+ tools..."
+            aria-label="Terminal command or tool search input"
+            className="flex-1 bg-transparent text-slate-100 placeholder-slate-400 focus:outline-none font-mono text-sm truncate"
           />
           <kbd className="px-2 py-1 text-[10px] bg-navy-850 border border-navy-700 rounded text-slate-400 font-bold shrink-0">
             ENTER ↵
@@ -269,12 +280,12 @@ export const CommandPalette: React.FC = () => {
           ) : (
             <>
               {/* Matched Tools */}
-              {searchResults.tools.length > 0 && (
+              {activeSearchResults.tools.length > 0 && (
                 <div className="space-y-1.5">
                   <div className="text-[11px] text-lime-accent/80 uppercase tracking-wider font-bold mb-1">
-                    Matching Tools ({searchResults.tools.length})
+                    Matching Tools ({activeSearchResults.tools.length})
                   </div>
-                  {searchResults.tools.map((tool, index) => {
+                  {activeSearchResults.tools.map((tool, index) => {
                     const isSelected = selectedIndex === index;
                     return (
                       <div
@@ -326,13 +337,13 @@ export const CommandPalette: React.FC = () => {
               )}
 
               {/* Matched Categories */}
-              {searchResults.categories.length > 0 && (
+              {activeSearchResults.categories.length > 0 && (
                 <div className="space-y-1.5 pt-2">
                   <div className="text-[11px] text-amber-400/80 uppercase tracking-wider font-bold mb-1">
-                    Taxonomy Categories ({searchResults.categories.length})
+                    Taxonomy Categories ({activeSearchResults.categories.length})
                   </div>
-                  {searchResults.categories.map((cat, index) => {
-                    const itemIndex = searchResults.tools.length + index;
+                  {activeSearchResults.categories.map((cat, index) => {
+                    const itemIndex = activeSearchResults.tools.length + index;
                     const isSelected = selectedIndex === itemIndex;
                     return (
                       <div
@@ -368,7 +379,7 @@ export const CommandPalette: React.FC = () => {
                 </div>
               )}
 
-              {searchResults.tools.length === 0 && searchResults.categories.length === 0 && (
+              {activeSearchResults.tools.length === 0 && activeSearchResults.categories.length === 0 && (
                 <div className="text-center py-6 text-slate-500 font-mono text-xs">
                   No matching tools or commands found for &ldquo;{input}&rdquo;
                 </div>

@@ -6,8 +6,8 @@ interface IndexStatusLineProps {
 }
 
 export const IndexStatusLine: React.FC<IndexStatusLineProps> = ({
-  toolCount = 8,
-  lastUpdatedText = "14 minutes ago",
+  toolCount = 838,
+  lastUpdatedText = "Just now",
 }) => {
   return (
     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-navy-900 border border-navy-800 font-mono text-xs text-slate-400">

@@ -109,8 +109,9 @@ export const SmartSearch: React.FC = () => {
             if (query.trim()) setIsOpen(true);
           }}
           onMouseEnter={preheatIndex}
-          placeholder="Search 1,000+ tools, categories, APIs..."
-          className="w-full bg-transparent text-slate-100 placeholder-slate-500 text-xs sm:text-sm font-mono py-3.5 pl-1 pr-28 sm:pr-36 focus:outline-none"
+          placeholder="Search 838+ tools, categories, APIs..."
+          aria-label="Search 838+ tools, categories, and APIs"
+          className="w-full bg-transparent text-slate-100 placeholder-slate-400 text-xs sm:text-sm font-mono py-3.5 pl-1 pr-28 sm:pr-36 focus:outline-none"
         />
 
         {/* Action / Keyboard Shortcut Hint - Padded for curved right pill edge */}

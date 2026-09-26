@@ -3,29 +3,38 @@ const path = require("path");
 const { createClient } = require("@supabase/supabase-js");
 
 const DEFAULT_SUPABASE_URL = "https://pmeacccwxsejxhzoeyic.supabase.co";
-const DEFAULT_SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtZWFjY2N3eHNlanhoem9leWljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMTExMjcsImV4cCI6MjEwMTU4NzEyN30.miFV9xJDd35TdiQTJyhiGr_NGqKEKm4wm8cfaX02qqw";
+const DEFAULT_SUPABASE_KEY =
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+  "sb_publishable_AvdWqSLptj3FHgLOrvRZXw_NQIjs_El";
 
-const supabase = createClient(DEFAULT_SUPABASE_URL, DEFAULT_SUPABASE_ANON_KEY);
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || DEFAULT_SUPABASE_URL;
+const supabase = createClient(supabaseUrl, DEFAULT_SUPABASE_KEY);
 
-// Category mapping helper
+// Canonical category mapping helper
 function mapHeadingToCategorySlug(heading) {
   const h = heading.toLowerCase().trim();
-  if (h.includes("audio") || h.includes("transcrib") || h.includes("podcast")) return "transcription";
-  if (h.includes("avatar")) return "image-generation";
-  if (h.includes("code assistant") || h.includes("developer tools") || h.includes("sql") || h.includes("low-code")) return "code-assistants";
-  if (h.includes("copywriting") || h.includes("general writing") || h.includes("email") || h.includes("paraphraser")) return "copywriting";
-  if (h.includes("customer support") || h.includes("chat")) return "chatbots";
-  if (h.includes("design") || h.includes("logo") || h.includes("image") || h.includes("fashion")) return "image-generation";
-  if (h.includes("education") || h.includes("research")) return "learning-education";
-  if (h.includes("gaming") || h.includes("fun")) return "gaming-ai";
-  if (h.includes("legal")) return "legal-ai";
-  if (h.includes("music") || h.includes("text to speech")) return "text-to-speech";
-  if (h.includes("personalized video") || h.includes("video")) return "video-generator";
-  if (h.includes("productivity") || h.includes("summarizer") || h.includes("memory") || h.includes("spreadsheet")) return "productivity";
-  if (h.includes("real estate")) return "3d-modeling";
-  if (h.includes("sales") || h.includes("social media") || h.includes("seo") || h.includes("startup")) return "marketing-sales";
-  if (h.includes("prompt")) return "devtools";
+  if (h.includes("podcast")) return "podcast-tools";
+  if (h.includes("transcrib")) return "transcription";
+  if (h.includes("speech") || h.includes("voice") || h.includes("text to speech")) return "text-to-speech";
+  if (h.includes("music") || h.includes("audio")) return "music-generation";
+  if (h.includes("avatar") || h.includes("image generator") || h.includes("image editing")) return "image-generation";
+  if (h.includes("code assistant") || h.includes("sql") || h.includes("low-code")) return "code-assistants";
+  if (h.includes("developer tools") || h.includes("prompt")) return "devtools";
+  if (h.includes("email")) return "email-assistants";
+  if (h.includes("copywriting") || h.includes("general writing") || h.includes("paraphraser")) return "copywriting";
+  if (h.includes("customer support") || h.includes("chat")) return "chatbot-builders";
+  if (h.includes("logo")) return "logo-generator";
+  if (h.includes("fashion")) return "fashion-design";
+  if (h.includes("education") || h.includes("research")) return "learning-tools";
+  if (h.includes("gaming") || h.includes("fun")) return "gaming";
+  if (h.includes("legal") || h.includes("finance")) return "finance-tools";
+  if (h.includes("video")) return "video-generator";
+  if (h.includes("social media")) return "social-media-tools";
+  if (h.includes("seo") || h.includes("sales") || h.includes("marketing") || h.includes("startup")) return "lead-generation";
+  if (h.includes("productivity") || h.includes("summarizer") || h.includes("memory") || h.includes("spreadsheet")) return "project-management";
+  if (h.includes("real estate") || h.includes("3d")) return "3d-modeling";
   return "devtools";
 }
 
@@ -41,12 +50,17 @@ async function run() {
     categoryMap[c.slug] = c.id;
   });
 
-  // Fetch existing tools to avoid duplicate slugs or update existing
+  // Fetch existing tools to avoid duplicate slugs or names
   const { data: existingTools } = await supabase.from("tools").select("slug, name");
   const seenSlugs = new Set((existingTools || []).map((t) => t.slug));
+  const seenNames = new Set((existingTools || []).map((t) => t.name.toLowerCase()));
 
   console.log("--- Parsing AITool.md ---");
   const filePath = path.join(__dirname, "../AITool.md");
+  if (!fs.existsSync(filePath)) {
+    console.error(`File not found: ${filePath}`);
+    return;
+  }
   const content = fs.readFileSync(filePath, "utf-8");
   const lines = content.split("\n");
 
@@ -72,7 +86,7 @@ async function run() {
       let name = match[1].trim();
       let rawUrl = match[2].trim();
 
-      // Clean URL: keep base URL or remove tracking ref query param if standard
+      // Clean URL: remove tracking query params
       let url = rawUrl;
       try {
         const parsedUrl = new URL(rawUrl);
@@ -80,8 +94,14 @@ async function run() {
         parsedUrl.searchParams.delete("via");
         parsedUrl.searchParams.delete("utm_source");
         url = parsedUrl.toString();
-      } catch (e) {
+      } catch {
         url = rawUrl;
+      }
+
+      const nameLower = name.toLowerCase();
+      // Skip if already in database or already parsed in this batch
+      if (seenNames.has(nameLower)) {
+        continue;
       }
 
       // Generate base slug
@@ -90,31 +110,26 @@ async function run() {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-+|-+$/g, "");
 
-      if (!baseSlug) baseSlug = `aitool-${Date.now()}`;
-
-      let slug = baseSlug;
-      let counter = 1;
-      while (seenSlugs.has(slug)) {
-        slug = `${baseSlug}-${counter}`;
-        counter++;
+      if (!baseSlug || seenSlugs.has(baseSlug)) {
+        continue;
       }
-      seenSlugs.add(slug);
+
+      seenNames.add(nameLower);
+      seenSlugs.add(baseSlug);
 
       const catSlug = mapHeadingToCategorySlug(currentCategoryHeading);
       const category_id = categoryMap[catSlug] || categoryMap["devtools"];
 
-      const nameLower = name.toLowerCase();
       let pricing_model = "freemium";
       if (nameLower.includes("free")) pricing_model = "free";
       if (url.includes("github.com") || nameLower.includes("open")) pricing_model = "open-source";
 
       const has_api = nameLower.includes("api") || nameLower.includes("cli") || url.includes("github.com");
-
-      const description = `${name} is an AI-powered tool specialized in ${currentCategoryHeading.toLowerCase()}. Indexed for fast search & direct link access.`;
+      const description = `${name} is an AI tool specialized in ${currentCategoryHeading.toLowerCase()}. Indexed for fast search & direct link access.`;
 
       parsedTools.push({
         name,
-        slug,
+        slug: baseSlug,
         url,
         description,
         pricing_model,
@@ -125,28 +140,30 @@ async function run() {
     }
   }
 
-  console.log(`Parsed ${parsedTools.length} new tools from AITool.md.`);
+  console.log(`Parsed ${parsedTools.length} new unique tools from AITool.md.`);
 
-  console.log("--- Upserting into Supabase tools table ---");
-  const chunkSize = 50;
-  let insertedCount = 0;
+  if (parsedTools.length > 0) {
+    console.log("--- Upserting into Supabase tools table ---");
+    const chunkSize = 50;
+    let insertedCount = 0;
 
-  for (let i = 0; i < parsedTools.length; i += chunkSize) {
-    const chunk = parsedTools.slice(i, i + chunkSize);
-    const { data, error } = await supabase
-      .from("tools")
-      .upsert(chunk, { onConflict: "slug" })
-      .select();
+    for (let i = 0; i < parsedTools.length; i += chunkSize) {
+      const chunk = parsedTools.slice(i, i + chunkSize);
+      const { data, error } = await supabase
+        .from("tools")
+        .upsert(chunk, { onConflict: "slug" })
+        .select();
 
-    if (error) {
-      console.error(`Error inserting chunk ${i / chunkSize + 1}:`, error.message);
-    } else {
-      insertedCount += data ? data.length : chunk.length;
-      console.log(`Inserted chunk ${i / chunkSize + 1}/${Math.ceil(parsedTools.length / chunkSize)} (${chunk.length} tools).`);
+      if (error) {
+        console.error(`Error inserting chunk ${i / chunkSize + 1}:`, error.message);
+      } else {
+        insertedCount += data ? data.length : chunk.length;
+        console.log(`Inserted chunk ${Math.floor(i / chunkSize) + 1}/${Math.ceil(parsedTools.length / chunkSize)} (${chunk.length} tools).`);
+      }
     }
-  }
 
-  console.log(`--- COMPLETE! Successfully imported ${insertedCount} tools from AITool.md into Supabase! ---`);
+    console.log(`--- COMPLETE! Successfully imported ${insertedCount} tools from AITool.md into Supabase! ---`);
+  }
 }
 
 run().catch(console.error);

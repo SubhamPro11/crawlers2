@@ -44,7 +44,7 @@ const FREE_LLM_TOOLS = [
     url: "https://openrouter.ai/workspaces/default/keys",
     description: "Unified API gateway offering 22+ free LLM models alongside single-key routing to OpenAI, Anthropic, and open-source models with up to 1M context.",
     pricing_model: "freemium",
-    category_slug: "ai-frameworks",
+    category_slug: "api-tools",
     has_api: true,
   },
   {
@@ -62,7 +62,7 @@ const FREE_LLM_TOOLS = [
     url: "https://aistudio.google.com/app/apikey",
     description: "Multimodal developer API with 1M context window for Gemini 3.6 Flash, 3.5 Flash, and Flash-Lite. Generous free tier offering 15-30 RPM & 1,500 RPD.",
     pricing_model: "freemium",
-    category_slug: "ai-frameworks",
+    category_slug: "api-tools",
     has_api: true,
   },
   {
@@ -107,7 +107,7 @@ const FREE_LLM_TOOLS = [
     url: "https://console.mistral.ai/api-keys",
     description: "Official developer API for Mistral models including Mistral 7B, Mixtral 8x7B, and Mistral Medium 3.5 with 256k context window.",
     pricing_model: "freemium",
-    category_slug: "ai-frameworks",
+    category_slug: "api-tools",
     has_api: true,
   },
   {
@@ -116,7 +116,7 @@ const FREE_LLM_TOOLS = [
     url: "https://dashboard.cohere.com/api-keys",
     description: "Enterprise language modeling API providing Command A+ (218B) and Command R+ models with up to 436k context and 20 RPM free tier.",
     pricing_model: "freemium",
-    category_slug: "ai-frameworks",
+    category_slug: "api-tools",
     has_api: true,
   },
   {
@@ -152,7 +152,7 @@ const FREE_LLM_TOOLS = [
     url: "https://www.aionlabs.ai",
     description: "Specialized LLM provider serving Aion 2.5, Aion 2.0, and roleplay models with 15 RPM and 20k TPD free allocation.",
     pricing_model: "freemium",
-    category_slug: "ai-frameworks",
+    category_slug: "api-tools",
     has_api: true,
   },
   {
@@ -179,7 +179,7 @@ const FREE_LLM_TOOLS = [
     url: "https://bailian.console.alibabacloud.com/?apiKey=1",
     description: "Global cloud API for Qwen3-Max, Qwen3-Plus, and Qwen3-VL-Plus with up to 1M context window and free tier access.",
     pricing_model: "freemium",
-    category_slug: "ai-frameworks",
+    category_slug: "api-tools",
     has_api: true,
   },
   {
@@ -188,7 +188,7 @@ const FREE_LLM_TOOLS = [
     url: "https://open.bigmodel.cn/usercenter/apikeys",
     description: "Pioneer Chinese AI lab providing GLM-4.7-Flash and GLM-4.5-Flash with 200k context window and zero API cost.",
     pricing_model: "free",
-    category_slug: "ai-frameworks",
+    category_slug: "api-tools",
     has_api: true,
   },
   {
@@ -215,7 +215,7 @@ const FREE_LLM_TOOLS = [
     url: "https://console.x.ai",
     description: "Official developer console for Grok-4.3, Grok-4.1 Fast (2M context), and Grok-3 Mini with recurring monthly credits.",
     pricing_model: "freemium",
-    category_slug: "ai-frameworks",
+    category_slug: "api-tools",
     has_api: true,
   },
   {
@@ -242,7 +242,7 @@ const FREE_LLM_TOOLS = [
     url: "https://studio.ai21.com/account/api-key",
     description: "Language intelligence portal serving Jamba Large 1.7 and Jamba Mini 2 hybrid SSM-Transformer models with 256k context and 200 RPM.",
     pricing_model: "freemium",
-    category_slug: "ai-frameworks",
+    category_slug: "api-tools",
     has_api: true,
   },
   {
@@ -251,7 +251,7 @@ const FREE_LLM_TOOLS = [
     url: "https://platform.deepseek.com/api_keys",
     description: "Official API for DeepSeek-V3.2 and DeepSeek-R1 reasoning models with 128k context and low-cost pay-as-you-go / free tier.",
     pricing_model: "freemium",
-    category_slug: "ai-frameworks",
+    category_slug: "api-tools",
     has_api: true,
   },
   {
@@ -298,7 +298,7 @@ const FREE_LLM_TOOLS = [
     url: "https://github.com/ggerganov/llama.cpp",
     description: "Ultra-lightweight C/C++ LLM inference engine with AVX2/AVX512/Metal/CUDA optimization for high-speed local model execution.",
     pricing_model: "open-source",
-    category_slug: "ai-frameworks",
+    category_slug: "api-tools",
     has_api: true,
   },
   {
@@ -352,16 +352,13 @@ async function importFreeLLMTools() {
 
   // Fallback category ID if specific slug not matched
   const devtoolsCatId = categoryMap["devtools"] || categories[0]?.id;
-  const aiFrameworksCatId = categoryMap["ai-frameworks"] || devtoolsCatId;
+  const apiToolsCatId = categoryMap["api-tools"] || devtoolsCatId;
 
   let insertedCount = 0;
   let errorCount = 0;
 
   for (const item of FREE_LLM_TOOLS) {
-    let catId = categoryMap[item.category_slug];
-    if (!catId) {
-      catId = item.category_slug === "ai-frameworks" ? aiFrameworksCatId : devtoolsCatId;
-    }
+    let catId = categoryMap[item.category_slug] || apiToolsCatId;
 
     const payload = {
       name: item.name,

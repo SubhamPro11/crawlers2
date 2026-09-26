@@ -8,13 +8,13 @@ import { BreadcrumbJsonLd, CollectionPageJsonLd } from "@/components/seo/JsonLd"
 export const revalidate = 3600; // SSG/ISR 1-hour revalidation
 
 export const metadata = {
-  title: "Complete AI Tools Directory Index (1,000+ Software)",
+  title: "Complete AI Tools Directory Index (838+ Software)",
   description: "Browse the complete paginated index of human-curated AI software, developer tools, and API endpoints.",
   alternates: {
     canonical: "/tools",
   },
   openGraph: {
-    title: "Complete AI Tools Directory Index (1,000+ Software)",
+    title: "Complete AI Tools Directory Index (838+ Software)",
     description: "Browse the complete paginated index of human-curated AI software, developer tools, and API endpoints.",
     url: "https://crawlers.dpdns.org/tools",
     siteName: "Crawlers",
@@ -23,7 +23,7 @@ export const metadata = {
     card: "summary_large_image",
     site: "@crawlers",
     creator: "@crawlers",
-    title: "Complete AI Tools Directory Index (1,000+ Software)",
+    title: "Complete AI Tools Directory Index (838+ Software)",
     description: "Browse the complete paginated index of human-curated AI software, developer tools, and API endpoints.",
   },
 };

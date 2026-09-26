@@ -45,6 +45,11 @@ async function testFullReportPipeline() {
     .select("*, tools(name, url)")
     .order("reported_at", { ascending: false });
 
+  if (fetchErr) {
+    console.error("Fetch failed:", fetchErr);
+    return;
+  }
+
   console.log("✓ Triage Queue Fetch result:", fetchedReports);
 }
 

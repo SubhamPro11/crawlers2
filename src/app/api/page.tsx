@@ -80,6 +80,17 @@ export default async function ApiRegistryPage() {
           </div>
         </div>
 
+        {/* Third-Party API Legal Disclaimer */}
+        <div className="p-4 rounded-xl border border-navy-800 bg-navy-950 font-mono text-xs text-slate-300 space-y-1.5">
+          <div className="flex items-center gap-2 text-slate-200 font-bold">
+            <ShieldCheck className="w-4 h-4 text-cyan-400" aria-hidden="true" />
+            <span>Third-Party API Terms &amp; Quota Disclaimer</span>
+          </div>
+          <p className="font-sans text-xs text-slate-400 leading-relaxed">
+            API endpoints, model weights, token quotas, and credentials listed below are operated exclusively by their respective infrastructure providers. Crawlers does not host, proxy, broker, or guarantee API key issuance, rate limits, or uptime. All usage is subject to the individual provider&apos;s developer terms.
+          </p>
+        </div>
+
         {/* Tools Grid */}
         <div className="animate-entrance space-y-6">
           <div className="flex items-center justify-between font-mono text-xs text-slate-400 border-b border-navy-850 pb-3">

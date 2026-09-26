@@ -12,6 +12,7 @@ import { PricingModel } from "@/types/database";
 export default function SubmitPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -121,10 +122,11 @@ export default function SubmitPage() {
 
             {/* Category Dropdown */}
             <div className="space-y-1.5 font-mono text-xs">
-              <label className="block font-medium text-slate-400 uppercase tracking-wider">
+              <label htmlFor="submit-category" className="block font-medium text-slate-400 uppercase tracking-wider cursor-pointer">
                 Category
               </label>
               <select
+                id="submit-category"
                 className="w-full bg-navy-950 border border-navy-700 text-slate-100 rounded px-3 py-2 text-sm font-sans focus:outline-none focus:border-lime-accent"
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
@@ -141,10 +143,11 @@ export default function SubmitPage() {
 
             {/* Pricing Model */}
             <div className="space-y-1.5 font-mono text-xs">
-              <label className="block font-medium text-slate-400 uppercase tracking-wider">
+              <label htmlFor="submit-pricing" className="block font-medium text-slate-400 uppercase tracking-wider cursor-pointer">
                 Pricing Model
               </label>
               <select
+                id="submit-pricing"
                 className="w-full bg-navy-950 border border-navy-700 text-slate-100 rounded px-3 py-2 text-sm font-sans focus:outline-none focus:border-lime-accent"
                 value={formData.pricing_model}
                 onChange={(e) => setFormData({ ...formData, pricing_model: e.target.value as PricingModel })}
@@ -158,13 +161,14 @@ export default function SubmitPage() {
 
             {/* Description */}
             <div className="space-y-1.5 font-mono text-xs">
-              <label className="block font-medium text-slate-400 uppercase tracking-wider">
+              <label htmlFor="submit-description" className="block font-medium text-slate-400 uppercase tracking-wider cursor-pointer">
                 Description (Original Wording)
               </label>
               <textarea
+                id="submit-description"
                 rows={4}
                 required
-                className="w-full bg-navy-950 border border-navy-700 text-slate-100 rounded p-3 text-sm font-sans placeholder-slate-500 focus:outline-none focus:border-lime-accent"
+                className="w-full bg-navy-950 border border-navy-700 text-slate-100 rounded p-3 text-sm font-sans placeholder-slate-400 focus:outline-none focus:border-lime-accent"
                 placeholder="Describe what the tool accomplishes in original terms (do not paste verbatim promotional copy)..."
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -173,6 +177,7 @@ export default function SubmitPage() {
 
             {/* Tags */}
             <Input
+              id="submit-tags"
               label="Tags (Comma separated)"
               placeholder="cli, local-ai, developer-tool"
               value={formData.tags}
@@ -180,19 +185,54 @@ export default function SubmitPage() {
             />
 
             {/* Submitter Email */}
-            <Input
-              label="Your Email (Optional for notification)"
-              type="email"
-              placeholder="dev@example.com"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            />
+            <div className="space-y-1">
+              <Input
+                id="submit-email"
+                label="Your Email (Optional for notification)"
+                type="email"
+                placeholder="dev@example.com"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+              <p className="text-[11px] font-sans text-slate-400">
+                Data Minimization: We only use your email to alert you regarding editorial review status. We never share or sell it.
+              </p>
+            </div>
+
+            {/* Form Consent Checkbox (DPDP Act & Terms) */}
+            <div className="p-4 rounded-xl bg-navy-950/70 border border-navy-800 space-y-2">
+              <label className="flex items-start gap-3 cursor-pointer text-xs font-sans text-slate-300">
+                <input
+                  type="checkbox"
+                  required
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 rounded border-navy-700 bg-navy-900 text-lime-accent focus:ring-lime-accent focus:ring-1 cursor-pointer accent-lime-400"
+                />
+                <span>
+                  I confirm that this tool is legitimate, that I have the right to submit this information, and I agree to Crawlers&apos;{" "}
+                  <Link href="/terms" target="_blank" className="text-lime-accent underline font-mono">
+                    Terms &amp; Conditions
+                  </Link>{" "}
+                  and acknowledge the{" "}
+                  <Link href="/privacy" target="_blank" className="text-lime-accent underline font-mono">
+                    Privacy Policy (DPDP Act)
+                  </Link>
+                  .
+                </span>
+              </label>
+            </div>
 
             <div className="pt-4 border-t border-navy-850 flex items-center justify-between">
-              <span className="font-mono text-xs text-slate-500">
+              <span className="font-mono text-xs text-slate-400">
                 Status: Queued for pending review
               </span>
-              <Button type="submit" variant="primary" disabled={submitting} icon={<Send className="w-4 h-4" />}>
+              <Button
+                type="submit"
+                variant="primary"
+                disabled={submitting || !agreedToTerms}
+                icon={<Send className="w-4 h-4" aria-hidden="true" />}
+              >
                 {submitting ? "Submitting..." : "Submit For Review"}
               </Button>
             </div>

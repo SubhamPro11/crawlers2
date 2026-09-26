@@ -46,7 +46,7 @@ export default async function HomePage() {
           </blockquote>
 
           <div className="pt-1">
-            <IndexStatusLine toolCount={1000} lastUpdatedText="Just now" />
+            <IndexStatusLine toolCount={838} lastUpdatedText="Just now" />
           </div>
 
           <div className="pt-2">
@@ -55,8 +55,8 @@ export default async function HomePage() {
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4 font-mono text-xs">
             <Link href="/tools">
-              <Button variant="primary" icon={<ShieldCheck className="w-4 h-4" />}>
-                Browse All 1,000+ Tools
+              <Button variant="primary" icon={<ShieldCheck className="w-4 h-4" aria-hidden="true" />}>
+                Browse All 838+ Tools
               </Button>
             </Link>
             <Link href="#sections">
@@ -151,8 +151,8 @@ export default async function HomePage() {
 
         <div className="pt-8 text-center">
           <Link href="/tools">
-            <Button variant="primary" icon={<ArrowRight className="w-4 h-4" />}>
-              Open Complete Paginated Tool Index (1,000+ Software)
+            <Button variant="primary" icon={<ArrowRight className="w-4 h-4" aria-hidden="true" />}>
+              Open Complete Paginated Tool Index (838+ Software)
             </Button>
           </Link>
         </div>

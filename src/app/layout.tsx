@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ClientOverlays } from "@/components/layout/ClientOverlays";
 import { CompareProvider } from "@/context/CompareContext";
 import { SiteIdentityJsonLd } from "@/components/seo/JsonLd";
+import { CookieConsentBanner } from "@/components/layout/CookieConsentBanner";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -95,11 +96,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteIdentityJsonLd siteUrl={baseUrl} />
       </head>
       <body className="min-h-full flex flex-col bg-navy-950 text-slate-100 selection:bg-lime-accent/30 selection:text-lime-accent">
+        {/* Skip to Main Content for Screen Readers & Keyboard Users (WCAG 2.4.1) */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-lime-accent focus:text-navy-950 focus:font-mono focus:font-bold focus:rounded-md focus:shadow-xl focus:outline-none"
+        >
+          Skip to main content
+        </a>
         <CompareProvider>
           <Navbar />
-          <div className="flex-1">{children}</div>
+          <div id="main-content" className="flex-1 flex flex-col outline-none">
+            {children}
+          </div>
           <Footer />
           <ClientOverlays />
+          <CookieConsentBanner />
         </CompareProvider>
       </body>
     </html>
