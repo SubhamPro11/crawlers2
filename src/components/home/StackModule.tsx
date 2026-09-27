@@ -37,7 +37,7 @@ export const StackModule: React.FC<StackModuleProps> = ({ stacks }) => {
 
           {/* Included Tools Pills */}
           <div className="space-y-2 pt-1">
-            <span className="font-mono text-xs text-slate-400 uppercase tracking-wider block">
+            <span className="font-mono text-xs text-slate-400 font-medium tracking-wide block">
               Bundled Infrastructure Tools:
             </span>
             <div className="flex flex-wrap gap-2 font-mono text-xs">
@@ -53,14 +53,14 @@ export const StackModule: React.FC<StackModuleProps> = ({ stacks }) => {
           </div>
         </div>
 
-        <div className="mt-6 pt-4 border-t border-navy-850 flex items-center justify-between font-mono text-xs">
-          <span className="text-slate-400">{primaryStack.toolSlugs.length} Tools Hand-Selected</span>
+        <div className="mt-6 pt-4 border-t border-navy-850 flex items-center gap-4 font-mono text-xs">
           <Link
             href={`/compare?tools=${primaryStack.toolSlugs.slice(0, 2).join(",")}`}
-            className="inline-flex items-center gap-1.5 text-lime-accent font-semibold hover:underline"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-lime-accent/10 border border-lime-accent/30 text-lime-accent font-semibold hover:bg-lime-accent hover:text-navy-950 transition-colors"
           >
-            run stack <ArrowRight className="w-3.5 h-3.5" />
+            run stack <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
           </Link>
+          <span className="text-slate-400">{primaryStack.toolSlugs.length} Tools Hand-Selected</span>
         </div>
       </div>
 
@@ -73,7 +73,7 @@ export const StackModule: React.FC<StackModuleProps> = ({ stacks }) => {
           >
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-xs text-slate-400 uppercase tracking-wider">
+                <span className="font-mono text-xs text-slate-400 font-medium tracking-wide">
                   {"// Stack"}
                 </span>
                 <span className="font-mono text-xs text-slate-400">
@@ -88,16 +88,16 @@ export const StackModule: React.FC<StackModuleProps> = ({ stacks }) => {
               </p>
             </div>
 
-            <div className="pt-3 mt-3 border-t border-navy-850/60 flex items-center justify-between font-mono text-xs">
+            <div className="pt-3 mt-3 border-t border-navy-850/60 flex items-center gap-3 font-mono text-xs">
+              <Link
+                href={`/compare?tools=${stack.toolSlugs.slice(0, 2).join(",")}`}
+                className="text-lime-accent hover:underline transition-colors flex items-center gap-1 font-semibold"
+              >
+                open stack <ArrowRight className="w-3 h-3" aria-hidden="true" />
+              </Link>
               <span className="text-slate-400 text-xs">
                 [{stack.toolSlugs.slice(0, 2).join(", ")}]
               </span>
-              <Link
-                href={`/compare?tools=${stack.toolSlugs.slice(0, 2).join(",")}`}
-                className="text-slate-300 hover:text-lime-accent transition-colors flex items-center gap-1"
-              >
-                open stack <ArrowRight className="w-3 h-3" />
-              </Link>
             </div>
           </div>
         ))}

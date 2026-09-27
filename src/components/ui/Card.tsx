@@ -84,44 +84,47 @@ export const ToolCard: React.FC<ToolCardProps> = React.memo(({
               </div>
               <div className="flex items-center gap-2 pt-1">
                 <Badge pricingModel={pricingModel}>{pricingModel}</Badge>
-                
-                {/* Compare Quick-Action Button */}
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    toggleCompare({ id, name, slug, url, logo_url: logoUrl, pricing_model: pricingModel });
-                  }}
-                  className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono transition-all border ${
-                    isQueued
-                      ? "bg-lime-accent/15 text-lime-accent border-lime-accent/40 font-bold"
-                      : "bg-navy-950 text-slate-400 border-navy-800 hover:border-navy-700 hover:text-slate-200"
-                  }`}
-                  title={isQueued ? "Remove from compare queue" : "Add to compare matrix"}
-                >
-                  <ArrowLeftRight className="w-3 h-3" />
-                  <span>{isQueued ? "Queued" : "+ Compare"}</span>
-                </button>
               </div>
             </div>
           </div>
 
-          {onBookmarkToggle && (
+          <div className="flex items-center gap-1.5 shrink-0">
+            {/* Compare Quick-Action Button - Fixed top-right placement */}
             <button
               onClick={(e) => {
                 e.preventDefault();
-                onBookmarkToggle(id);
+                toggleCompare({ id, name, slug, url, logo_url: logoUrl, pricing_model: pricingModel });
               }}
-              className={`p-1.5 rounded-md flex items-center justify-center transition-colors shrink-0 ${
-                isBookmarked
-                  ? "text-lime-accent bg-lime-accent/10 border border-lime-accent/30"
-                  : "text-slate-500 hover:text-slate-300 hover:bg-navy-800"
+              className={`inline-flex items-center gap-1 px-2 py-1 rounded text-[10px] font-mono transition-all border ${
+                isQueued
+                  ? "bg-lime-accent/15 text-lime-accent border-lime-accent/40 font-bold"
+                  : "bg-navy-950 text-slate-400 border-navy-800 hover:border-navy-700 hover:text-slate-200"
               }`}
-              title={isBookmarked ? "Remove Bookmark" : "Save Tool"}
-              aria-label="Bookmark Tool"
+              title={isQueued ? "Remove from compare queue" : "Add to compare matrix"}
+              aria-label={`${isQueued ? "Remove" : "Add"} ${name} to compare`}
             >
-              <Bookmark className="w-4 h-4" fill={isBookmarked ? "currentColor" : "none"} />
+              <ArrowLeftRight className="w-3 h-3" aria-hidden="true" />
+              <span>{isQueued ? "Queued" : "Compare"}</span>
             </button>
-          )}
+
+            {onBookmarkToggle && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  onBookmarkToggle(id);
+                }}
+                className={`p-1.5 rounded-md flex items-center justify-center transition-colors shrink-0 ${
+                  isBookmarked
+                    ? "text-lime-accent bg-lime-accent/10 border border-lime-accent/30"
+                    : "text-slate-500 hover:text-slate-300 hover:bg-navy-800"
+                }`}
+                title={isBookmarked ? "Remove Bookmark" : "Save Tool"}
+                aria-label="Bookmark Tool"
+              >
+                <Bookmark className="w-4 h-4" fill={isBookmarked ? "currentColor" : "none"} />
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Category Badge */}

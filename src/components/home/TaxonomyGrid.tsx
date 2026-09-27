@@ -73,7 +73,7 @@ export const TaxonomyGrid: React.FC<TaxonomyGridProps> = ({ sections }) => {
                 Sub-Categories ({section.categories.length})
               </div>
               <div className="grid grid-cols-1 gap-2">
-                {section.categories.map((cat) => (
+                {section.categories.slice(0, 3).map((cat) => (
                   <Link
                     key={cat.slug}
                     href={`/${section.slug}/${cat.slug}`}
@@ -83,6 +83,14 @@ export const TaxonomyGrid: React.FC<TaxonomyGridProps> = ({ sections }) => {
                     <span className="truncate">{cat.name}</span>
                   </Link>
                 ))}
+                {section.categories.length > 3 && (
+                  <Link
+                    href={`/${section.slug}`}
+                    className="font-mono text-xs text-lime-accent/80 hover:text-lime-accent hover:underline pt-1 block"
+                  >
+                    +{section.categories.length - 3} more sub-categories →
+                  </Link>
+                )}
               </div>
             </div>
           </div>

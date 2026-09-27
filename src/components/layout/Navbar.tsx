@@ -59,7 +59,7 @@ export const Navbar: React.FC = () => {
           </Link>
           <Link
             href="/submit"
-            className="btn-press flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-lime-accent text-navy-950 font-semibold hover:bg-lime-hover transition-colors ml-1"
+            className="btn-press flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-lime-accent/50 text-lime-accent hover:bg-lime-accent/10 hover:border-lime-accent font-semibold transition-colors ml-1"
           >
             <PlusCircle className="w-3.5 h-3.5" aria-hidden="true" /> Submit
           </Link>

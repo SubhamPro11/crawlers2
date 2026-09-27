@@ -111,7 +111,7 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Tools Preview */}
-      <section className="animate-entrance pt-16 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full border-t border-navy-800 section-inset">
+      <section className="animate-entrance pt-16 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full border-t border-navy-800 section-inset">
         <div className="flex items-center justify-between border-b border-navy-800 pb-4 mb-8">
           <div>
             <div className="font-mono text-[11px] text-lime-accent/70 uppercase tracking-[0.2em] mb-1.5">
@@ -149,7 +149,7 @@ export default async function HomePage() {
           ))}
         </div>
 
-        <div className="pt-8 text-center">
+        <div className="pt-6 text-center">
           <Link href="/tools">
             <Button variant="outline" icon={<ArrowRight className="w-4 h-4" aria-hidden="true" />}>
               Open Complete Paginated Tool Index (838+ Software)
