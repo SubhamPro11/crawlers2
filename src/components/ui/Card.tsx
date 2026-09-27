@@ -163,12 +163,14 @@ export const ToolCard: React.FC<ToolCardProps> = React.memo(({
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-navy-950 border border-lime-accent/40 text-lime-accent hover:bg-lime-accent hover:text-navy-950 font-mono text-xs font-semibold transition-all shrink-0"
         >
-          {pricingModel === "open-source"
-            ? "→ source"
-            : hasApi
-            ? "> api"
-            : "open →"}{" "}
-          <ExternalLink className="w-3.5 h-3.5" />
+          <span>
+            {pricingModel === "open-source"
+              ? "→ source"
+              : hasApi
+              ? "→ api"
+              : "→ visit"}
+          </span>
+          <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
         </a>
       </div>
     </div>

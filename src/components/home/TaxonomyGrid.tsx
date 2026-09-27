@@ -34,18 +34,12 @@ export const TaxonomyGrid: React.FC<TaxonomyGridProps> = ({ sections }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {sections.map((section) => {
-        // Section 9 (Education & Lifestyle, 6 categories) gets a distinct layout span & treatment
-        const isFeatured = section.categories.length > 5;
         const sectionIcon = SECTION_ICONS[section.slug];
 
         return (
           <div
             key={section.slug}
-            className={`p-6 rounded-xl border border-navy-800 bg-navy-900/60 hover:border-lime-accent/20 hover:shadow-[0_0_24px_-6px_rgba(163,230,53,0.06)] transition-all duration-300 card-lift flex flex-col justify-between ${
-              isFeatured
-                ? "md:col-span-2 lg:col-span-2 border-lime-accent/40 bg-navy-900"
-                : ""
-            }`}
+            className="p-6 rounded-xl border border-navy-800 bg-navy-900/60 hover:border-lime-accent/20 hover:shadow-[0_0_24px_-6px_rgba(163,230,53,0.06)] transition-all duration-300 card-lift flex flex-col justify-between"
           >
             <div>
               {/* Left-aligned integrated index marker in heading */}
@@ -75,21 +69,17 @@ export const TaxonomyGrid: React.FC<TaxonomyGridProps> = ({ sections }) => {
 
             {/* Category Tags Layout */}
             <div className="p-6 pt-4 border-t border-navy-850 bg-navy-950/40">
-              <div className="font-mono text-[10px] text-slate-500 uppercase tracking-[0.2em] mb-2.5">
+              <div className="font-mono text-xs text-slate-400 uppercase tracking-[0.2em] mb-2.5">
                 Sub-Categories ({section.categories.length})
               </div>
-              <div
-                className={`grid gap-2 ${
-                  isFeatured ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-1"
-                }`}
-              >
+              <div className="grid grid-cols-1 gap-2">
                 {section.categories.map((cat) => (
                   <Link
                     key={cat.slug}
                     href={`/${section.slug}/${cat.slug}`}
                     className="font-mono text-xs text-slate-300 hover:text-lime-accent hover:translate-x-0.5 transition-all truncate flex items-center gap-1.5"
                   >
-                    <span className="text-slate-600 text-[10px]">&gt;</span>
+                    <span className="text-slate-600 text-xs">&gt;</span>
                     <span className="truncate">{cat.name}</span>
                   </Link>
                 ))}

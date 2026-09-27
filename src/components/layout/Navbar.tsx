@@ -20,7 +20,7 @@ export const Navbar: React.FC = () => {
             <span className="font-mono text-base font-bold tracking-tight text-slate-100 group-hover:text-lime-accent transition-colors">
               Crawlers
             </span>
-            <span className="font-mono text-[10px] text-slate-500 tracking-wider uppercase">
+            <span className="font-mono text-[10px] text-slate-400 tracking-wider">
               AI Tools Directory
             </span>
           </div>

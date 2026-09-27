@@ -21,23 +21,23 @@ export const StackModule: React.FC<StackModuleProps> = ({ stacks }) => {
           Primary Featured Stack
         </div>
 
-        <div>
-          <div className="flex items-center gap-2 font-mono text-xs text-lime-accent mb-3">
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 font-mono text-xs text-lime-accent">
             <Terminal className="w-4 h-4" />
             <span>curated_stack://{primaryStack.slug}</span>
           </div>
 
-          <h3 className="font-mono text-2xl font-bold text-slate-100 group-hover:text-lime-accent transition-colors mb-3">
+          <h3 className="font-mono text-2xl font-bold text-slate-100 group-hover:text-lime-accent transition-colors">
             {primaryStack.name}
           </h3>
 
-          <p className="text-sm text-slate-300 font-sans leading-relaxed mb-6 max-w-xl">
+          <p className="text-sm text-slate-300 font-sans leading-relaxed max-w-xl">
             {primaryStack.description}
           </p>
 
           {/* Included Tools Pills */}
-          <div className="space-y-2 mb-6">
-            <span className="font-mono text-xs text-slate-500 uppercase tracking-wider block">
+          <div className="space-y-2 pt-1">
+            <span className="font-mono text-xs text-slate-400 uppercase tracking-wider block">
               Bundled Infrastructure Tools:
             </span>
             <div className="flex flex-wrap gap-2 font-mono text-xs">
@@ -53,7 +53,7 @@ export const StackModule: React.FC<StackModuleProps> = ({ stacks }) => {
           </div>
         </div>
 
-        <div className="pt-4 border-t border-navy-850 flex items-center justify-between font-mono text-xs">
+        <div className="mt-6 pt-4 border-t border-navy-850 flex items-center justify-between font-mono text-xs">
           <span className="text-slate-400">{primaryStack.toolSlugs.length} Tools Hand-Selected</span>
           <Link
             href={`/compare?tools=${primaryStack.toolSlugs.slice(0, 2).join(",")}`}
@@ -73,10 +73,10 @@ export const StackModule: React.FC<StackModuleProps> = ({ stacks }) => {
           >
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-[11px] text-slate-500 uppercase tracking-wider">
+                <span className="font-mono text-xs text-slate-400 uppercase tracking-wider">
                   {"// Stack"}
                 </span>
-                <span className="font-mono text-[11px] text-slate-500">
+                <span className="font-mono text-xs text-slate-400">
                   {stack.toolSlugs.length} Tools
                 </span>
               </div>
@@ -89,7 +89,7 @@ export const StackModule: React.FC<StackModuleProps> = ({ stacks }) => {
             </div>
 
             <div className="pt-3 mt-3 border-t border-navy-850/60 flex items-center justify-between font-mono text-xs">
-              <span className="text-slate-500 text-[11px]">
+              <span className="text-slate-400 text-xs">
                 [{stack.toolSlugs.slice(0, 2).join(", ")}]
               </span>
               <Link

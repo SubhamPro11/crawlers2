@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
         </div>
 
         <div>
-          <h4 className="font-mono text-[11px] text-slate-200 uppercase tracking-[0.2em] mb-3">Directory</h4>
+          <h3 className="font-mono text-xs text-slate-200 uppercase tracking-[0.2em] mb-3">Directory</h3>
           <ul className="space-y-2 text-xs font-mono">
             <li>
               <Link href="/#sections" className="hover:text-lime-accent transition-colors">
@@ -50,7 +50,7 @@ export const Footer: React.FC = () => {
         </div>
 
         <div>
-          <h4 className="font-mono text-[11px] text-slate-200 uppercase tracking-[0.2em] mb-3">Community</h4>
+          <h3 className="font-mono text-xs text-slate-200 uppercase tracking-[0.2em] mb-3">Community</h3>
           <ul className="space-y-2 text-xs font-mono">
             <li>
               <Link href="/submit" className="hover:text-lime-accent transition-colors">
@@ -71,10 +71,10 @@ export const Footer: React.FC = () => {
         </div>
 
         <div>
-          <h4 className="font-mono text-[11px] text-slate-200 uppercase tracking-[0.2em] mb-3 flex items-center gap-1.5">
+          <h3 className="font-mono text-xs text-slate-200 uppercase tracking-[0.2em] mb-3 flex items-center gap-1.5">
             <Shield className="w-3.5 h-3.5 text-lime-accent" aria-hidden="true" />
             <span>Legal &amp; Policy</span>
-          </h4>
+          </h3>
           <ul className="space-y-2 text-xs font-mono">
             <li>
               <Link href="/privacy" className="hover:text-lime-accent transition-colors">
@@ -101,8 +101,8 @@ export const Footer: React.FC = () => {
       </div>
 
       {/* Trademark Disclaimer & Legal Details */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-6 border-t border-navy-850 space-y-3 font-mono text-[11px] text-slate-400">
-        <p className="font-sans leading-relaxed text-slate-400">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-6 border-t border-navy-850 space-y-3 font-mono text-xs text-slate-400">
+        <p className="font-sans leading-relaxed text-xs text-slate-400">
           <strong>Trademark Disclaimer:</strong> All third-party product names, logos, brands, and registered trademarks displayed on Crawlers are the property of their respective owners. Display is solely for descriptive identification and nominative fair use, and does not imply affiliation, sponsorship, or endorsement.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-navy-900 text-slate-400">

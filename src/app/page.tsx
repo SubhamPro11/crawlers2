@@ -151,7 +151,7 @@ export default async function HomePage() {
 
         <div className="pt-8 text-center">
           <Link href="/tools">
-            <Button variant="primary" icon={<ArrowRight className="w-4 h-4" aria-hidden="true" />}>
+            <Button variant="outline" icon={<ArrowRight className="w-4 h-4" aria-hidden="true" />}>
               Open Complete Paginated Tool Index (838+ Software)
             </Button>
           </Link>
